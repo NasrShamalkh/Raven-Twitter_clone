@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'profiles',
     'tweets',
+    'auth_app',
     'rest_framework',
     'corsheaders'
 ]
@@ -127,3 +128,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#---------------- Adding custome user model ----------------#
+AUTH_USER_MODEL = "auth_app.RavenUser"
