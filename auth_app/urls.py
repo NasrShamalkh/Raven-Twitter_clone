@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import RavenUserCreate
 # official docs for simple jwt on how to obtain and refresh tokens
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -8,4 +9,5 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('obtain_token/', TokenObtainPairView.as_view(), name='token_obtain'),
     path('refresh_token/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/register/', RavenUserCreate.as_view(), name='user_register'),
 ]
