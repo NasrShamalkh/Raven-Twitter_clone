@@ -19,7 +19,7 @@ class Profile(models.Model):
     user = models.OneToOneField(RavenUser, on_delete=models.CASCADE) # each user can have only one profile
     alias = models.CharField(max_length=100, blank=True, null=True)
     bio = models.CharField(max_length=2000, blank=True, null=True)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True) # image url from cloudinary
     background_image_url = models.URLField(blank=True, null=True)
     date_joined = models.DateTimeField(auto_now_add=True) # timestamp whenever a profile is created

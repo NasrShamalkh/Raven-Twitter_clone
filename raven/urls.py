@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profiles/', include('profiles.urls')),
     path('tweets/', include('tweets.urls')),
+    path('auth/', include('auth_app.urls')),
 ]
