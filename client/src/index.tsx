@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './App.css';
+import App from './components/App';
 
-const App = () => <h1>This should be on production</h1>;
+const rootEl = document.getElementById('root');
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, rootEl);

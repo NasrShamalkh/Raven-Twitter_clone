@@ -160,3 +160,6 @@ STATIC_URL = '/static/'
 
 #---------------- Adding custome user model ----------------#
 AUTH_USER_MODEL = "auth_app.RavenUser"
+
+#----------------- CORS allow all ( for development) ------------#
+CORS_ORIGIN_ALLOW_ALL = True
