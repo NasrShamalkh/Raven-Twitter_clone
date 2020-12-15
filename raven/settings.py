@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'profiles',
     'tweets',
     'auth_app',
+    'client',
     'rest_framework',
     'corsheaders'
 ]

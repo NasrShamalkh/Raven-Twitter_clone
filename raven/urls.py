@@ -21,4 +21,7 @@ urlpatterns = [
     path('profiles/', include('profiles.urls')),
     path('tweets/', include('tweets.urls')),
     path('auth/', include('auth_app.urls')),
+    # putting the client (Frontend) path at the end of urlpatterns ensures that anything not matching django
+    # urls will be handled by the frontend code (react + typescript)
+    path('', include('client.urls')),
 ]
