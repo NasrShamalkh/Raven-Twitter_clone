@@ -3,6 +3,7 @@
     "outDir": "./static/client/build/",
     "sourceMap": true,
     "esModuleInterop": true,
+    "allowJs": true,
     "noImplicitAny": false,
     "module": "commonjs",
     "target": "es5",

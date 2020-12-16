@@ -10,7 +10,7 @@ module.exports = merge(commonConfig, {
   output: {
     filename: 'bundle.js',
     path: resolve(__dirname, '../../static/client/build/'),
-    publicPath: '/'
+    publicPath: '/static/client/public/'
   },
   // devtool: 'source-map',
   plugins: []

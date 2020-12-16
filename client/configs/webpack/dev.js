@@ -13,7 +13,13 @@ module.exports = merge(commonConfig, {
   ],
   devServer: {
     hot: true, // enable HMR on the server
-    port: 3000
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        secure: false
+      }
+    }
   },
   devtool: 'cheap-module-eval-source-map',
   plugins: [
