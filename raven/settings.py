@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'auth_app',
     'client',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [

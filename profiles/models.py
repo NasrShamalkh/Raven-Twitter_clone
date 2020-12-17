@@ -1,6 +1,6 @@
 from django.db import models
 from auth_app.models import RavenUser 
-from django.db.models.signals import post_save
+# from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # Create your models here.
@@ -31,18 +31,3 @@ class Profile(models.Model):
     #RavenUser.following.all() =====> all profiles this RavenUser follows
 
 
-# make sure that our profiles get created everytime we do registration a new uesr
-@receiver(post_save, sender=RavenUser)
-def user_saved(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.get_or_create(user=instance)
-
-# @receiver(post_save, sender=RavenUser)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()
-
-# def user_saved(sender, instance, created, *args, **kwarfs):
-#     if created:
-#         Profile.objects.get_or_create(user=instance)
-
-# post_save.connect(user_saved) # connecting the function to the signal
