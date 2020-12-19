@@ -3,6 +3,7 @@ from .models import RavenUser
 from profiles.serializers import ProfileSerializer
 from profiles.models import Profile
 
+
 class RavenUserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required = True)
     username = serializers.CharField()
@@ -35,3 +36,10 @@ class RavenUserSerializer(serializers.ModelSerializer):
             validated_data['profile'] = profile
         return instance
 
+# special serializer for editing username and email to avoid complixity
+class EditUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(required=False)
+    email = serializers.EmailField(required=False)
+    class Meta:
+        model = RavenUser
+        fields = ('username', 'email')

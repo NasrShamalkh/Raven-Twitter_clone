@@ -11,6 +11,6 @@ urlpatterns = [
     path('refresh_token/', TokenRefreshView.as_view(), name='token_refresh'),
     path('user/register/', views.RavenUserCreate.as_view(), name='user_register'),
     path('user/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='blacklist'),
-    path('user/currentUser/', views.currentUser, name='currentUser'),
-    path('user/delete/', views.delete_user, name='delete_user'), 
+    path('user/edit/', views.currentUser, name='edit_user'),
+    path('user/delete/', views.currentUser, name='delete_user'), 
 ]

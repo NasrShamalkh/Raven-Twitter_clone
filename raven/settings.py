@@ -73,7 +73,7 @@ REST_FRAMEWORK = {
 
 ## ------------------- SIMPLE_JWT configuration -------------------##
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10), # time delta her is basicall a timer
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=10), # time delta her is basicall a timer (days for development)
     'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
     'ROTATE_REFRESH_TOKENS': True, # so that the user dont have to login again within 14 days with every visit the refresh token is rotated ( created again )
     'BLACKLIST_AFTER_ROTATION': True,
