@@ -53,7 +53,7 @@
                     "refresh_token": refresh_token
                 }
 
-- profiles (api/profiles/)
+- profiles (api/profiles/) ## Authorization required
     GET --> api/profiles/view_profile/:id # name='view_profile'
     PUT --> api/prfiles/edit/             # name='edit_profile'
             body {
@@ -66,4 +66,13 @@
     GET --> api/profiles/get_following/:id  # name='get_following'
 
 
-- tweets (api/tweets/)
+- tweets (api/tweets/) ## Authorization required
+    POST --> api/tweets/tweets_list/   # name='tweets_list'  ## add a new tweet
+            body {
+                "content": content,
+                "media": media, (optional)
+                "media_url": media_url (optional)
+            }
+    GET  --> api/tweets/tweets_list/  # name='tweets_list' ## get all tweets of the 'following' profiles (Home tweets)
+    GET  --> api/tweets/get_tweets/ # name='get_tweets'  ## current user's tweets
+
