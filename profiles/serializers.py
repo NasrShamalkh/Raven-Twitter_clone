@@ -33,3 +33,38 @@ class ProfileSerializer(serializers.ModelSerializer):
         
     def get_number_of_following(self, obj):
         return len(obj.user.following.all())
+
+# this serializer handles serializing data sent as a brief or a preview of a profile ( in searches or displaying followers)
+# a miniture version of the upper serializer to avoid complexity
+# only for serializing api responses (read_only)
+class ProfileBriefSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(source='pk', read_only=True)
+    related = serializers.SerializerMethodField('get_related', read_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
+    number_of_followers = serializers.SerializerMethodField('get_number_of_followers', read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ('id', 'username', 'number_of_followers', 'image_url', 'related', )
+
+    def get_number_of_followers(self, obj):
+        return len(obj.followers.all())
+ 
+
+        
+    # this method returns:
+    # other users that you follow (who follow this profile)/// this profile is also followed by 
+    def get_related(self, obj):
+        # getting the current user (request user)
+        request = self.context.get('request', None) # self.context ==> the context that the serializer is execuring in
+        user = request.user
+        following_profile = user.following.all() # Profile objects (users follow profiles but profiles follow users not other profiles)
+        followers_user = obj.followers.all() # RavenUser # target profile followers list
+        related_followers = []
+        for follow_user in followers_user: # iterating users (that follow the target profile)
+            if follow_user.profile in following_profile: # if one of the profiles that the follow the target profile is in the current user's followers list
+                related_followers.append({               # then add it to the recomendations list (related)
+                    "id": follow_user.profile.id,
+                    "username": follow_user.username,
+                    })
+        return related_followers

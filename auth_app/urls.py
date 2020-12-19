@@ -13,4 +13,5 @@ urlpatterns = [
     path('user/logout/', views.LogoutAndBlacklistRefreshTokenForUserView.as_view(), name='blacklist'),
     path('user/edit/', views.currentUser, name='edit_user'),
     path('user/delete/', views.currentUser, name='delete_user'), 
+    path('user/logout_all/', views.LogoutAll.as_view(), name='logout_all'),
 ]

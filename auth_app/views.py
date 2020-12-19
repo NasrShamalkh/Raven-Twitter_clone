@@ -1,7 +1,7 @@
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken, OutstandingToken, BlacklistedToken
 from rest_framework.parsers import JSONParser
 #### 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -73,9 +73,14 @@ class RavenUserCreate(APIView):
                 # return Response({"refresh" : str(refresh_token),"access" : str(access_token)} )
         return Response(raven_user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+####   -----     ------     ATTENTION     ------    ---------      ##### 
+
+# https://miro.medium.com/max/511/1*Qp_2RBl4GgCn022OZFpkfQ.jpeg
+
+#### -------                 +++                    ---------      ######
 
 class LogoutAndBlacklistRefreshTokenForUserView(APIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = ()
 
     def post(self, request):
@@ -87,4 +92,13 @@ class LogoutAndBlacklistRefreshTokenForUserView(APIView):
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-   
+# to black list all of the user's tokens in the outstanding tokens list, thus loging out from all devices
+class LogoutAll(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        tokens = OutstandingToken.objects.filter(user__id=request.user.id)
+        for token in tokens:
+            t, _ = BlacklistedToken.objects.get_or_create(token=token)
+        
+        return Response(status=status.HTTP_205_RESET_CONTENT)

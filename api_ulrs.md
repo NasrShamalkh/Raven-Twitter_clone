@@ -31,6 +31,10 @@
                 body {
                     "refresh_token": refresh_token
                 }
+    POST --> api/auth/user/logout_all/ #name="logout_all" # logout from all devices
+                headers {
+                    Authorization: "JWT " + access_token 
+                }
     PUT --> api/auth/user/edit/   # name='edit_user'  /// note /// only send the things you want to update
                 body {
                     "username": username,
@@ -58,6 +62,8 @@
                 ... bio, image_url, background_image_url
             }
     PUT --> api/profiles/follow_status/:id  # name='change_follow_status'  (trigger functionality)
+    GET --> api/profiles/get_followers/:id  # name='get_followers'
+    GET --> api/profiles/get_following/:id  # name='get_following'
 
 
 - tweets (api/tweets/)

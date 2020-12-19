@@ -4,7 +4,7 @@ from rest_framework import status
 from django.http.response import JsonResponse
 from rest_framework.response import Response
 from .models import Profile
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, ProfileBriefSerializer
 
 
 @api_view(['GET'])
@@ -43,9 +43,9 @@ def follow_status(request, profile_id):
     except Profile.DoesNotExist:
         return Response({"message": 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    if profile in user.following.all(): # unfollow (if the profile in the users following list, the we unfollow)
+    if profile in user.following.all():  # unfollow (if the profile in the users following list, the we unfollow)
         try:
-            # this is a many_to_many realtionship 
+            # this is a many_to_many realtionship
             # we dont have to update both sides on adding or removing, they get updated automatically
             user.following.remove(profile)
             return Response({"message": f"Profile with id {profile_id} removed from following"}, status=status.HTTP_202_ACCEPTED)
@@ -59,3 +59,34 @@ def follow_status(request, profile_id):
         return Response({"message": f"Profile with id {profile_id} added to following"}, status=status.HTTP_202_ACCEPTED)
     except:
         return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+
+@api_view(['GET'])
+def get_followers(request, profile_id):
+    profile = Profile.objects.get(pk=profile_id)
+    followers_users = profile.followers.all()
+    # we extract the profiles from users and add them to an iterable (list) because we need to add the profiles not the users
+    """
+    there is probably a more straight forward way of doing this, but it iiiiisssss whaattt ittt isssss :)
+    """
+
+    profile_list = []
+    for user in followers_users:
+        # adding the profiles to the profile_list
+        profile_list.append(user.profile)
+
+    # we pass in the context because we want to interact with the user in the serializer class (request.user)
+    profile_brief_serializer = ProfileBriefSerializer(profile_list, context={'request': request}, many=True)
+    return Response(profile_brief_serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def get_following(request, profile_id):
+    profile = Profile.objects.get(pk=profile_id)
+    following_list = profile.user.following.all()
+    # profile_list = []
+    # for user in following_users:
+    #     profile_list.append(user.profile)
+
+    profile_brief_serializer = ProfileBriefSerializer(following_list, context={'request': request}, many=True)
+    return Response(profile_brief_serializer.data, status=status.HTTP_200_OK)
