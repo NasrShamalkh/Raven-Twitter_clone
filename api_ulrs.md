@@ -35,6 +35,7 @@
                 body {
                     "username": username,
                     "email": email,
+                    "mode": mode,
                     "update_password": Boolean,
                     "current_password": current_password,
                     "new_password": new_password,
@@ -56,6 +57,7 @@
                 "alias": new_alias,
                 ... bio, image_url, background_image_url
             }
+    PUT --> api/profiles/follow_status/:id  # name='change_follow_status'  (trigger functionality)
 
 
 - tweets (api/tweets/)

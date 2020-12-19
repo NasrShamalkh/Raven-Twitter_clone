@@ -31,13 +31,13 @@ def currentUser(request):
     if request.method == 'PUT': # updates (Edit) the currentUser data
         put_data = JSONParser().parse(request)
         user = request.user
-        if 'update_password' in put_data and put_data['update_password']: # if this evaluates to true then we need to update the password
+        if 'update_password' in put_data and put_data['update_password'] == True: # if this evaluates to true then we need to update the password
             current_password = put_data['current_password']
             new_password = put_data['new_password']
             if user.check_password(current_password):
                 user.set_password(new_password)
                 # if the user only wants to update the password save and return message
-                if not 'email' in put_data and not 'username' in put_data:
+                if not 'email' in put_data and not 'username' in put_data and not 'mode' in put_data:
                     user.save()
                     return Response({'message': 'Password updated !'}, status=status.HTTP_202_ACCEPTED)
             else:

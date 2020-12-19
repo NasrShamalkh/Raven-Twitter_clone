@@ -40,6 +40,7 @@ class RavenUserSerializer(serializers.ModelSerializer):
 class EditUserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=False)
     email = serializers.EmailField(required=False)
+    mode = serializers.CharField(required=False)
     class Meta:
         model = RavenUser
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'mode',)
