@@ -54,16 +54,16 @@
                 }
 
 - profiles (api/profiles/) ## Authorization required
-    GET --> api/profiles/view_profile/:id # name='view_profile'
+    GET --> api/profiles/view_profile/:id/ # name='view_profile'
     PUT --> api/prfiles/edit/             # name='edit_profile'
             body {
                 "profile_id": id,
                 "alias": new_alias,
                 ... bio, image_url, background_image_url
             }
-    PUT --> api/profiles/follow_status/:id  # name='change_follow_status'  (trigger functionality)
-    GET --> api/profiles/get_followers/:id  # name='get_followers'
-    GET --> api/profiles/get_following/:id  # name='get_following'
+    PUT --> api/profiles/follow_status/:id/  # name='change_follow_status'  (trigger functionality)
+    GET --> api/profiles/get_followers/:id/  # name='get_followers'
+    GET --> api/profiles/get_following/:id/  # name='get_following'
 
 
 - tweets (api/tweets/) ## Authorization required
@@ -74,5 +74,21 @@
                 "media_url": media_url (optional)
             }
     GET  --> api/tweets/tweets_list/  # name='tweets_list' ## get all tweets of the 'following' profiles (Home tweets)
-    GET  --> api/tweets/get_tweets/ # name='get_tweets'  ## current user's tweets
+    GET  --> api/tweets/get_tweets/:id # name='get_tweets'  ## get tweets of user with id (:id)
+
+    PUT  --> api/tweets/saved_tweets_list/:id # name='saved_tweets_list' ## add a tweet to saved / remove :: Trigger_Functionality
+    GET  --> api/tweets/get_saved_tweets/ # name='get_saved_tweets'  ## get saved tweets ## only for current user
+
+    PUT  --> api/tweets/liked_tweets_list/:id # name='liked_tweets_list' ## add a tweet to liked list / remove :: Trigger_Functionality
+    GET  --> api/tweets/get_liked_tweets/ # name='get_liked_tweets'  ## get liked tweets # only for current user
+    GET  --> api/tweets/get_like_list/:id/  # name='get_like_list'  ## return list of people who liked this tweet
+
+    POST --> api/tweets/replies/replies_list/:id/  # name='replies_list' # add new reply
+    GET --> api/tweets/replies/replies_list/:id/  # name='replies_list' # get all replies on a tweet
+    DELETE --> api/tweets/replies/delete/:id/  # name='delete' # remove user's reply on a tweet
+
+    !!!! TODO !!!!
+    - add delete, Edit functionality to tweets
+    - replies (add, get, delete, like) (check if public)
+    - apply retweets functionality
 

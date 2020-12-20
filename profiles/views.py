@@ -43,7 +43,7 @@ def follow_status(request, profile_id):
     except Profile.DoesNotExist:
         return Response({"message": 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    if profile in user.following.all():  # unfollow (if the profile in the users following list, the we unfollow)
+    if profile in user.following.all():  # unfollow (if the profile in the users following list, then we unfollow)
         try:
             # this is a many_to_many realtionship
             # we dont have to update both sides on adding or removing, they get updated automatically

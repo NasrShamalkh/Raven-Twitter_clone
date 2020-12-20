@@ -10,6 +10,7 @@ serializing (validating in this case) some of the data
 """
 class ProfileSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(source='pk', read_only=True)
+    user_id = serializers.IntegerField(source='user.id', read_only=True) # now we have the user_id available in the front
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.EmailField(source='user.email', read_only=True)
     alias = serializers.CharField(allow_blank=True, required=False)
@@ -26,7 +27,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('username', 'id', 'email', 'alias', 'bio', 'date_of_birth', 'image_url', 'background_image_url', 'date_joined', 'number_of_followers', 'number_of_following', )
+        fields = ('username', 'id', 'user_id', 'email', 'alias', 'bio', 'date_of_birth', 'image_url', 'background_image_url', 'date_joined', 'number_of_followers', 'number_of_following', )
 
     def get_number_of_followers(self, obj):
         return len(obj.followers.all())

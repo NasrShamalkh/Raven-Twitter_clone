@@ -35,7 +35,7 @@ class Tweet(models.Model):
     content = models.TextField() 
     media = models.BooleanField(default=False)
     media_url = models.URLField(blank=True, null=True)
-    public_reply = models.BooleanField(default=True) # everyone / only-followers can reply
+    public = models.BooleanField(default=True) # everyone / only-followers can view / reply
     ###-------------------------------###
     likes = models.ManyToManyField(RavenUser, related_name='liked_tweets', through=TweetLike_relation)
     retweets = models.ManyToManyField(RavenUser, related_name='retweeted', through=TweetRetweet_relation)
