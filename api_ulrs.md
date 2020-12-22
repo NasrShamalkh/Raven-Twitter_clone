@@ -86,25 +86,29 @@
   
     PUT  --> api/tweets/saved_tweets_list/:id # name='saved_tweets_list' ## add a tweet to saved / remove :: Trigger_Functionality  
     GET  --> api/tweets/get_saved_tweets/ # name='get_saved_tweets'  ## get saved tweets ## only for current user  
+    GET  --> api/tweets/get_user_media/:id/ name='get_user_media' 
 
     PUT  --> api/tweets/liked_tweets_list/:id # name='liked_tweets_list' ## add a tweet to liked list / remove :: Trigger_Functionality  
-    GET  --> api/tweets/get_liked_tweets/ # name='get_liked_tweets'  ## get liked tweets # only for current user  
-    GET  --> api/tweets/get_tweet_like_list/:id/  # name='get_tweet_like_list'  ## return list of people who liked this tweet  
+    GET  --> api/tweets/get_liked/:id/ # name='get_liked'  ## get liked tweets and replies for a user (profile)
+    GET  --> api/tweets/get_tweet_like_list/:id/  # name='get_tweet_like_list'  ## return list of people who liked this tweet 
+
+    POST --> api/tweets/retweet_list/:id/   # name='retweet_list'  ## add new retweet
+    GET  --> api/tweets/retweet_list/:id/   # name='retweet_list'    ## get retweets list
 
 ------------------------------------------  
   
     POST --> api/tweets/replies/replies_list/:id/  # name='replies_list' # add new reply  (id of tweet)  
     GET --> api/tweets/replies/replies_list/:id/  # name='replies_list' # get all replies on a tweet  (id of tweet)  
+    GET --> api/tweets/replies/get_user_replies/:id/  #name='get_user_replies'  # get all replies of a user (use with tweets & replies)
     DELETE --> api/tweets/replies/delete/:id/  # name='delete_reply' # remove user's reply on a tweet (id of reply)  
     PUT  --> api/tweets/replies/liked_replies_list/:id/  # name='liked_replies_list'  Trigger  
-    GET  --> api/tweets/replies/get_reply_like_list/:id/  name='get_reply_like_list'
- 
+    GET  --> api/tweets/replies/get_reply_like_list/:id/  name='get_reply_like_list'  
+
+------------------------------------------  
 
     !!!! TODO !!!!  
-
-    - add own tweets to Home screen   **
-    - add delete, Edit functionality to tweets  **
-    - replies (add, get, delete, like) (check if public)  
-    - apply retweets functionality  
-    - change get_liked_tweets to get_liked (tweets and replies for a profile/user not the current user)
+    - #1 getting started with front 
+    - add 'retweeted' to all GET tweets requests  (show 'retweeted by')  
+    - Explore tweets and profiles (based on popularity/followers/relations) + (top, latest, media)
+    - Hashtags  
 

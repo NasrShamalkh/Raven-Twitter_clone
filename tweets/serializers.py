@@ -14,6 +14,7 @@ class TweetSerializer(serializers.ModelSerializer):
     number_of_likes = serializers.SerializerMethodField('get_number_of_likes', read_only=True)
     number_of_retweets = serializers.SerializerMethodField('get_number_of_retweets', read_only=True)
     number_of_replies = serializers.SerializerMethodField('get_number_of_replies', read_only=True)
+    # retweeted_by_user = serializers.SerializerMethodField('check_retweeted_by_user', read_only=True)
     ##
     liked = serializers.SerializerMethodField('check_liked', read_only=True)
     retweeted = serializers.SerializerMethodField('check_retweeted', read_only=True)
@@ -37,12 +38,14 @@ class TweetSerializer(serializers.ModelSerializer):
             'number_of_likes',
             'number_of_retweets',
             'number_of_replies',
+            # 'retweeted_by_user',
             'liked',
             'retweeted',
             'saved',
         ]
         extra_kwargs = {
             'user': {'write_only': True},
+            'retweeted_by_user': {'required' : False, 'read_only': True, 'default': False},
             'timestamp': {'read_only': True}
         }
         order_by = ('-timestamp') # not working
@@ -80,6 +83,13 @@ class TweetSerializer(serializers.ModelSerializer):
         if obj in user.saved_tweets.all():
             return True
         return False
+
+    # def check_retweeted_by_user(self, obj):
+    #     # check if it is retweeted by the user or not
+    #     if 'retweet_user' not in self.context:
+    #         return False
+    #     retweet_user = self.context['retweet_user', None]
+    #     return retweet_user # a username \\ string
 
 
 class ReplySerializer(serializers.ModelSerializer):

@@ -11,9 +11,12 @@ urlpatterns = [
     path('get_saved_tweets/', views.get_saved_tweets, name='get_saved_tweets'),
     url(r'^liked_tweets_list/(?P<tweet_id>\d+)/$', views.liked_tweets_list, name='liked_tweets_list'), # trigger
     url(r'^get_tweet_like_list/(?P<tweet_id>\d+)/$', views.get_tweet_like_list, name='get_tweet_like_list'),
+    url(r'^retweet_list/(?P<tweet_id>\d+)/$', views.retweet_list, name='retweet_list'),
     url(r'^replies/replies_list/(?P<tweet_id>\d+)/$', views.replies_list, name='replies_list'), # GET | POST
+    url(r'^replies/get_user_replies/(?P<user_id>\d+)/$', views.get_user_replies, name='get_user_replies'), 
     url(r'^replies/delete/(?P<reply_id>\d+)/$', views.delete_reply, name='delete_reply'),
     url(r'^replies/liked_replies_list/(?P<reply_id>\d+)/$', views.liked_replies_list, name='liked_replies_list'), # trigger
     url(r'^replies/get_reply_like_list/(?P<reply_id>\d+)/$', views.get_reply_like_list, name='get_reply_like_list'),
-    path('get_liked_tweets/', views.get_liked_tweets, name='get_liked_tweets'), # must be get likes (tweets and replies)
+    url(r'^get_liked/(?P<user_id>\d+)/$', views.get_liked, name='get_liked'),
+    url(r'^get_user_media/(?P<user_id>\d+)/$', views.get_user_media, name='get_user_media'),
 ]

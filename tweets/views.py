@@ -16,10 +16,16 @@ def tweets_list(request):
     if(request.method == 'GET'):
         user = request.user
         tweets_querysets = []  # an empty list to add all of the queyrsets to
+        serialized_retweets_list = []
         # adding all of the tweets from the profiles who the current user follows to tweets_qeuryset
         for following_profile in user.following.all():
             tweets_querysets.append(Tweet.objects.filter(
                 user_id=following_profile.user.id))
+
+            #adding retweets //\\ for each tweet we have to serializer it an add it to the list
+            # retweets = following_profile.user.retweeted.all()
+            # serialized_tweets_for_profile = TweetSerializer(retweets, many=True, context={'request': request, 'check_user': following_profile.user.id})
+            # serialized_retweets_list.append(serialized_tweets_for_profile.data)
 
         def reduce_func(current_value, accumulator):  # reduce arguement function
             # chain method combines multiple querysets into one
@@ -30,9 +36,12 @@ def tweets_list(request):
         if not tweets_querysets and not user.tweets.all(): # check if empty ==> return 404 # following tweets + own tweets
             return Response([], status=status.HTTP_404_NOT_FOUND)
         else: 
-            chain_result = reduce(reduce_func, tweets_querysets, user.tweets.all()) # user.tweets.all() is the initializer of the reduce func
+            tweets_querysets.append(user.tweets.all()) # adding user tweets
+            # tweets_querysets.append(user.retweeted.all()) # adding user retweets
+            chain_result = reduce(reduce_func, tweets_querysets) # user.tweets.all() is the initializer of the reduce func
 
         tweet_serializer = TweetSerializer(chain_result, context={'request': request}, many=True)
+        # result = chain(serialized_retweets_list, tweet_serializer.data)
         return Response(tweet_serializer.data, status=status.HTTP_200_OK)
 
     if(request.method == 'POST'):
@@ -132,13 +141,25 @@ def liked_tweets_list(request, tweet_id):
         except NotImplementedError:
             return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
 
-# get liked tweets of the current user
+# get liked tweets and replies of a user
 @api_view(['GET'])
-def get_liked_tweets(request):
-    user = request.user
+def get_liked(request, user_id):
+    user = RavenUser.objects.get(pk=user_id)
     liked_tweets = user.liked_tweets.all()
-    tweets_serializer = TweetSerializer(liked_tweets, context={'request': request}, many=True)
-    return Response(tweets_serializer.data, status=status.HTTP_200_OK)
+    liked_replies = user.liked_replies.all()
+    dicts_list = []
+    for tweet in liked_tweets:
+        tweet_serializer = TweetSerializer(tweet, context={'request': request})
+        dicts_list.append(tweet_serializer.data)
+
+    for reply in liked_replies:
+        reply_tweet = reply.tweet
+        dicts_list.append({
+            'tweet': TweetSerializer(reply_tweet, context={'request': request}).data,
+            'reply': ReplySerializer(reply, context={'request': request}).data
+        })
+
+    return Response(dicts_list, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_tweet_like_list(request, tweet_id):
@@ -188,6 +209,39 @@ def manage_tweet(request, tweet_id):
             return Response({'message': f'Tweet with id {tweet_id} for user {user.username} is deleted successfully !'}, status=status.HTTP_202_ACCEPTED)
         except:
             return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+
+
+# Retweets ---//---
+
+@api_view(['POST', 'GET'])
+def retweet_list(request, tweet_id):
+    user = request.user
+    try: 
+        tweet = Tweet.objects.get(pk=tweet_id)
+    except:
+        return Response({"message": 'Tweet not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+    #  retweet functionality
+    if request.method == 'POST':
+        if tweet not in user.retweeted.all(): # means we can add it
+            try:
+                tweet.retweets.add(user)
+                return Response({'message': f'Tweet with id {tweet_id} retweeted for user  {user.username}'}, status=status.HTTP_202_ACCEPTED)
+                raise NotImplementedError
+            except NotImplementedError:
+                return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+        return Response({'message': "Already retweeted"}, status=status.HTTP_409_CONFLICT)
+    
+    #get all retweeters for a tweet  
+    if request.method == 'GET':
+        retweet_users = tweet.retweets.all() # users who retweetd
+        # we need profiles
+        retweet_profiles = []
+        for user in retweet_users:
+            retweet_profiles.append(user.profile)
+        
+        profile_brief_serializer = ProfileBriefSerializer(retweet_profiles, context={'request': request}, many=True)
+        return Response(profile_brief_serializer.data, status=status.HTTP_200_OK)
 
 
 # add a reply to a tweet or get all replies
@@ -281,18 +335,40 @@ def get_reply_like_list(request, reply_id):
     }, many=True)
 
     return Response(profile_brief_serialzier.data, status=status.HTTP_200_OK)
-    
 
-    
+# get user replies (send reply and tweet) used in view tweets & replies
+@api_view(['GET'])
+def get_user_replies(request, user_id):
+    user = RavenUser.objects.get(pk=user_id)
+    dicts_list = []
+    for reply in user.user_replies.all():
+        tweet = reply.tweet
+        reply_serializer = ReplySerializer(reply, context={'request': request})
+        tweet_serializer = TweetSerializer(tweet, context={'request': request})
+        dicts_list.append({
+            'tweet': tweet_serializer.data,
+            'reply': reply_serializer.data
+        })
+    return Response(dicts_list, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_user_media(request, user_id):
+    # search in user tweets and replies if any tweet/replies contains media and reaturn it
+    user = RavenUser.objects.get(pk=user_id)
+    media_tweets = user.tweets.filter(media=True)
+    dicts_list = []
+    for media_tweet in media_tweets:
+        dicts_list.append(TweetSerializer(media_tweet, context={'request': request}).data)
 
-#  retweet functionality
-#  user = request.user
-#     tweet = Tweet.objects.get(pk=tweet_id)
-#     if tweet not in user.retweeted.all(): # means we can add it
-#         try:
-#             tweet.retweets.add(user)
-#             return Response({'message': f'Tweet with id {tweet_id} retweeted for user with id {user.id}'}, status=status.HTTP_202_ACCEPTED)
-#             raise NotImplementedError
-#         except NotImplementedError:
-#             return Response(status=status.HTTP_501_NOT_IMPLEMENTED)
+    for reply in user.user_replies.all():
+        if reply.media == True:
+            tweet = reply.tweet
+            reply_serializer = ReplySerializer(reply, context={'request': request})
+            tweet_serializer = TweetSerializer(tweet, context={'request': request})
+            dicts_list.append({
+                'tweet': tweet_serializer.data,
+                'reply': reply_serializer.data
+            })
+
+    return Response(dicts_list, status=status.HTTP_200_OK)
+
