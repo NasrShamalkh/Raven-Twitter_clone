@@ -9,11 +9,17 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.decorators import api_view
 from .models import RavenUser
 
-from .serializers import RavenUserSerializer, EditUserSerializer
+from .serializers import RavenUserSerializer, EditUserSerializer, CurrentUserSerializer
 
-@api_view(['DELETE', 'PUT'])
+@api_view(['DELETE', 'PUT', 'GET'])
 def currentUser(request):
-# this view handles delte user and alson blacklists the user's refresh tokens to log them out as well 
+# this view handles delte user and also blacklists the user's refresh tokens to log them out as well  + get current_user
+    if request.method == 'GET': 
+        user = request.user
+        current_user_serializer = CurrentUserSerializer(user)
+        return Response(current_user_serializer.data, status=status.HTTP_202_ACCEPTED)
+
+
     if request.method == 'DELETE': # delets current User
         try:
             user_serializer = RavenUserSerializer(request.user)
@@ -60,6 +66,18 @@ class RavenUserCreate(APIView):
     authentication_classes = ()
     
     def post(self, request, format='json'): # the format param is used to specify the output type of the response // default is None
+        post_data = request.data
+        # checking if the username or email is duplicate
+        if RavenUser.objects.filter(username=post_data['username']).exists():
+            return Response({"message": 'Username already Exists'}, status=status.HTTP_409_CONFLICT)
+        if RavenUser.objects.filter(email=post_data['email']).exists():
+            return Response({"message": 'Email already Exists'}, status=status.HTTP_409_CONFLICT) 
+        
+        # checking if the passwords match
+        password2 = post_data.pop('password2')
+        if password2 != post_data['password']:
+            return Response({"message": 'Passwords did not match'}, status=status.HTTP_400_BAD_REQUEST)
+             
         raven_user_serializer = RavenUserSerializer(data=request.data)
         # if the serializer is valid, create a new user and return it with 201 status code
         if raven_user_serializer.is_valid():
@@ -67,10 +85,6 @@ class RavenUserCreate(APIView):
             if user:
                 json_data = raven_user_serializer.data
                 return Response(json_data, status=status.HTTP_201_CREATED)
-                ## handling login after user creation
-                # refresh_token = TokenObtainPairSerializer().get_token(user)  
-                # access_token = AccessToken().for_user(user)
-                # return Response({"refresh" : str(refresh_token),"access" : str(access_token)} )
         return Response(raven_user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 ####   -----     ------     ATTENTION     ------    ---------      ##### 

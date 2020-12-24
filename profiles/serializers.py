@@ -20,7 +20,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     number_of_following = serializers.SerializerMethodField('get_number_of_following', read_only=True)
     ##
     bio = serializers.CharField(allow_blank=True, required=False)
-    date_of_birth = serializers.DateField(required=False, read_only=True)
+    date_of_birth = serializers.DateField(required=True)
     image_url = serializers.URLField(allow_blank=True, required=False)
     background_image_url = serializers.URLField(allow_blank=True, required=False)
     date_joined = serializers.DateTimeField(read_only=True)

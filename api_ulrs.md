@@ -46,6 +46,7 @@
                     "current_password": current_password,  
                     "new_password": new_password,  
                 }  
+    GET --> api/auth/user/current_user/  # name='current_user'  
                 
     DELETE --> api/auth/user/delete/ # name='delete_user'  
                 headers {  

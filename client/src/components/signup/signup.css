@@ -1,0 +1,51 @@
+.redirect_link {
+  color: blue;
+}
+.redirect_link:hover {
+  text-decoration: underline;
+  cursor: default;
+}
+
+#signup_form {
+  width: 36%;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: auto;
+  padding: 10px;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+#message {
+  display: none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+}
+
+#message p {
+  padding: 10px 35px;
+  font-size: 10px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -15px;
+  content: '✅';
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -15px;
+  content: '❌';
+}

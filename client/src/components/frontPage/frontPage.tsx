@@ -2,10 +2,17 @@
 // includes signin / signup options
 // some blah blah and a footer
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import './frontPage.css';
 
 const FrontPage: React.FC = () => {
+  const [redirect, setRedirect] = React.useState<string | null>(
+    localStorage.getItem('access_token') ? '/home' : null
+  );
+
+  if (redirect) {
+    return <Redirect to={redirect} />;
+  }
   return (
     <div id='front_page_main_div'>
       <div className='front_page_content_div'>

@@ -1,34 +1,56 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import axiosInstance from '../axiosApi/axiosApi';
 import './login.css';
+import { connect } from 'react-redux';
+import * as actions from '../../redux/actions';
 
-const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+interface Props {
+  set_current_user: Function;
+}
 
-  const handleSubmit = event => {
+const Login: React.FC<Props> = (props: Props) => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [redirect, setRedirect] = useState<string | null>(null);
+
+  const handleSubmit = async event => {
     event.preventDefault();
-    axiosInstance
+    await axios
       .post('/api/auth/obtain_token/', {
         username: username,
         password: password
       })
-      .then(res => {
+      .then(async (res: AxiosResponse) => {
         axiosInstance.defaults.headers['Authorization'] =
           'JWT ' + res.data.access;
         localStorage.setItem('access_token', res.data.access);
         localStorage.setItem('refresh_token', res.data.refresh);
-        console.log('Log in success !! ');
+        setRedirect('/home');
+        await axiosInstance
+          .get('api/auth/user/current_user/')
+          .then(res => {
+            props.set_current_user(res.data);
+          })
+          .catch((err: AxiosError) => {
+            console.log('Error in getting current user', err);
+          });
       })
-      .catch(err => {
+      .catch((err: AxiosError) => {
         alert('Error in log in please try again ! ');
+        console.log('This should redirect !');
         throw err;
       });
   };
 
+  if (redirect) {
+    return <Redirect to={redirect} />;
+  }
+
   return (
     <div id='container'>
-      <form onSubmit={handleSubmit}>
+      <form id='login_form' onSubmit={handleSubmit}>
         <h3>Log in</h3>
         <div className='form-group'>
           <label>Username: </label>
@@ -40,9 +62,9 @@ const Login: React.FC = () => {
             onChange={e => {
               setUsername(e.target.value);
             }}
+            required
           />
         </div>
-
         <div className='form-group'>
           <label>Password: </label>
           <input
@@ -53,14 +75,32 @@ const Login: React.FC = () => {
             onChange={e => {
               setPassword(e.target.value);
             }}
+            required
           />
         </div>
         <button type='submit' className='btn btn-dark btn-lg'>
           Sign in
         </button>
+        <p className='text-right'>
+          Don't have an account ?{' '}
+          <span
+            className='redirect_link'
+            onClick={() => {
+              setRedirect('/signup');
+            }}
+          >
+            Register
+          </span>
+        </p>
       </form>
     </div>
   );
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => {
+  return {
+    set_current_user: newUser => dispatch(actions.setCurrentUser(newUser))
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

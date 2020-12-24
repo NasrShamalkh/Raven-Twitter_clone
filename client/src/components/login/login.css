@@ -1,8 +1,10 @@
-form {
+#login_form {
   width: 36%;
   border: 1px solid black;
   border-radius: 10px;
   margin: auto;
+  padding: 10px;
+  padding-top: 20px;
 }
 
 button {
@@ -12,4 +14,11 @@ button {
   height: 100%;
   display: flex;
   padding-top: 150px;
+}
+.redirect_link {
+  color: blue;
+}
+.redirect_link:hover {
+  text-decoration: underline;
+  cursor: default;
 }
