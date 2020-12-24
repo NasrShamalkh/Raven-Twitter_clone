@@ -19,7 +19,9 @@ module.exports = merge(commonConfig, {
         target: 'http://localhost:8000',
         secure: false
       }
-    }
+    },
+    publicPath: '/',
+    historyApiFallback: true
   },
   devtool: 'cheap-module-eval-source-map',
   plugins: [

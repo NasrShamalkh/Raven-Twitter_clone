@@ -1,0 +1,15 @@
+form {
+  width: 36%;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: auto;
+}
+
+button {
+  width: 150px;
+}
+#container {
+  height: 100%;
+  display: flex;
+  padding-top: 150px;
+}

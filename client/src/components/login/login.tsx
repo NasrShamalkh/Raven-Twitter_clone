@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axiosInstance from '../axiosApi/axiosApi';
+import './login.css';
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -13,7 +14,6 @@ const Login: React.FC = () => {
         password: password
       })
       .then(res => {
-        console.log(res, '---------');
         axiosInstance.defaults.headers['Authorization'] =
           'JWT ' + res.data.access;
         localStorage.setItem('access_token', res.data.access);
@@ -21,37 +21,43 @@ const Login: React.FC = () => {
         console.log('Log in success !! ');
       })
       .catch(err => {
+        alert('Error in log in please try again ! ');
         throw err;
       });
   };
 
   return (
-    <div>
-      Login
+    <div id='container'>
       <form onSubmit={handleSubmit}>
-        <label>
-          Username:
+        <h3>Log in</h3>
+        <div className='form-group'>
+          <label>Username: </label>
           <input
-            name='username'
             type='text'
+            className='form-control'
+            placeholder='Enter Username'
             value={username}
             onChange={e => {
               setUsername(e.target.value);
             }}
           />
-        </label>
-        <label>
-          Password:
+        </div>
+
+        <div className='form-group'>
+          <label>Password: </label>
           <input
-            name='password'
             type='password'
+            className='form-control'
+            placeholder='Enter password'
             value={password}
             onChange={e => {
               setPassword(e.target.value);
             }}
           />
-        </label>
-        <input type='submit' value='Submit' />
+        </div>
+        <button type='submit' className='btn btn-dark btn-lg'>
+          Sign in
+        </button>
       </form>
     </div>
   );

@@ -1,0 +1,19 @@
+#front_page_main_div {
+  display: flex;
+  flex-direction: row;
+}
+.front_page_content_div {
+  border: 1px solid black;
+  text-align: center;
+  flex: 1;
+  padding-top: 100px;
+  /* padding-bottom: 60px; */
+  height: 650px;
+}
+ul {
+  list-style: none;
+}
+button {
+  width: 100px;
+  margin: 10px;
+}

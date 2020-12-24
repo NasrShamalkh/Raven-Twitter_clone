@@ -18,11 +18,13 @@ axiosInstance.interceptors.response.use(
   // and this is done for each request ==> anytime inside our app
   response => response,
   error => {
-    const originalRequest = error.config;
+    const originalRequest: AxiosRequestConfig = error.config;
 
     if (
       error.response.status === 401 &&
-      error.response.statusText === 'Unauthorized'
+      error.response.statusText === 'Unauthorized' &&
+      localStorage.getItem('refresh_token') &&
+      localStorage.getItem('access_token')
     ) {
       const refresh_token = localStorage.getItem('refresh_token');
 
