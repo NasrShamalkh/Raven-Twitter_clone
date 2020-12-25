@@ -32,7 +32,7 @@ class TweetSave_relation(models.Model):
 class Tweet(models.Model):
     # this is where we connect users to ther tweets 
     user = models.ForeignKey(RavenUser, related_name='tweets', on_delete=models.CASCADE) # each user can have multiple tweets
-    content = models.TextField() 
+    content = models.TextField(blank=True, null=True) 
     media = models.BooleanField(default=False)
     media_url = models.URLField(blank=True, null=True)
     public = models.BooleanField(default=True) # everyone / only-followers can view / reply

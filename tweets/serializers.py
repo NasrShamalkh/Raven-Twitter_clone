@@ -7,7 +7,7 @@ class TweetSerializer(serializers.ModelSerializer):
     # we only want them on the API's response
     tweet_id = serializers.IntegerField(source='pk', read_only=True)
     username = serializers.CharField(source='user.username', read_only=True)
-    content = serializers.CharField(required=False)
+    content = serializers.CharField(required=False, allow_blank=True)
     profile_image = serializers.URLField(source='user.profile.image_url', read_only=True)
     ##
     number_of_saves = serializers.SerializerMethodField('get_number_of_saves', read_only=True)

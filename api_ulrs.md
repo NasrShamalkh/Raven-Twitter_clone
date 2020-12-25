@@ -77,7 +77,8 @@
             body {  
                 "content": content,  
                 "media": media, (optional)  
-                "media_url": media_url (optional)  
+                "media_url": media_url (optional)  ,
+                "public": true / false
             }  
     GET  --> api/tweets/tweets_list/  # name='tweets_list' ## get all tweets of the 'following' profiles (Home tweets)  
     GET  --> api/tweets/get_tweets/:id/ # name='get_tweets'  ## get tweets of user with id (:id)  

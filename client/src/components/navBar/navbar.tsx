@@ -21,7 +21,7 @@ const NavBar: React.FC<CurrentUserInterface> = (
       <NavLink to='/home' className='navbar-brand d-none d-lg-inline-block'>
         <img
           id='raven_brand'
-          src='https://i.pinimg.com/originals/53/38/22/5338222e8cb88bc99dd14cb722d8c43f.jpg'
+          src='http://res.cloudinary.com/nasr-cloudinary/image/upload/v1608924243/Raven%20App/5338222e8cb88bc99dd14cb722d8c43f_r4qs7p.jpg'
         />
       </NavLink>
       <div
@@ -116,7 +116,7 @@ const DropDown = props => {
               src={
                 user.image_url
                   ? user.image_url
-                  : 'https://media.istockphoto.com/vectors/grunge-raven-vector-id93394538?k=6&m=93394538&s=612x612&w=0&h=fcO9jMmjdk5Yd5rb0NqRMYYCArFSLU9RUUu4RQZ-VC0='
+                  : 'http://res.cloudinary.com/nasr-cloudinary/image/upload/v1608924149/Raven%20App/istockphoto-93394538-612x612_gui0vc.jpg'
               }
               id='profile_image'
             />
