@@ -13,6 +13,7 @@ import BookMarks from './bookmarks/bookmarks';
 import Explore from './explore/explore';
 import Profile from './profile/profile';
 import Settings from './settings/settings';
+import PrivateRoute from './privateroute';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,13 +28,13 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         <Route component={FrontPage} exact path='/' />
-        <Route component={Home} path='/home' />
         <Route component={Login} path='/login' />
         <Route component={Signup} path='/signup' />
-        <Route component={BookMarks} path='/bookmarks' />
-        <Route component={Profile} path='/profile' />
-        <Route component={Settings} path='/settings' />
-        <Route component={Explore} path='/explore' />
+        <PrivateRoute exact component={Home} path='/home' />
+        <PrivateRoute exact component={BookMarks} path='/bookmarks' />
+        <PrivateRoute exact component={Profile} path='/profile' />
+        <PrivateRoute exact component={Settings} path='/settings' />
+        <PrivateRoute exact component={Explore} path='/explore' />
       </Switch>
     </Router>
   );
