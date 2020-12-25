@@ -1,7 +1,7 @@
 import React from 'react';
 import './navBar.css';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import axiosInstance from '../axiosApi/axiosApi';
 
 interface CurrentUserInterface {
@@ -16,60 +16,34 @@ interface CurrentUserInterface {
 const NavBar: React.FC<CurrentUserInterface> = (
   props: CurrentUserInterface
 ) => {
-  const [redirect, setRedirect] = React.useState<string | null>(null);
-
-  if (redirect) {
-    return <Redirect to={redirect} />;
-  }
-
   return (
     <nav className='navbar sticky-top navbar-expand-md navbar-dark bg-dark'>
-      <a
-        className='navbar-brand d-none d-lg-inline-block'
-        onClick={() => {
-          setRedirect('/home');
-        }}
-      >
+      <NavLink to='/home' className='navbar-brand d-none d-lg-inline-block'>
         <img
           id='raven_brand'
           src='https://i.pinimg.com/originals/53/38/22/5338222e8cb88bc99dd14cb722d8c43f.jpg'
         />
-      </a>
+      </NavLink>
       <div
         className='navbar-collapse collapse w-100 justify-content-center'
         id='navbar5'
       >
         <ul className='navbar-nav mx-auto'>
           <li className='nav-item'>
-            <a
-              className='nav-link'
-              onClick={() => {
-                setRedirect('/home');
-              }}
-            >
+            <NavLink to='/home' className='nav-link'>
               Home
-            </a>
+            </NavLink>
           </li>
           <li className='nav-item'>
-            <a
-              className='nav-link'
-              onClick={() => {
-                setRedirect('/explore');
-              }}
-            >
+            <NavLink to='/explore' className='nav-link'>
               {' '}
               Explore
-            </a>
+            </NavLink>
           </li>
           <li className='nav-item'>
-            <a
-              className='nav-link'
-              onClick={() => {
-                setRedirect('/bookmarks');
-              }}
-            >
+            <NavLink to='/bookmarks' className='nav-link'>
               Bookmarks
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
@@ -83,7 +57,7 @@ const DropDown = props => {
   const [redirect, setRedirect] = React.useState<string | null>(null);
   let user = props.user;
   const handleLogout = () => {
-    let refresh = localStorage.getItem('refresh_token')
+    let refresh = localStorage.getItem('refresh_token');
     axiosInstance
       .post('api/auth/user/logout/', {
         refresh_token: refresh
@@ -132,36 +106,33 @@ const DropDown = props => {
         <li className='nav-item dropdown'>
           <a
             className='nav-link dropdown-toggle'
-            href='#'
             id='navbarDropdown'
             role='button'
             data-toggle='dropdown'
             aria-haspopup='true'
             aria-expanded='false'
           >
-            <span id='burger' className='fas fa-bars'></span>
+            <img
+              src={
+                user.image_url
+                  ? user.image_url
+                  : 'https://media.istockphoto.com/vectors/grunge-raven-vector-id93394538?k=6&m=93394538&s=612x612&w=0&h=fcO9jMmjdk5Yd5rb0NqRMYYCArFSLU9RUUu4RQZ-VC0='
+              }
+              id='profile_image'
+            />
+            <span>{user.alias ? user.alias : user.username}</span>
           </a>
           <div
             id='nav_dropdown_menu'
             className='dropdown-menu dropdown-menu-right'
             aria-labelledby='navbarDropdown'
           >
-            <a
-              className='dropdown-item'
-              onClick={e => {
-                setRedirect('/profile');
-              }}
-            >
+            <NavLink to='/profile' className='dropdown-item'>
               Profile
-            </a>
-            <a
-              className='dropdown-item'
-              onClick={() => {
-                setRedirect('/settings');
-              }}
-            >
+            </NavLink>
+            <NavLink to='/settings' className='dropdown-item'>
               Settings
-            </a>
+            </NavLink>
             <div className='dropdown-divider'></div>
             <a className='dropdown-item log_out_text' onClick={handleLogout}>
               <i>Log out</i>
