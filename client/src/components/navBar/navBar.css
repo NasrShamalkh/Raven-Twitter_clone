@@ -1,0 +1,25 @@
+#raven_brand {
+  width: 50px;
+  border-radius: 50%;
+}
+#burger {
+  font-size: 25px;
+}
+.nav-link {
+  cursor: default;
+}
+
+#nav_dropdown_menu {
+  margin-right: 50px;
+}
+.log_out_text {
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.log_out_from_all_text {
+  color: red;
+  text-decoration: underline;
+  font-size: 13px;
+  cursor: pointer;
+}

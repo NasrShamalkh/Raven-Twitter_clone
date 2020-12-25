@@ -1,14 +1,14 @@
 import React from 'react';
+import './bookmarks.css';
 import NavBar from '../navBar/navbar';
-import './home.css';
 
-const Home: React.FC = () => {
+const BookMarks: React.FC = () => {
   return (
     <div>
       <NavBar />
-      <h1>Work Please</h1>
+      <h1>BookMarks</h1>
     </div>
   );
 };
 
-export default Home;
+export default BookMarks;

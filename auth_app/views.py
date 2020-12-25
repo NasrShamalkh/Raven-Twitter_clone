@@ -95,7 +95,6 @@ class RavenUserCreate(APIView):
 
 class LogoutAndBlacklistRefreshTokenForUserView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = ()
 
     def post(self, request):
         try:

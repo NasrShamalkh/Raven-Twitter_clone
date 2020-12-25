@@ -1,14 +1,13 @@
 import React from 'react';
+import './profile.css';
 import NavBar from '../navBar/navbar';
-import './home.css';
 
-const Home: React.FC = () => {
+const Profile: React.FC = () => {
   return (
     <div>
       <NavBar />
-      <h1>Work Please</h1>
+      <h1>Profile</h1>;
     </div>
   );
 };
-
-export default Home;
+export default Profile;

@@ -1,14 +1,14 @@
 import React from 'react';
+import './explore.css';
 import NavBar from '../navBar/navbar';
-import './home.css';
 
-const Home: React.FC = () => {
+const Explore: React.FC = () => {
   return (
     <div>
       <NavBar />
-      <h1>Work Please</h1>
+      <h1>Explore</h1>
     </div>
   );
 };
 
-export default Home;
+export default Explore;

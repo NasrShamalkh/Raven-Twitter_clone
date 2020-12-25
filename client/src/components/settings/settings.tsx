@@ -1,14 +1,13 @@
 import React from 'react';
+import './settings.css';
 import NavBar from '../navBar/navbar';
-import './home.css';
 
-const Home: React.FC = () => {
+const Settings: React.FC = () => {
   return (
     <div>
       <NavBar />
-      <h1>Work Please</h1>
+      <h1>Settings</h1>;
     </div>
   );
 };
-
-export default Home;
+export default Settings;
