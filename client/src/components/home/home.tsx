@@ -3,6 +3,7 @@ import NavBar from '../navBar/navbar';
 import { connect } from 'react-redux';
 import axiosInstance from '../axiosApi/axiosApi';
 import axios from 'axios';
+import Tweet from '../tweet/tweet';
 
 import './home.css';
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
   image_url: string | null;
   alias: string | null;
   mode: string;
+  defaultProfileImage: string;
 }
 // upload image and post tweet on submit of form
 const Home: React.FC<Props> = (props: Props) => {
@@ -21,6 +23,30 @@ const Home: React.FC<Props> = (props: Props) => {
   const [finished, setFinished] = React.useState<boolean>(false);
   // createRef to create a Refrence to the html element that contains the upload file
   let fileInput = React.createRef<HTMLInputElement>();
+  let tweet_data = {
+    tweet_id: 10,
+    user_id: 7,
+    username: 'nasr',
+    alias: 'Head Hunter',
+    content: 'I am sill standing, A true survivor  yeah yeah yeah',
+    media: true,
+    // media_url:'https://i1.wp.com/animehunch.com/wp-content/uploads/2020/08/zoro-one-piece.jpg?fit=1280%2C720&ssl=1',
+    media_url:
+      'http://res.cloudinary.com/nasr-cloudinary/image/upload/v1608933752/Raven%20App/9b16a287d60cf382c3aadea8aa4b6a3d_f5bzbt.jpg',
+    public: true,
+    // profile_image:'https://res.cloudinary.com/nasr-cloudinary/image/upload/v1608924149/Raven%20App/istockphoto-93394538-612x612_gui0vc.jpg',
+    // profile_image:'https://www.biography.com/.image/t_share/MTE4MDAzNDEwNzkxOTI1MjYy/scarlett-johansson-13671719-1-402.jpg',
+    profile_image:
+      'https://m.media-amazon.com/images/M/MV5BYTQ5MzZiMzEtNjJjOS00ZGRjLTg4YzctZTljODUwMTg2ZjdiXkEyXkFqcGdeQXVyNjkzNjQ5NjU@._V1_.jpg',
+    timestamp: '2020-12-25T22:17:37.346196Z',
+    number_of_saves: 10,
+    number_of_likes: 400,
+    number_of_retweets: 50,
+    number_of_replies: 3,
+    liked: false,
+    retweeted: true,
+    saved: true
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -98,9 +124,7 @@ const Home: React.FC<Props> = (props: Props) => {
               <img
                 id='home_profile_image'
                 src={
-                  props.image_url
-                    ? props.image_url
-                    : 'https://res.cloudinary.com/nasr-cloudinary/image/upload/v1608924149/Raven%20App/istockphoto-93394538-612x612_gui0vc.jpg'
+                  props.image_url ? props.image_url : props.defaultProfileImage
                 }
               />
               <textarea
@@ -153,8 +177,8 @@ const Home: React.FC<Props> = (props: Props) => {
             </div>
           </form>
         </div>
-        <div className='container'>
-          <h2>second conteiner</h2>
+        <div id='tweets_container' className='container'>
+          <Tweet tweet_data={tweet_data} />
         </div>
       </div>
     </div>
@@ -168,7 +192,8 @@ const mapStateToProps = state => {
     username: state.username,
     image_url: state.image_url,
     alias: state.alias,
-    mode: state.mode
+    mode: state.mode,
+    defaultProfileImage: state.defaultProfileImage
   };
 };
 

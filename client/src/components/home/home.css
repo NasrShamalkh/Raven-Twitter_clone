@@ -1,13 +1,21 @@
+body {
+  background-color: lightcyan;
+}
 .container {
   border: 1px solid grey;
   border-radius: 10px;
   padding: 40px;
   width: 60%;
+  background-color: lightyellow;
 }
 #first_container {
   padding: 10px;
   margin-top: 15px;
   margin-bottom: 7px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 40px;
+  width: 60%;
 }
 #tweet_input {
   border: none;

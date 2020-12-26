@@ -1,0 +1,86 @@
+.card {
+  padding: 20px;
+}
+.card > div,
+.card > form {
+  width: 85%;
+  margin: auto;
+}
+.card-img {
+  width: 85%;
+  margin: auto;
+  border-radius: 15px;
+}
+#tweets_profile_image {
+  width: 60px;
+  border: 0.2px solid grey;
+  border-radius: 7px;
+  margin-right: 10px;
+}
+#card_fist_div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 3px;
+}
+#tweet_profile_div {
+  display: flex;
+  flex-direction: column;
+}
+#tweet_content_div > p {
+  opacity: 0.95;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#tweet_content_div {
+  padding-top: 3px;
+  padding-left: 7px;
+}
+#class_info_div > p {
+  float: right;
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-right: 7px;
+}
+.tweet_info_span {
+  opacity: 0.8;
+  font-size: 13px;
+}
+#tweet_actions {
+  border: 0.2px solid grey;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.ml-1 {
+  cursor: pointer;
+}
+.action_button {
+  border-radius: 3px;
+  -webkit-transition: color 0.2s ease-out;
+  -moz-transition: color 0.2s ease-out;
+  -o-transition: color 0.2s ease-out;
+  -ms-transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out;
+}
+
+.action_button:hover {
+  background-color: lightsteelblue;
+}
+.cardbox {
+  border-radius: 3px;
+  margin-bottom: 20px;
+  padding: 0px !important;
+}
+#image_icon {
+  width: 40px;
+}
+#comment_section {
+  border: 1px solid grey;
+  border-radius: 10px;
+  margin-top: 5px;
+  padding: 4px;
+}
