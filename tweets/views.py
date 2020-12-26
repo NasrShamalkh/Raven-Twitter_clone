@@ -24,6 +24,7 @@ def tweets_list(request):
 
             #adding retweets //\\ for each tweet we have to serializer it an add it to the list
             # retweets = following_profile.user.retweeted.all()
+            # print(retweets, 'retweets, --------, for each profile')
             # serialized_tweets_for_profile = TweetSerializer(retweets, many=True, context={'request': request, 'check_user': following_profile.user.id})
             # serialized_retweets_list.append(serialized_tweets_for_profile.data)
 

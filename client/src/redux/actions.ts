@@ -8,3 +8,12 @@ export const setCurrentUser = newUser => {
     }
   };
 };
+
+export const setDisplayedTweets = tweets_data => {
+  return {
+    type: actionTypes.SET_DISPLAYED_TWEETS,
+    payload: {
+      data: tweets_data
+    }
+  };
+};

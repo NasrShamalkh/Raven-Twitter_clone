@@ -38,9 +38,9 @@ const Login: React.FC<Props> = (props: Props) => {
           });
       })
       .catch((err: AxiosError) => {
-        alert('Error in log in please try again ! ');
-        console.log('This should redirect !');
-        throw err;
+        if (err.response.status === 401) {
+          alert('Please check your Information');
+        }
       });
   };
 

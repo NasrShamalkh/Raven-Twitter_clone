@@ -1,8 +1,12 @@
-import { current_user_reducer } from './reducers';
-import { createStore, compose } from 'redux';
+import { current_user_reducer, displayed_tweets_reducer } from './reducers';
+import { createStore, compose, combineReducers } from 'redux';
 
 const composeEnhancers =
   (window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose) || compose;
 
-const store = createStore(current_user_reducer, composeEnhancers());
+const root_reducer = combineReducers({
+  current_user_reducer,
+  displayed_tweets_reducer
+});
+const store = createStore(root_reducer, composeEnhancers());
 export default store;

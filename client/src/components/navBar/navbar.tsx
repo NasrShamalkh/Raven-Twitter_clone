@@ -152,12 +152,12 @@ const DropDown = props => {
 
 const mapStateToProps = state => {
   return {
-    user_id: state.user_id,
-    profile_id: state.profile_id,
-    username: state.username,
-    image_url: state.image_url,
-    alias: state.alias,
-    mode: state.mode
+    user_id: state.current_user_reducer.user_id,
+    profile_id: state.current_user_reducer.profile_id,
+    username: state.current_user_reducer.username,
+    image_url: state.current_user_reducer.image_url,
+    alias: state.current_user_reducer.alias,
+    mode: state.current_user_reducer.mode
   };
 };
 export default connect(mapStateToProps, null)(NavBar);

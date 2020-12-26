@@ -37,3 +37,25 @@ export const current_user_reducer = (
       return state;
   }
 };
+
+interface DisplayedTweetsI {
+  tweets_data: Array<object>;
+}
+
+const displayed_tweets_initial: DisplayedTweetsI = {
+  tweets_data: []
+};
+
+export const displayed_tweets_reducer = (
+  state: DisplayedTweetsI = displayed_tweets_initial,
+  action
+) => {
+  switch (action.type) {
+    case actionTypes.SET_DISPLAYED_TWEETS:
+      return {
+        tweets_data: [...action.payload.data]
+      };
+    default:
+      return state;
+  }
+};

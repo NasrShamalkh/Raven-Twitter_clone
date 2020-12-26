@@ -37,8 +37,8 @@ const Signup: React.FC<Props> = (props: Props) => {
         console.log(res);
         axiosInstance.defaults.headers['Authorization'] =
           'JWT ' + res.data.access;
-        localStorage.setItem('access_token', res.data.access);
-        localStorage.setItem('refresh_token', res.data.refresh);
+        localStorage.setItem('access_token', res.data.tokens.access);
+        localStorage.setItem('refresh_token', res.data.tokens.refresh);
         setRedirect('/home');
         await axiosInstance
         .get('api/auth/user/current_user/')

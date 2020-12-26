@@ -87,11 +87,8 @@ class TweetSerializer(serializers.ModelSerializer):
         return False
 
     # def check_retweeted_by_user(self, obj):
-    #     # check if it is retweeted by the user or not
-    #     if 'retweet_user' not in self.context:
-    #         return False
-    #     retweet_user = self.context['retweet_user', None]
-    #     return retweet_user # a username \\ string
+    #     print()
+            
 
 
 class ReplySerializer(serializers.ModelSerializer):

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 //interface based on serializer output
 // all the props that need to pass to tweet component
-interface ITweetData {
-  // tweet_id: number;
+export interface ITweetData {
+  tweet_id: number;
   user_id: number;
   username: string;
   alias: string | null;
@@ -37,8 +37,8 @@ interface Props {
   user_data: IUserData;
 }
 const Tweet: React.FC<Props> = (props: Props) => {
-  let fileInput = React.createRef<HTMLInputElement>();
-  const handleReplay = () => [];
+  // let fileInput = React.createRef<HTMLInputElement>();
+  // const handleReplay = () => {};
   const getDate = timestamp => {
     let date = new Date(timestamp);
     let day = date.getDate();
@@ -78,11 +78,20 @@ const Tweet: React.FC<Props> = (props: Props) => {
     <div className='card'>
       <div id='card_fist_div'>
         <div>
-          <img id='tweets_profile_image' src={props.tweet_data.profile_image} />
+          <img
+            id='tweets_profile_image'
+            src={
+              props.tweet_data.profile_image
+                ? props.tweet_data.profile_image
+                : props.user_data.defaultProfileImage
+            }
+          />
         </div>
         <div id='tweet_profile_div'>
           <span style={{ fontSize: '18px', fontWeight: 'bold' }}>
-            {props.tweet_data.alias}
+            {props.tweet_data.alias
+              ? props.tweet_data.alias
+              : props.tweet_data.username}
           </span>
           <span style={{ fontSize: '13px', opacity: '0.9' }}>
             {getDate(props.tweet_data.timestamp)}
@@ -144,8 +153,9 @@ const Tweet: React.FC<Props> = (props: Props) => {
         </div>
       </div>
       {/*---------------- comment section  ----------------+*/}
-      <form onSubmit={handleReplay} id='comment_section'>
-        <div className='d-flex flex-row align-items-start'>
+      {/* <form onSubmit={handleReplay} id='comment_section'>
+        <div id='card_fist_div'>
+          <div>
           <img
             id='tweets_profile_image'
             src={
@@ -154,6 +164,7 @@ const Tweet: React.FC<Props> = (props: Props) => {
                 : props.user_data.defaultProfileImage
             }
           />
+          </div>
           <textarea
             style={{ resize: 'none', borderRadius: '0' }}
             className='form-control'
@@ -171,20 +182,20 @@ const Tweet: React.FC<Props> = (props: Props) => {
             Post comment
           </button>
         </div>
-      </form>
+      </form> */}
       {/*---------------- comment section  ----------------+*/}
     </div>
   );
 };
 const mapStateToProps = state => {
   const user_data = {
-    user_id: state.user_id,
-    profile_id: state.profile_id,
-    username: state.username,
-    image_url: state.image_url,
-    alias: state.alias,
-    mode: state.mode,
-    defaultProfileImage: state.defaultProfileImage
+    user_id: state.current_user_reducer.user_id,
+    profile_id: state.current_user_reducer.profile_id,
+    username: state.current_user_reducer.username,
+    image_url: state.current_user_reducer.image_url,
+    alias: state.current_user_reducer.alias,
+    mode: state.current_user_reducer.mode,
+    defaultProfileImage: state.current_user_reducer.defaultProfileImage
   };
   return { user_data };
 };
