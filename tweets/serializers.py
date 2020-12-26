@@ -7,6 +7,7 @@ class TweetSerializer(serializers.ModelSerializer):
     # we only want them on the API's response
     tweet_id = serializers.IntegerField(source='pk', read_only=True)
     username = serializers.CharField(source='user.username', read_only=True)
+    alias = serializers.CharField(source='user.profile.alias', read_only=True)
     content = serializers.CharField(required=False, allow_blank=True)
     profile_image = serializers.URLField(source='user.profile.image_url', read_only=True)
     ##
@@ -29,6 +30,7 @@ class TweetSerializer(serializers.ModelSerializer):
             'username',
             'user',
             'content',
+            "alias",
             'media',
             'media_url',
             'public',
