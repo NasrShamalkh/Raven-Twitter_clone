@@ -30,6 +30,7 @@ export interface IProfile {
   number_of_tweets: string | number;
   number_of_tweets_and_replies: string | number;
   number_of_media: string | number;
+  following: boolean
 }
 let init_state: IProfile = {
   username: '',
@@ -47,7 +48,8 @@ let init_state: IProfile = {
   number_of_likes: '',
   number_of_tweets: '',
   number_of_tweets_and_replies: '',
-  number_of_media: ''
+  number_of_media: '',
+  following: false
 };
 
 const Profile: React.FC<Props> = (props: Props) => {
@@ -107,7 +109,7 @@ const Profile: React.FC<Props> = (props: Props) => {
         console.log('Error in fetching profile data', err);
         alert('Error in fetching profile data');
       });
-  }, []);
+  }, [props.user_id]);
 
   React.useEffect(() => {
     if (endPoint && profile_data) {
@@ -245,6 +247,14 @@ const Profile: React.FC<Props> = (props: Props) => {
                 <i className='fa fa-calendar' aria-hidden='true'></i>{' '}
                 <small> Date Joined: {getDate(profile_data.date_joined)}</small>
               </div>
+              {(!(props.current_user_id == props.user_id))? (
+                              <div id='follow_status'>
+                              <img src={profile_data.following?
+                               ('https://res.cloudinary.com/nasr-cloudinary/image/upload/v1609048452/Raven%20App/follow_following_twitter_icon-1320196031920300840_oi7guk.png'):
+                               ('https://res.cloudinary.com/nasr-cloudinary/image/upload/v1609048471/Raven%20App/JD-27-512_aavneb.png')} alt='...' />
+                            </div>
+                            ):
+                             ''}
               <ul id='follow_statics' className='list-inline mb-0'>
                 <li
                   style={{

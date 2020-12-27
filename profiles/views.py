@@ -13,7 +13,7 @@ def view_profile(request, user_id):
     try:
         profile_user = RavenUser.objects.get(pk=user_id)
         profile = Profile.objects.get(pk=profile_user.profile.id)
-        profile_serializer = ProfileSerializer(profile)
+        profile_serializer = ProfileSerializer(profile, context={'request': request})
         return JsonResponse(profile_serializer.data, status=status.HTTP_202_ACCEPTED)
     except Profile.DoesNotExist:
         # send this if the user is not found

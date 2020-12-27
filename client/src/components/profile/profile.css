@@ -24,11 +24,13 @@ body {
 #edit_button {
   margin-top: 10px;
   background-color: darkslategray;
+  font-size: 21px;
+  border-radius: 5px;
 }
 #profile_statics_div {
   border-radius: 5px;
   /* border: 1px solid red; */
-  flex-grow: 2;
+  flex-grow: 1;
   justify-self: flex-end;
   display: flex;
   justify-content: space-between;
@@ -42,6 +44,7 @@ body {
 }
 #follow_statics {
   margin-right: 10px;
+  font-size: 25px;
   /* border: 1px solid black; */
 }
 .show_followers {
@@ -55,6 +58,10 @@ body {
 #profile_info_div {
   margin-left: 50px;
   /* border: 1px solid rebeccapurple; */
+  /* flex-grow: 1; */
+}
+#follow_status > img {
+  width: 200px;
 }
 
 /* The side navigation menu */
@@ -115,7 +122,7 @@ body {
 }
 #profile_large_div {
   display: flex;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 #M_sidebar {
   position: relative;

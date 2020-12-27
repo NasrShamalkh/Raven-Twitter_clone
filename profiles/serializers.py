@@ -19,6 +19,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     # using SerializerMethodField to calculate the count / length
     number_of_followers = serializers.SerializerMethodField('get_number_of_followers', read_only=True)
     number_of_following = serializers.SerializerMethodField('get_number_of_following', read_only=True)
+    following = serializers.SerializerMethodField('check_following', read_only=True)
     ##
     bio = serializers.CharField(allow_blank=True, required=False)
     date_of_birth = serializers.DateField(required=True)
@@ -27,7 +28,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     date_joined = serializers.DateTimeField(read_only=True)
     number_of_likes = serializers.SerializerMethodField('get_number_of_likes', read_only=True)
     number_of_tweets = serializers.SerializerMethodField('get_number_of_tweets', read_only=True)
-    number_of_tweets_and_replies = serializers.SerializerMethodField('get_number_of_tweets_and_replie', read_only=True)
+    number_of_tweets_and_replies = serializers.SerializerMethodField('get_number_of_tweets_and_replies', read_only=True)
     number_of_media = serializers.SerializerMethodField('get_number_of_media', read_only=True)
 
     class Meta:
@@ -47,6 +48,7 @@ class ProfileSerializer(serializers.ModelSerializer):
                 'image_url',
                 'background_image_url',
                 'date_joined',
+                'following',
                 'number_of_followers',
                 'number_of_following',
                 )
@@ -63,11 +65,18 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_number_of_tweets(self, obj):
         return len(obj.user.tweets.all())
 
-    def get_number_of_tweets_and_replie(self, obj):
+    def get_number_of_tweets_and_replies(self, obj):
         return len(obj.user.tweets.all()) + len(obj.user.user_replies.all())
 
     def get_number_of_media(self, obj):
         return len(obj.user.tweets.filter(media=True))
+    
+    def check_following(self, obj):
+        request = self.context.get('request', None)
+        user = request.user
+        if user in obj.followers.all():
+            return True
+        return False
 
 
 
@@ -93,7 +102,7 @@ class ProfileBriefSerializer(serializers.ModelSerializer):
     # other users that you follow (who follow this profile)/// this profile is also followed by 
     def get_related(self, obj):
         # getting the current user (request user)
-        request = self.context.get('request', None) # self.context ==> the context that the serializer is execuring in
+        request = self.context.get('request', None) # self.context ==> the context that the serializer is executing in
         user = request.user
         following_profile = user.following.all() # Profile objects (users follow profiles but profiles follow users not other profiles)
         followers_user = obj.followers.all() # RavenUser # target profile followers list
