@@ -1,4 +1,4 @@
-import { current_user_reducer, displayed_tweets_reducer } from './reducers';
+import { current_user_reducer, display_reducer } from './reducers';
 import { createStore, compose, combineReducers } from 'redux';
 
 const composeEnhancers =
@@ -6,7 +6,7 @@ const composeEnhancers =
 
 const root_reducer = combineReducers({
   current_user_reducer,
-  displayed_tweets_reducer
+  display_reducer
 });
 const store = createStore(root_reducer, composeEnhancers());
 export default store;

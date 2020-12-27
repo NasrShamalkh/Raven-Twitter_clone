@@ -5,12 +5,14 @@ from django.http.response import JsonResponse
 from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer, ProfileBriefSerializer
+from auth_app.models import RavenUser
 
 
 @api_view(['GET'])
-def view_profile(request, profile_id):
+def view_profile(request, user_id):
     try:
-        profile = Profile.objects.get(pk=profile_id)
+        profile_user = RavenUser.objects.get(pk=user_id)
+        profile = Profile.objects.get(pk=profile_user.profile.id)
         profile_serializer = ProfileSerializer(profile)
         return JsonResponse(profile_serializer.data, status=status.HTTP_202_ACCEPTED)
     except Profile.DoesNotExist:

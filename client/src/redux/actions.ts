@@ -17,3 +17,12 @@ export const setDisplayedTweets = tweets_data => {
     }
   };
 };
+
+export const setShowProfileId = profile_id => {
+  return {
+    type: actionTypes.SET_SHOW_PROFILE_ID,
+    payload: {
+      data: profile_id
+    }
+  };
+};

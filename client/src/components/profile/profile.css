@@ -1,0 +1,134 @@
+body {
+  width: 100%;
+  padding: 0;
+}
+
+.cover {
+  height: 300px;
+  overflow: hidden;
+  background: darkslategray;
+}
+#cover_image {
+  display: block;
+  margin: auto;
+  width: 100%;
+  object-fit: contain;
+}
+.profile {
+  height: 200px;
+}
+#profile_image_div {
+  transform: translate(3rem, -3.5rem);
+  width: fit-content;
+}
+#edit_button {
+  margin-top: 10px;
+  background-color: darkslategray;
+}
+#profile_statics_div {
+  border-radius: 5px;
+  /* border: 1px solid red; */
+  flex-grow: 2;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: space-between;
+}
+.profile {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  /* border: 1px solid black; */
+  justify-content: space-between;
+}
+#follow_statics {
+  margin-right: 10px;
+  /* border: 1px solid black; */
+}
+.show_followers {
+  padding: 5px;
+  border-radius: 7px;
+}
+.show_followers:hover {
+  background: lightblue;
+  cursor: pointer;
+}
+#profile_info_div {
+  margin-left: 50px;
+  /* border: 1px solid rebeccapurple; */
+}
+
+/* The side navigation menu */
+.sidebar {
+  width: 200px;
+  background-color: lightgrey;
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  /* border: 1px solid yellow; */
+  margin-right: 0px;
+  margin-top: 10px;
+}
+
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+}
+
+/* Active/current link */
+.sidebar a.active {
+  background-color: darkslategray;
+  color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: darkslategray;
+  color: white;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {
+    float: left;
+  }
+  div.content {
+    margin-left: 0;
+  }
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+#profile_large_div {
+  display: flex;
+  border: 1px solid black;
+}
+#M_sidebar {
+  position: relative;
+  left: 50px;
+  border-radius: 10px;
+}
+
+.staticNumber {
+  color: white;
+  background-color: #909090;
+  border-radius: 30%;
+  font-size: 16px;
+  padding: 3.5px;
+  float: right;
+  border: none;
+}

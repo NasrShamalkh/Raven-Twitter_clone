@@ -194,7 +194,7 @@ const Home: React.FC<Props> = (props: Props) => {
         </div>
         <div id='tweets_container' className='container'>
           {props.displayed_tweets.tweets_data.length == 0 ? (
-            <p>Sorry not tweets, try to follow profiles</p>
+            <p>Sorry no tweets, try to follow profiles</p>
           ) : (
             props.displayed_tweets.tweets_data.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;
@@ -217,7 +217,7 @@ const mapStateToProps = state => {
     mode: state.current_user_reducer.mode,
     defaultProfileImage: state.current_user_reducer.defaultProfileImage
   };
-  const displayed_tweets = state.displayed_tweets_reducer;
+  const displayed_tweets = state.display_reducer;
   return { user_data, displayed_tweets };
 };
 

@@ -60,7 +60,7 @@
 
 
 - profiles (api/profiles/) ## Authorization required  
-    GET --> api/profiles/view_profile/:id/ # name='view_profile'  
+    GET --> api/profiles/view_profile/:id/ # name='view_profile'  ## user_id   
     PUT --> api/prfiles/edit/             # name='edit_profile'  
             body {  
                 "profile_id": id,  
@@ -101,7 +101,7 @@
   
     POST --> api/tweets/replies/replies_list/:id/  # name='replies_list' # add new reply  (id of tweet)  
     GET --> api/tweets/replies/replies_list/:id/  # name='replies_list' # get all replies on a tweet  (id of tweet)  
-    GET --> api/tweets/replies/get_user_replies/:id/  #name='get_user_replies'  # get all replies of a user (use with tweets & replies)
+    GET --> api/tweets/replies/get_user_tweets_and_replies/:id/  #name='get_user_tweets_and_replies'  # get all replies and tweets of a user (use with tweets & replies)
     DELETE --> api/tweets/replies/delete/:id/  # name='delete_reply' # remove user's reply on a tweet (id of reply)  
     PUT  --> api/tweets/replies/liked_replies_list/:id/  # name='liked_replies_list'  Trigger  
     GET  --> api/tweets/replies/get_reply_like_list/:id/  name='get_reply_like_list'  

@@ -85,3 +85,118 @@
   margin-top: 5px;
   padding: 4px;
 }
+
+.comment {
+  overflow: hidden;
+  padding: 0 0 1em;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 1em;
+}
+
+.comment-img {
+  float: left;
+  margin-right: 33px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.comment-img img {
+  display: block;
+}
+.text {
+  background: #f5efef;
+}
+
+.comment-body {
+  overflow: hidden;
+}
+
+.comment .text {
+  padding: 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  background: #f5efef;
+}
+
+.comment .text p:last-child {
+  margin: 0;
+}
+
+.comment .attribution {
+  margin: 0.5em 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Decoration */
+
+.comments,
+.comment {
+  position: relative;
+}
+.comments {
+  margin-top: 25px;
+}
+
+.comments:before,
+.comment:before,
+.comment .text:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 65px;
+}
+
+.comments:before {
+  width: 3px;
+  top: -8px;
+  bottom: -20px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.comment:before {
+  width: 9px;
+  height: 9px;
+  border: 3px solid #fff;
+  border-radius: 100px;
+  margin: 20px 0 0 0px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  background: #f5efef;
+}
+
+.comment:hover:before {
+  background: orange;
+}
+
+.comment .text:before {
+  top: 20px;
+  left: 78px;
+  width: 9px;
+  height: 7px;
+  border-width: 0 0 1px 1px;
+  border-style: solid;
+  border-color: #f5efef;
+  background: #f5efef;
+}
+#comment_media {
+  width: 300px;
+ border-radius: 10px;
+}
+
+#comment_section {
+  background-color: #f5efef !important;
+}
+#reply_like_button {
+  width: fit-content;
+  padding: 3px;
+  cursor: pointer;
+  border-radius: 3px;
+  -webkit-transition: color 0.2s ease-out;
+  -moz-transition: color 0.2s ease-out;
+  -o-transition: color 0.2s ease-out;
+  -ms-transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out;
+}
+#reply_like_button:hover {
+  background-color: lightsteelblue;
+}

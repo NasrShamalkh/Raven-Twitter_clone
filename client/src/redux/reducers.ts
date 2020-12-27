@@ -38,22 +38,27 @@ export const current_user_reducer = (
   }
 };
 
-interface DisplayedTweetsI {
+interface IDisplay {
   tweets_data: Array<object>;
+  show_profile_user_id: number | string;
 }
 
-const displayed_tweets_initial: DisplayedTweetsI = {
-  tweets_data: []
+const init_dispaly: IDisplay = {
+  tweets_data: [],
+  show_profile_user_id: localStorage.getItem('profile_user_id') || ''
 };
 
-export const displayed_tweets_reducer = (
-  state: DisplayedTweetsI = displayed_tweets_initial,
-  action
-) => {
+export const display_reducer = (state: IDisplay = init_dispaly, action) => {
   switch (action.type) {
     case actionTypes.SET_DISPLAYED_TWEETS:
       return {
         tweets_data: [...action.payload.data]
+      };
+    case actionTypes.SET_SHOW_PROFILE_ID:
+      localStorage.setItem('profile_user_id', action.payload.data);
+      return {
+        ...state,
+        show_profile_user_id: action.payload.data
       };
     default:
       return state;

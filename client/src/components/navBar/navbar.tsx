@@ -1,8 +1,9 @@
 import React from 'react';
 import './navBar.css';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { NavLink, Redirect } from 'react-router-dom';
 import axiosInstance from '../axiosApi/axiosApi';
+import * as actions from '../../redux/actions';
 
 interface CurrentUserInterface {
   user_id: string | number;
@@ -56,6 +57,7 @@ const NavBar: React.FC<CurrentUserInterface> = (
 const DropDown = props => {
   const [redirect, setRedirect] = React.useState<string | null>(null);
   let user = props.user;
+  const dispatch = useDispatch();
   const handleLogout = () => {
     let refresh = localStorage.getItem('refresh_token');
     axiosInstance
@@ -64,15 +66,14 @@ const DropDown = props => {
       })
       .then(res => {
         console.log(res.data);
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token');
+        localStorage.clear();
         setRedirect('/');
       })
       .catch(err => {
         console.log('Error in logging out', err);
         // we still want to remove the tokens even if there is an error
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token');
+        localStorage.clear();
+
         setRedirect('/');
       });
   };
@@ -84,15 +85,14 @@ const DropDown = props => {
       })
       .then(res => {
         console.log(res.data);
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token');
+        localStorage.clear();
+
         setRedirect('/');
       })
       .catch(err => {
         console.log('Error in logging out', err);
         // we still want to remove the tokens even if there is an error
-        localStorage.removeItem('refresh_token');
-        localStorage.removeItem('access_token');
+        localStorage.clear();
         setRedirect('/');
       });
   };
@@ -127,7 +127,13 @@ const DropDown = props => {
             className='dropdown-menu dropdown-menu-right'
             aria-labelledby='navbarDropdown'
           >
-            <NavLink to='/profile' className='dropdown-item'>
+            <NavLink
+              onClick={() => {
+                dispatch(actions.setShowProfileId(props.user.user_id))
+              }}
+              to='/profile'
+              className='dropdown-item'
+            >
               Profile
             </NavLink>
             <NavLink to='/settings' className='dropdown-item'>

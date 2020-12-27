@@ -1,5 +1,6 @@
 from .models import Profile
 from rest_framework import serializers
+from auth_app.models import RavenUser
 
 """
 This serializer handles two things:
@@ -24,16 +25,51 @@ class ProfileSerializer(serializers.ModelSerializer):
     image_url = serializers.URLField(allow_blank=True, required=False)
     background_image_url = serializers.URLField(allow_blank=True, required=False)
     date_joined = serializers.DateTimeField(read_only=True)
+    number_of_likes = serializers.SerializerMethodField('get_number_of_likes', read_only=True)
+    number_of_tweets = serializers.SerializerMethodField('get_number_of_tweets', read_only=True)
+    number_of_tweets_and_replies = serializers.SerializerMethodField('get_number_of_tweets_and_replie', read_only=True)
+    number_of_media = serializers.SerializerMethodField('get_number_of_media', read_only=True)
 
     class Meta:
         model = Profile
-        fields = ('username', 'id', 'user_id', 'email', 'alias', 'bio', 'date_of_birth', 'image_url', 'background_image_url', 'date_joined', 'number_of_followers', 'number_of_following', )
+        fields = (
+                'username',
+                'id',
+                'user_id',
+                'email',
+                'alias',
+                'bio',
+                'number_of_likes',
+                'number_of_tweets',
+                'number_of_tweets_and_replies',
+                'number_of_media',
+                'date_of_birth',
+                'image_url',
+                'background_image_url',
+                'date_joined',
+                'number_of_followers',
+                'number_of_following',
+                )
 
     def get_number_of_followers(self, obj):
         return len(obj.followers.all())
         
     def get_number_of_following(self, obj):
         return len(obj.user.following.all())
+
+    def get_number_of_likes(self, obj):
+        return len(obj.user.liked_tweets.all()) + len(obj.user.liked_replies.all())
+
+    def get_number_of_tweets(self, obj):
+        return len(obj.user.tweets.all())
+
+    def get_number_of_tweets_and_replie(self, obj):
+        return len(obj.user.tweets.all()) + len(obj.user.user_replies.all())
+
+    def get_number_of_media(self, obj):
+        return len(obj.user.tweets.filter(media=True))
+
+
 
 # this serializer handles serializing data sent as a brief or a preview of a profile ( in searches or displaying followers)
 # a miniture version of the upper serializer to avoid complexity

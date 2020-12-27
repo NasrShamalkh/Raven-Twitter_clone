@@ -339,7 +339,7 @@ def get_reply_like_list(request, reply_id):
 
 # get user replies (send reply and tweet) used in view tweets & replies
 @api_view(['GET'])
-def get_user_replies(request, user_id):
+def get_user_tweets_and_replies(request, user_id):
     user = RavenUser.objects.get(pk=user_id)
     dicts_list = []
     for reply in user.user_replies.all():
@@ -350,6 +350,9 @@ def get_user_replies(request, user_id):
             'tweet': tweet_serializer.data,
             'reply': reply_serializer.data
         })
+    tweets_serializer = TweetSerializer(user.tweets.all(), many=True, context={'request': request})
+    for tweet in tweets_serializer.data: 
+        dicts_list.append(tweet)
     return Response(dicts_list, status=status.HTTP_200_OK)
 
 @api_view(['GET'])

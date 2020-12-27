@@ -1,6 +1,9 @@
 import React from 'react';
 import './tweet.css';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import * as actions from '../../redux/actions';
+import { NavLink } from 'react-router-dom';
+import { IProfile } from '../profile/profile';
 
 //interface based on serializer output
 // all the props that need to pass to tweet component
@@ -23,6 +26,17 @@ export interface ITweetData {
   retweeted: boolean;
   saved: boolean;
 }
+interface IReply {
+  reply_id: string | number;
+  tweet: string | number;
+  user: string | number;
+  content: string | null;
+  media: boolean;
+  media_url: null | string;
+  number_of_likes: string | number;
+  liked: boolean;
+  timestamp: string | Date;
+}
 type IUserData = {
   user_id: number;
   profile_id: number;
@@ -35,10 +49,14 @@ type IUserData = {
 interface Props {
   tweet_data: ITweetData;
   user_data: IUserData;
+  reply_data?: IReply; // optional
+  profile_data?: IProfile;
 }
 const Tweet: React.FC<Props> = (props: Props) => {
   // let fileInput = React.createRef<HTMLInputElement>();
   // const handleReplay = () => {};
+  const dispatch = useDispatch();
+
   const getDate = timestamp => {
     let date = new Date(timestamp);
     let day = date.getDate();
@@ -78,21 +96,35 @@ const Tweet: React.FC<Props> = (props: Props) => {
     <div className='card'>
       <div id='card_fist_div'>
         <div>
-          <img
-            id='tweets_profile_image'
-            src={
-              props.tweet_data.profile_image
-                ? props.tweet_data.profile_image
-                : props.user_data.defaultProfileImage
-            }
-          />
+          <NavLink
+            onClick={() => {
+              dispatch(actions.setShowProfileId(props.tweet_data.user_id));
+            }}
+            to='/profile'
+          >
+            <img
+              id='tweets_profile_image'
+              src={
+                props.tweet_data.profile_image
+                  ? props.tweet_data.profile_image
+                  : props.user_data.defaultProfileImage
+              }
+            />
+          </NavLink>
         </div>
         <div id='tweet_profile_div'>
-          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>
-            {props.tweet_data.alias
-              ? props.tweet_data.alias
-              : props.tweet_data.username}
-          </span>
+          <NavLink
+            onClick={() => {
+              dispatch(actions.setShowProfileId(props.tweet_data.user_id));
+            }}
+            to='/profile'
+          >
+            <span style={{ fontSize: '18px', fontWeight: 'bold' }}>
+              {props.tweet_data.alias
+                ? props.tweet_data.alias
+                : props.tweet_data.username}
+            </span>
+          </NavLink>
           <span style={{ fontSize: '13px', opacity: '0.9' }}>
             {getDate(props.tweet_data.timestamp)}
           </span>
@@ -152,6 +184,74 @@ const Tweet: React.FC<Props> = (props: Props) => {
           <span className='ml-1'>Save</span>
         </div>
       </div>
+      {props.reply_data ? (
+        <section>
+          <div id='comment_section' className='comments'>
+            <article className='comment'>
+              <a className='comment-img'>
+                <img
+                  src={
+                    props.profile_data.image_url
+                      ? props.profile_data.image_url
+                      : props.user_data.defaultProfileImage
+                  }
+                  alt='...'
+                  width='60'
+                />
+              </a>
+              <div className='comment-body'>
+                {props.reply_data.content ? (
+                  <div className='text'>{props.reply_data.content}</div>
+                ) : (
+                  ''
+                )}
+                <div>
+                  {props.reply_data.media ? (
+                    <img
+                      id='comment_media'
+                      src={props.reply_data.media_url}
+                      alt='...'
+                    />
+                  ) : (
+                    ''
+                  )}
+                </div>
+                <p className='attribution'>
+                  by{' '}
+                  <a>
+                    {props.profile_data.alias
+                      ? props.profile_data.alias
+                      : props.profile_data.username}
+                  </a>{' '}
+                  at{' '}
+                  {`${new Date(
+                    props.reply_data.timestamp
+                  ).getHours()}: ${new Date(
+                    props.reply_data.timestamp
+                  ).getMinutes()}`}
+                  , {getDate(props.reply_data.timestamp)}
+                </p>
+                <br />
+                <div id='reply_like_dev'>
+                  <div id='reply_like_button'>
+                    {props.tweet_data.liked ? (
+                      <i style={{ color: 'red' }} className='fa fa-heart'></i>
+                    ) : (
+                      <i className='far fa-heart'></i>
+                    )}
+                    <span className='ml-1'>Like</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+          {/* <div  className='d-flex flex-row fs-12'>
+       
+      </div> */}
+        </section>
+      ) : (
+        ''
+      )}
       {/*---------------- comment section  ----------------+*/}
       {/* <form onSubmit={handleReplay} id='comment_section'>
         <div id='card_fist_div'>
