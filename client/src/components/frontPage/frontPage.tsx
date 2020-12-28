@@ -14,9 +14,23 @@ const FrontPage: React.FC = () => {
     return <Redirect to={redirect} />;
   }
   return (
-    <div id='front_page_main_div'>
-      <div className='front_page_content_div'>
-        <div>
+    <div
+      style={{
+        color: 'white'
+      }}
+      id='front_page_main_div'
+    >
+      <div
+        style={{
+          color: 'white'
+        }}
+        className='front_page_content_div'
+      >
+        <div
+          style={{
+            color: 'white'
+          }}
+        >
           <h3>Keep yourself up to speed</h3>
           <h4>Join Ravn !</h4>
           <NavLink to='/login'>

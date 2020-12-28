@@ -6,7 +6,7 @@ import './signup.css';
 import { connect } from 'react-redux';
 import * as actions from '../../redux/actions';
 interface Props {
-  set_current_user: Function
+  set_current_user: Function;
 }
 
 const Signup: React.FC<Props> = (props: Props) => {
@@ -41,14 +41,13 @@ const Signup: React.FC<Props> = (props: Props) => {
         localStorage.setItem('refresh_token', res.data.tokens.refresh);
         setRedirect('/home');
         await axiosInstance
-        .get('api/auth/user/current_user/')
-        .then((res: AxiosResponse) => {
-          props.set_current_user(res.data);
-        })
-        .catch((err: AxiosResponse) => {
-          console.log('Error in getting current user', err);
-        });
-        
+          .get('api/auth/user/current_user/')
+          .then((res: AxiosResponse) => {
+            props.set_current_user(res.data);
+          })
+          .catch((err: AxiosResponse) => {
+            console.log('Error in getting current user', err);
+          });
       })
       .catch((err: AxiosError) => {
         if (err.response.status === 409 || err.response.status === 409) {
@@ -61,7 +60,12 @@ const Signup: React.FC<Props> = (props: Props) => {
     return <Redirect to={redirect} />;
   }
   return (
-    <div id='signup_container'>
+    <div
+      style={{
+        color: 'white'
+      }}
+      id='signup_container'
+    >
       <form id='signup_form' onSubmit={handleSubmit}>
         <h3>Register</h3>
 
@@ -162,4 +166,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(null, mapDispatchToProps)(Signup);
-

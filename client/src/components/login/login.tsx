@@ -49,7 +49,9 @@ const Login: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div id='container'>
+    <div style={{
+      color: 'white'
+    }} id='container'>
       <form id='login_form' onSubmit={handleSubmit}>
         <h3>Log in</h3>
         <div className='form-group'>

@@ -126,6 +126,11 @@ const Home: React.FC<Props> = (props: Props) => {
       return 'Buenos Días';
     }
   };
+
+  const forceRerender = () => {
+    setRerender(!rerender)
+  }
+  
   return (
     <div>
       <NavBar />
@@ -198,7 +203,7 @@ const Home: React.FC<Props> = (props: Props) => {
           ) : (
             props.displayed_tweets.tweets_data.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;
-              return <Tweet key={index} tweet_data={tweet_data} />;
+              return <Tweet key={index} tweet_data={tweet_data} forceRerender={forceRerender} />;
             })
           )}
         </div>

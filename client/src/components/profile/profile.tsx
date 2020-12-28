@@ -76,6 +76,10 @@ const Profile: React.FC<Props> = (props: Props) => {
   const [following, setFollowing] = React.useState<Array<IProfileBrief>>([profile_brief_init]);
   const dispatch = useDispatch()
 
+  const forceRerender = () => {
+    setRerender(!rerender)
+  }
+
   const getDate = timestamp => {
     let date = new Date(timestamp);
     let day = date.getDate();
@@ -502,7 +506,8 @@ const Profile: React.FC<Props> = (props: Props) => {
               if (tweet.tweet) {
                 let tweet_data: ITweetData = tweet.tweet;
                 return (
-                  <Tweet
+                  <Tweet 
+                  forceRerender={forceRerender}
                     key={index}
                     reply_data={tweet.reply}
                     tweet_data={tweet_data}
@@ -512,7 +517,8 @@ const Profile: React.FC<Props> = (props: Props) => {
               } else {
                 let tweet_data: ITweetData = tweet;
                 return (
-                  <Tweet
+                  <Tweet 
+                  forceRerender={forceRerender}
                     profile_data={profile_data}
                     key={index}
                     tweet_data={tweet_data}

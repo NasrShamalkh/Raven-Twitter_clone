@@ -7,9 +7,14 @@ import Tweet, { ITweetData } from '../tweet/tweet';
 const BookMarks: React.FC = () => {
   const [allTweets, setAllTweets] = React.useState([]);
   const [mediaTweets, setMediaTweets] = React.useState([]);
+  const [rerender, setRerender] = React.useState<boolean>(false);
   const [displayedTweets, setdisplayedTweets] = React.useState<string>(
     'AllTweets'
   );
+
+  const forceRerender = () => {
+    setRerender(!rerender);
+  };
 
   React.useEffect(() => {
     axiosInstance
@@ -25,7 +30,7 @@ const BookMarks: React.FC = () => {
       .catch(err => {
         console.log('Error in fetching data');
       });
-  }, []);
+  }, [rerender]);
   return (
     <div>
       <NavBar />
@@ -48,7 +53,10 @@ const BookMarks: React.FC = () => {
         </div>
       </nav>
       {displayedTweets == 'AllTweets' ? (
-        <div id='tweets_container' className='container bookmarks_tweet_container'>
+        <div
+          id='tweets_container'
+          className='container bookmarks_tweet_container'
+        >
           {allTweets.length == 0 ? (
             <p className='no_content'>
               <i>Looks Like you haven't saved any Tweets</i>
@@ -56,12 +64,21 @@ const BookMarks: React.FC = () => {
           ) : (
             allTweets.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;
-              return <Tweet key={index} tweet_data={tweet_data} />;
+              return (
+                <Tweet
+                  key={index}
+                  forceRerender={forceRerender}
+                  tweet_data={tweet_data}
+                />
+              );
             })
           )}
         </div>
       ) : (
-        <div id='tweets_container' className='container bookmarks_tweet_container'>
+        <div
+          id='tweets_container'
+          className='container bookmarks_tweet_container'
+        >
           {mediaTweets.length == 0 ? (
             <p className='no_content'>
               <i>You don't have saved tweets with media</i>
@@ -69,7 +86,13 @@ const BookMarks: React.FC = () => {
           ) : (
             mediaTweets.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;
-              return <Tweet key={index} tweet_data={tweet_data} />;
+              return (
+                <Tweet
+                  forceRerender={forceRerender}
+                  key={index}
+                  tweet_data={tweet_data}
+                />
+              );
             })
           )}
         </div>

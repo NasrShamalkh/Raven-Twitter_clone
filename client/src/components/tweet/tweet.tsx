@@ -4,6 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
 import { NavLink } from 'react-router-dom';
 import { IProfile } from '../profile/profile';
+import axiosInstance from '../axiosApi/axiosApi';
 
 //interface based on serializer output
 // all the props that need to pass to tweet component
@@ -51,6 +52,7 @@ interface Props {
   user_data: IUserData;
   reply_data?: IReply; // optional
   profile_data?: IProfile;
+  forceRerender?: Function;
 }
 const Tweet: React.FC<Props> = (props: Props) => {
   // let fileInput = React.createRef<HTMLInputElement>();
@@ -92,6 +94,57 @@ const Tweet: React.FC<Props> = (props: Props) => {
     }
     return `${day}/${getMonth(month)}/${year}`;
   };
+  // ---------- HANDLE LIKE ----------------------------
+  //api/tweets/liked_tweets_list/:id/ # trigger  PUT
+  const handleLike = () => {
+    axiosInstance
+      .put(`api/tweets/liked_tweets_list/${props.tweet_data.tweet_id}/`)
+      .then(res => {
+        console.log('Like Trigger ', res.data);
+        if (props.forceRerender) {
+          props.forceRerender();
+        }
+      })
+      .catch(err => console.log('Error in liking tweet', err));
+  };
+
+  // ---------- HANDLE RETWEET ----------------------------
+  // api/tweets/retweet_list/:id/ # retweet  POST
+  const handleRetweet = () => {
+    if (props.tweet_data.retweeted) {
+      alert('Already Retweeted !');
+      return;
+    }
+    axiosInstance
+      .post(`api/tweets/retweet_list/${props.tweet_data.tweet_id}/`)
+      .then(res => {
+        console.log('Retweeted ', res.data);
+        alert('Retweeted');
+        if (props.forceRerender) {
+          props.forceRerender();
+        }
+      })
+      .catch(err => console.log('Error in Retweeting', err));
+  };
+
+  // ---------- HANDLE SAVE ----------------------------
+  // api/tweets/saved_tweets_list/:id/  # trigger  PUT
+  const handleSave = () => {
+    axiosInstance
+      .put(`api/tweets/saved_tweets_list/${props.tweet_data.tweet_id}/`)
+      .then(res => {
+        console.log('Save Trigger ', res.data);
+        if (props.forceRerender) {
+          props.forceRerender();
+        }
+      })
+      .catch(err => console.log('Error in saving tweet', err));
+  };
+
+  // ---------- HANDLE REPLY ----------------------------
+  // api/tweets/replies/replies_list/:id/ # tweet_id   POST
+  const handleReply = () => {};
+
   return (
     <div className='card'>
       <div id='card_fist_div'>
@@ -155,7 +208,7 @@ const Tweet: React.FC<Props> = (props: Props) => {
         </p>
       </div>
       <div id='tweet_actions' className='d-flex flex-row fs-12'>
-        <div className='action_button like p-2 cursor'>
+        <div onClick={handleLike} className='action_button like p-2 cursor'>
           {props.tweet_data.liked ? (
             <i style={{ color: 'red' }} className='fa fa-heart'></i>
           ) : (
@@ -167,7 +220,7 @@ const Tweet: React.FC<Props> = (props: Props) => {
           <i className='far fa-comment'></i>
           <span className='ml-1'>Reply</span>
         </div>
-        <div className='action_button like p-2 cursor'>
+        <div onClick={handleRetweet} className='action_button like p-2 cursor'>
           {props.tweet_data.retweeted ? (
             <i style={{ color: 'green' }} className='fas fa-retweet'></i>
           ) : (
@@ -175,7 +228,7 @@ const Tweet: React.FC<Props> = (props: Props) => {
           )}
           <span className='ml-1'>Retweet</span>
         </div>
-        <div className='action_button like p-2 cursor'>
+        <div onClick={handleSave} className='action_button like p-2 cursor'>
           {props.tweet_data.saved ? (
             <i className='fa fa-bookmark'></i>
           ) : (
@@ -217,25 +270,24 @@ const Tweet: React.FC<Props> = (props: Props) => {
                   )}
                 </div>
                 <p className='attribution'>
-                 <span>
-                 by{' '}
-                  <a>
-                    {props.profile_data.alias
-                      ? props.profile_data.alias
-                      : props.profile_data.username}
-                  </a>{' '}
-                  at{' '}
-                  {`${new Date(
-                    props.reply_data.timestamp
-                  ).getHours()}: ${new Date(
-                    props.reply_data.timestamp
-                  ).getMinutes()}`}
-                  , {getDate(props.reply_data.timestamp)}
-                 </span>
-                 <span id='reply-number_of_likes'>
-                   {props.reply_data.number_of_likes}
-                   {' '} Likes
-                 </span>
+                  <span>
+                    by{' '}
+                    <a>
+                      {props.profile_data.alias
+                        ? props.profile_data.alias
+                        : props.profile_data.username}
+                    </a>{' '}
+                    at{' '}
+                    {`${new Date(
+                      props.reply_data.timestamp
+                    ).getHours()}: ${new Date(
+                      props.reply_data.timestamp
+                    ).getMinutes()}`}
+                    , {getDate(props.reply_data.timestamp)}
+                  </span>
+                  <span id='reply-number_of_likes'>
+                    {props.reply_data.number_of_likes} Likes
+                  </span>
                 </p>
                 <br />
                 <div id='reply_like_dev'>

@@ -86,11 +86,11 @@
     DELETE --> api/tweets/manage_tweet/:id/  # name="manage_tweet" # delete a tweet  
     PUT  --> api/tweets/manage_tweet/:id/  # name='manage_tweet' # edit a tweet  
   
-    PUT  --> api/tweets/saved_tweets_list/:id # name='saved_tweets_list' ## add a tweet to saved / remove :: Trigger_Functionality  
+    PUT  --> api/tweets/saved_tweets_list/:id/ # name='saved_tweets_list' ## add a tweet to saved / remove :: Trigger_Functionality  
     GET  --> api/tweets/get_saved_tweets/ # name='get_saved_tweets'  ## get saved tweets ## only for current user  
     GET  --> api/tweets/get_user_media/:id/ name='get_user_media' 
 
-    PUT  --> api/tweets/liked_tweets_list/:id # name='liked_tweets_list' ## add a tweet to liked list / remove :: Trigger_Functionality  
+    PUT  --> api/tweets/liked_tweets_list/:id/ # name='liked_tweets_list' ## add a tweet to liked list / remove :: Trigger_Functionality  
     GET  --> api/tweets/get_liked/:id/ # name='get_liked'  ## get liked tweets and replies for a user (profile)
     GET  --> api/tweets/get_tweet_like_list/:id/  # name='get_tweet_like_list'  ## return list of people who liked this tweet 
 
