@@ -95,7 +95,6 @@ body {
   color: black;
   padding: 16px;
   text-decoration: none;
-  border-bottom: 1px solid gray;
   cursor: pointer;
 }
 
@@ -154,4 +153,14 @@ body {
 }
 #profile-profile_image {
   object-fit: scale-down;
+}
+.side_nav_elem {
+  font-size: 20px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.hr_elem {
+  color: gray;
+  background-color: gray;
 }

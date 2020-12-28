@@ -59,6 +59,7 @@ const DropDown = props => {
   let user = props.user;
   const dispatch = useDispatch();
   const handleLogout = () => {
+    dispatch(actions.userLogout());
     let refresh = localStorage.getItem('refresh_token');
     axiosInstance
       .post('api/auth/user/logout/', {
@@ -73,7 +74,6 @@ const DropDown = props => {
         console.error('Error in logging out', err);
         // we still want to remove the tokens even if there is an error
         localStorage.clear();
-
         setRedirect('/');
       });
   };
@@ -86,7 +86,6 @@ const DropDown = props => {
       .then(res => {
         console.log(res.data);
         localStorage.clear();
-
         setRedirect('/');
       })
       .catch(err => {
@@ -129,7 +128,7 @@ const DropDown = props => {
           >
             <NavLink
               onClick={() => {
-                dispatch(actions.setShowProfileId(props.user.user_id))
+                dispatch(actions.setShowProfileId(props.user.user_id));
               }}
               to='/profile'
               className='dropdown-item'

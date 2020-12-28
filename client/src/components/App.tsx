@@ -14,6 +14,7 @@ import Explore from './explore/explore';
 import Profile from './profile/profile';
 import Settings from './settings/settings';
 import PrivateRoute from './privateroute';
+import ViewTweet from './viewTweet/viewTweet';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const App: React.FC = () => {
         <PrivateRoute exact component={Profile} path='/profile' />
         <PrivateRoute exact component={Settings} path='/settings' />
         <PrivateRoute exact component={Explore} path='/explore' />
+        <PrivateRoute exact component={ViewTweet} path='/viewtweet' />
       </Switch>
     </Router>
   );

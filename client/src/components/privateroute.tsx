@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import axiosInstance from './axiosApi/axiosApi';
+import $ from 'jquery';
 
 const PrivateRoute: React.FC<{
   component: React.FC;
@@ -28,7 +29,18 @@ const PrivateRoute: React.FC<{
   const condition = access_token && refresh_token ? true : false;
 
   return condition ? (
-    <Route path={props.path} exact={props.exact} component={props.component} />
+    <Route
+      onLeave={
+        $('#display_state')
+          ? $('#display_state').html(
+              '<div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div>'
+            )
+          : ''
+      }
+      path={props.path}
+      exact={props.exact}
+      component={props.component}
+    />
   ) : (
     <Redirect to='/login' />
   );

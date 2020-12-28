@@ -26,3 +26,21 @@ export const setShowProfileId = profile_id => {
     }
   };
 };
+
+export const userLogout = () => {
+  return {
+    type: actionTypes.USER_LOGOUT,
+    payload: {
+      data: undefined
+    }
+  };
+};
+
+export const setViewedTweet = tweet_id => {
+  return {
+    type: actionTypes.SET_VIEWED_TWEET_ID,
+    payload: {
+      data: tweet_id
+    }
+  };
+};

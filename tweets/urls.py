@@ -7,6 +7,7 @@ urlpatterns = [
     path('tweets_list/', views.tweets_list, name='tweets_list'),
     url(r'^manage_tweet/(?P<tweet_id>\d+)/$', views.manage_tweet, name='manage_tweet'),
     url(r'^get_tweets/(?P<user_id>\d+)/$', views.get_tweets, name='get_tweets'),
+    url(r'^get_tweet/(?P<tweet_id>\d+)/$', views.get_tweet, name='get_tweet'),
     url(r'^saved_tweets_list/(?P<tweet_id>\d+)/$', views.saved_tweets_list, name='saved_tweets_list'), # trigger
     path('get_saved_tweets/', views.get_saved_tweets, name='get_saved_tweets'),
     url(r'^liked_tweets_list/(?P<tweet_id>\d+)/$', views.liked_tweets_list, name='liked_tweets_list'), # trigger

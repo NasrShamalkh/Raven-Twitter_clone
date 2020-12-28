@@ -5,10 +5,10 @@ import axiosInstance from '../axiosApi/axiosApi';
 import NavBar from '../navBar/navbar';
 import { Link } from 'react-router-dom';
 import Tweet from '../tweet/tweet';
-import { ITweetData } from '../tweet/tweet';
-import ProfileBrief from '../profileBrief/profileBrief'
-import { IProfileBrief } from '../profileBrief/profileBrief'
-import {useDispatch} from 'react-redux';
+import { ITweetData, getDate } from '../tweet/tweet';
+import ProfileBrief from '../profileBrief/profileBrief';
+import { IProfileBrief } from '../profileBrief/profileBrief';
+import { useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
 import $ from 'jquery';
 
@@ -65,75 +65,42 @@ const profile_brief_init = {
   image_url: '',
   related: [],
   alias: ''
-}
+};
 
 const Profile: React.FC<Props> = (props: Props) => {
   const [profile_data, set_profile_data] = React.useState<IProfile>(init_state);
   const [tweets, setTweets] = React.useState([]);
   const [endPoint, setEndPoint] = React.useState<string | null>(null);
   const [rerender, setRerender] = React.useState<boolean>(false);
-  const [followers, setFollowers] = React.useState<Array<IProfileBrief>>([profile_brief_init]);
-  const [following, setFollowing] = React.useState<Array<IProfileBrief>>([profile_brief_init]);
-  const dispatch = useDispatch()
+  const [followers, setFollowers] = React.useState<Array<IProfileBrief>>([
+    profile_brief_init
+  ]);
+  const [following, setFollowing] = React.useState<Array<IProfileBrief>>([
+    profile_brief_init
+  ]);
+  const [state, setState] = React.useState<string>('loading');
+  const dispatch = useDispatch();
 
   const forceRerender = () => {
-    setRerender(!rerender)
-  }
-
-  const getDate = timestamp => {
-    let date = new Date(timestamp);
-    let day = date.getDate();
-    let year = date.getFullYear();
-    let month = date.getMonth();
-    function getMonth(month) {
-      switch (month) {
-        case 0:
-          return 'Jan';
-        case 1:
-          return 'Feb';
-        case 2:
-          return 'Mar';
-        case 3:
-          return 'Apr';
-        case 4:
-          return 'May';
-        case 5:
-          return 'Jun';
-        case 6:
-          return 'Jul';
-        case 7:
-          return 'Aug';
-        case 8:
-          return 'Sep';
-        case 9:
-          return 'Oct';
-        case 10:
-          return 'Nov';
-        case 11:
-          return 'Dec';
-      }
-    }
-    return `${day}/${getMonth(month)}/${year}`;
+    setRerender(!rerender);
   };
 
   // for sorting tweets and replies all together
-    const sortTweets = tweet_data => {
-      return tweet_data.sort((x, y) => {
-        if(x.timestamp && y.timestamp) {
-          return (
-            Number(new Date(y.timestamp)) - Number(new Date(x.timestamp))
-          );
-        }else if(x.reply) {
-          return (
-            Number(new Date(y.timestamp)) - Number(new Date(x.reply.timestamp))
-          );
-        }else {
-          return (
-            Number(new Date(y.reply.timestamp)) - Number(new Date(x.timestamp))
-          );
-        }
-      });
-  }
+  const sortTweets = tweet_data => {
+    return tweet_data.sort((x, y) => {
+      if (x.timestamp && y.timestamp) {
+        return Number(new Date(y.timestamp)) - Number(new Date(x.timestamp));
+      } else if (x.reply) {
+        return (
+          Number(new Date(y.timestamp)) - Number(new Date(x.reply.timestamp))
+        );
+      } else {
+        return (
+          Number(new Date(y.reply.timestamp)) - Number(new Date(x.timestamp))
+        );
+      }
+    });
+  };
 
   React.useEffect(() => {
     axiosInstance
@@ -160,10 +127,16 @@ const Profile: React.FC<Props> = (props: Props) => {
         .get(`api/tweets/${endPoint}/${profile_data.user_id}/`)
         .then(res => {
           setTweets(sortTweets(res.data));
+          setTimeout(() => {
+            setState('no_data');
+          }, 3000);
         })
         .catch(err => {
           console.error('Error in getting data', err);
           setTweets([]);
+          setTimeout(() => {
+            setState('no_data');
+          }, 3000);
         });
     }
   }, [endPoint, profile_data]);
@@ -199,33 +172,47 @@ const Profile: React.FC<Props> = (props: Props) => {
 
   // this is put in a useEffect because I cant find a way to dealy modal pop untill data fetching
   React.useEffect(() => {
-    if(profile_data.id) {
-       //get followers 
-       axiosInstance
-       .get(`api/profiles/get_followers/${profile_data.id}/`)
-       .then(res => {
-         setFollowers(res.data);
-       })
-       .catch(err => {
-         setFollowers([]);
-         console.error('Error in getting followers', err);
-       });
-       //get following
-        axiosInstance
-       .get(`api/profiles/get_following/${profile_data.id}/`)
-       .then(res => {
-         setFollowing(res.data);
-       })
-       .catch(err => {
-         setFollowing([]);
-         console.error('Error in getting Following data', err);
-       });
+    if (profile_data.id) {
+      //get followers
+      axiosInstance
+        .get(`api/profiles/get_followers/${profile_data.id}/`)
+        .then(res => {
+          setFollowers(res.data);
+        })
+        .catch(err => {
+          setFollowers([]);
+          console.error('Error in getting followers', err);
+        });
+      //get following
+      axiosInstance
+        .get(`api/profiles/get_following/${profile_data.id}/`)
+        .then(res => {
+          setFollowing(res.data);
+        })
+        .catch(err => {
+          setFollowing([]);
+          console.error('Error in getting Following data', err);
+        });
     }
-   
+  }, [profile_data, rerender]);
 
+  const getState = () => {
+    const blinker =
+      '<div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div>';
+    const no_data = '<p className="no_content">No Tweets yet</p>';
+    if (state == 'loading') {
+      $('#display_state').html(blinker);
+    } else {
+      $('#display_state').html(no_data);
+      $('.spinner-grow').remove();
+    }
+  };
+  getState();
 
-  }, [profile_data, rerender])
-    
+  if ($('#display_state') && state == 'loading') {
+    setTimeout(() => setState('no_data'), 3000);
+  }
+
   return (
     <div>
       <NavBar />
@@ -314,7 +301,7 @@ const Profile: React.FC<Props> = (props: Props) => {
                   <i>{profile_data.email}</i>
                 </small>
                 <br></br>
-                <i className='fa fa-info-circle' aria-hidden='true'></i> {' '}
+                <i className='fa fa-info-circle' aria-hidden='true'></i>{' '}
                 <small>
                   {profile_data.bio ? (
                     <span> Bio: {profile_data.bio}</span>
@@ -459,9 +446,19 @@ const Profile: React.FC<Props> = (props: Props) => {
         }}
         id='profile_large_div'
       >
-        <div id='M_sidebar' className='sidebar'>
-          <a
+        <div
+          style={{
+            marginTop: '100px',
+            width: '250px',
+            height: '380px'
+          }}
+          id='M_sidebar'
+          className='sidebar'
+        >
+          <a 
+          className='side_nav_elem'
             onClick={() => {
+              setState('loading');
               setEndPoint('get_tweets');
             }}
           >
@@ -470,8 +467,11 @@ const Profile: React.FC<Props> = (props: Props) => {
               {profile_data.number_of_tweets}
             </span>
           </a>
-          <a
+          <hr className='hr_elem'/>
+          <a 
+          className='side_nav_elem'
             onClick={() => {
+              setState('loading');
               setEndPoint('replies/get_user_tweets_and_replies');
             }}
           >
@@ -480,16 +480,22 @@ const Profile: React.FC<Props> = (props: Props) => {
               {profile_data.number_of_tweets_and_replies}
             </span>
           </a>
-          <a
+          <hr className='hr_elem'/>
+          <a 
+          className='side_nav_elem'
             onClick={() => {
+              setState('loading');
               setEndPoint('get_user_media');
             }}
           >
             Media{' '}
             <span className='staticNumber'>{profile_data.number_of_media}</span>
           </a>
-          <a
+          <hr className='hr_elem'/>
+          <a 
+          className='side_nav_elem'
             onClick={() => {
+              setState('loading');
               setEndPoint('get_liked');
             }}
           >
@@ -499,15 +505,15 @@ const Profile: React.FC<Props> = (props: Props) => {
         </div>
         <div id='tweets_container' className='container'>
           {tweets.length == 0 ? (
-            <p className="no_content">No Tweets yet</p>
+            <div id='display_state'></div>
           ) : (
             tweets.map((tweet, index) => {
               // here we might have tweets + replies
               if (tweet.tweet) {
                 let tweet_data: ITweetData = tweet.tweet;
                 return (
-                  <Tweet 
-                  forceRerender={forceRerender}
+                  <Tweet
+                    forceRerender={forceRerender}
                     key={index}
                     reply_data={tweet.reply}
                     tweet_data={tweet_data}
@@ -517,8 +523,8 @@ const Profile: React.FC<Props> = (props: Props) => {
               } else {
                 let tweet_data: ITweetData = tweet;
                 return (
-                  <Tweet 
-                  forceRerender={forceRerender}
+                  <Tweet
+                    forceRerender={forceRerender}
                     profile_data={profile_data}
                     key={index}
                     tweet_data={tweet_data}
@@ -555,25 +561,30 @@ const Profile: React.FC<Props> = (props: Props) => {
             </div>
             <div className='modal-body'>
               <ul className='list-group list-group-flush'>
-                {followers.length > 0? (
-                  followers.map((profile, index) => {
-                    const profile_brief_data: IProfileBrief = profile
-                    return (
-                      <Link data-dismiss='modal' key={index} to='/profile'
-                      onClick={() => {
-                          dispatch(actions.setShowProfileId(profile.user_id));
-                      }}
-                      >
-                    <ProfileBrief  {...profile_brief_data}/>
-                    </Link>
-                    )
-                  })
-                ) : 'No followers yet'}
+                {followers.length > 0
+                  ? followers.map((profile, index) => {
+                      const profile_brief_data: IProfileBrief = profile;
+                      return (
+                        <Link
+                          data-dismiss='modal'
+                          key={index}
+                          to='/profile'
+                          onClick={() => {
+                            dispatch(actions.setShowProfileId(profile.user_id));
+                          }}
+                        >
+                          <div>
+                            <ProfileBrief {...profile_brief_data} />
+                          </div>
+                        </Link>
+                      );
+                    })
+                  : 'No followers yet'}
               </ul>
             </div>
             <div className='modal-footer'>
-              <button 
-              id='close_button'
+              <button
+                id='close_button'
                 type='button'
                 className='btn btn-secondary'
                 data-dismiss='modal'
@@ -612,24 +623,27 @@ const Profile: React.FC<Props> = (props: Props) => {
             <div className='modal-body'>
               <ul className='list-group list-group-flush'>
                 {following.length > 0
-                  ? (following.map((profile, index) => {
-                    const profile_brief_data: IProfileBrief = profile
-                    return (
-                      <Link data-dismiss='modal' key={index} to='/profile'
-                      onClick={() => {
-                          dispatch(actions.setShowProfileId(profile.user_id));
-                      }}
-                      >
-                    <ProfileBrief  {...profile_brief_data}/>
-                    </Link>
-                    )
+                  ? following.map((profile, index) => {
+                      const profile_brief_data: IProfileBrief = profile;
+                      return (
+                        <Link
+                          data-dismiss='modal'
+                          key={index}
+                          to='/profile'
+                          onClick={() => {
+                            dispatch(actions.setShowProfileId(profile.user_id));
+                          }}
+                        >
+                          <ProfileBrief {...profile_brief_data} />
+                        </Link>
+                      );
                     })
-                  ) : 'Not following anyone yet'}
+                  : 'Not following anyone yet'}
               </ul>
             </div>
             <div className='modal-footer'>
-              <button 
-              id='close_button'
+              <button
+                id='close_button'
                 type='button'
                 className='btn btn-secondary'
                 data-dismiss='modal'

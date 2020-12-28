@@ -47,7 +47,7 @@ class Tweet(models.Model):
 class Reply(models.Model):
     tweet = models.ForeignKey('Tweet', related_name='tweet_replies', on_delete=models.CASCADE) # a tweet can have multiple reples
     user = models.ForeignKey(RavenUser, related_name='user_replies', on_delete=models.CASCADE) # each user can have multiple replies
-    content = models.CharField(max_length=280) # max length of a tweet / reply is 280 characters
+    content = models.CharField(max_length=280, blank=True, null=True) # max length of a tweet / reply is 280 characters
     media = models.BooleanField(default=False)
     media_url = models.URLField(blank=True, null=True)
     likes = models.ManyToManyField(RavenUser, related_name='liked_replies', through=ReplyLike_relation)

@@ -1,0 +1,8 @@
+.post_reply_button {
+  background-color: #000033;
+  color: white;
+}
+#card_fist_div {
+  display: flex;
+  align-items: center;
+}

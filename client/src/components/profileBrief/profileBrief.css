@@ -5,8 +5,25 @@
   border-radius: 50%;
   margin-right: 10px;
 }
+#S_profile_brief_image {
+  width: 60px;
+  height: 60px;
+  object-fit: scale-down;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+#S_profile_brief_content_div h3 {
+  font-size: 16px;
+}
 
-.profile_pointer {
+.S_profile_pointer:hover {
+  background-color: lightblue;
+  border: 1px solid grey;
+  padding: 16px;
+}
+
+.profile_pointer,
+.S_profile_pointer {
   margin-top: 3px;
   margin-bottom: 2px;
   cursor: pointer;

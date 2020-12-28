@@ -7,6 +7,7 @@ import axios from 'axios';
 import Tweet from '../tweet/tweet';
 import { useDispatch } from 'react-redux';
 import { ITweetData } from '../tweet/tweet';
+import $ from 'jquery';
 import './home.css';
 
 interface IUserData {
@@ -33,7 +34,24 @@ const Home: React.FC<Props> = (props: Props) => {
   const [viewType, setViewType] = React.useState<string>('public');
   const [finished, setFinished] = React.useState<boolean>(false);
   const [rerender, setRerender] = React.useState<boolean>(false);
+  const [state, setState] = React.useState<string>('loading');
+
   const dispatch = useDispatch();
+
+  // state
+  const getState = () => {
+    const blinker =
+      '<div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div>';
+    const no_data =
+      '<div><h3>Seems you dont have any feed, try to follow some people</h3></div>';
+    if (state == 'loading') {
+      $('#display_state').html(blinker);
+    } else {
+      $('#display_state').html(no_data);
+      $('.spinner-grow').remove();
+    }
+  };
+  getState();
   // createRef to create a Refrence to the html element that contains the upload file
   let fileInput = React.createRef<HTMLInputElement>();
   // let tweet_data = {
@@ -51,10 +69,16 @@ const Home: React.FC<Props> = (props: Props) => {
           });
         };
         dispatch(actions.setDisplayedTweets(sort(data)));
+        setTimeout(() => {
+          setState('no_data');
+        }, 5000);
       })
       .catch(err => {
         console.error('Error in getting tweets');
         dispatch(actions.setDisplayedTweets([]));
+        setTimeout(() => {
+          setState('no_data');
+        }, 5000);
       });
   }, [rerender]);
 
@@ -203,7 +227,7 @@ const Home: React.FC<Props> = (props: Props) => {
         </div>
         <div id='tweets_container' className='container'>
           {props.displayed_tweets.tweets_data.length == 0 ? (
-            <p>Sorry no tweets, try to follow profiles</p>
+            <div id='display_state'></div>
           ) : (
             props.displayed_tweets.tweets_data.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;

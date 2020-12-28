@@ -376,3 +376,13 @@ def get_user_media(request, user_id):
 
     return Response(dicts_list, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def get_tweet(request, tweet_id):
+    try:
+        tweet = Tweet.objects.get(pk=tweet_id)
+        tweet_serializer = TweetSerializer(tweet, context={'request': request})
+        return Response(tweet_serializer.data, status=status.HTTP_200_OK)
+    except:
+        return Response({'message': "Tweet not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+

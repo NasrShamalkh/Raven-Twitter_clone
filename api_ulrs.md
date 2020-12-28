@@ -82,6 +82,7 @@
             }  
     GET  --> api/tweets/tweets_list/  # name='tweets_list' ## get all tweets of the 'following' profiles (Home tweets)  
     GET  --> api/tweets/get_tweets/:id/ # name='get_tweets'  ## get tweets of user with id (:id)  
+    GET  --> api/tweets/get_tweet/:id/ # name='get_tweet'
 
     DELETE --> api/tweets/manage_tweet/:id/  # name="manage_tweet" # delete a tweet  
     PUT  --> api/tweets/manage_tweet/:id/  # name='manage_tweet' # edit a tweet  
@@ -112,5 +113,6 @@
     - #1 getting started with front 
     - add 'retweeted' to all GET tweets requests  (show 'retweeted by')  
     - Explore tweets and profiles (based on popularity/followers/relations) + (top, latest, media)
-    - Hashtags  
+    - Hashtags 
+    - Fix 2 repliies 1 Tweet 
 

@@ -8,9 +8,22 @@ const BookMarks: React.FC = () => {
   const [allTweets, setAllTweets] = React.useState([]);
   const [mediaTweets, setMediaTweets] = React.useState([]);
   const [rerender, setRerender] = React.useState<boolean>(false);
+  const [state, setState] = React.useState<string>('loading');
   const [displayedTweets, setdisplayedTweets] = React.useState<string>(
     'AllTweets'
   );
+  const getState = () => {
+    const blinker =
+      '<div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div> <div class="spinner-grow text-info"></div>';
+    const no_data = '<i>You dont have saved tweets Here</i>';
+    if (state == 'loading') {
+      $('#display_state').html(blinker);
+    } else {
+      $('#display_state').html(no_data);
+      $('.spinner-grow').remove();
+    }
+  };
+  getState();
 
   const forceRerender = () => {
     setRerender(!rerender);
@@ -26,9 +39,15 @@ const BookMarks: React.FC = () => {
           return tweet.media;
         });
         setMediaTweets(media_tweets);
+        setTimeout(() => {
+          setState('no_data');
+        }, 3000);
       })
       .catch(err => {
-        console.error('Error in fetching data');
+        console.error('Error in fetching data', err);
+        setTimeout(() => {
+          setState('no_data');
+        }, 3000);
       });
   }, [rerender]);
   return (
@@ -37,7 +56,11 @@ const BookMarks: React.FC = () => {
       <nav id='bookmarks_nav' className='navbar navbar-dark bg-primary'>
         <div
           onClick={() => {
+            setState('loading');
             setdisplayedTweets('AllTweets');
+            setTimeout(() => {
+              setState('no_data');
+            }, 3000);
           }}
           className='navbar-brand bookmarks_toggle'
         >
@@ -45,7 +68,11 @@ const BookMarks: React.FC = () => {
         </div>
         <div
           onClick={() => {
+            setState('loading');
             setdisplayedTweets('MediaTweets');
+            setTimeout(() => {
+              setState('no_data');
+            }, 3000);
           }}
           className='navbar-brand bookmarks_toggle'
         >
@@ -58,9 +85,7 @@ const BookMarks: React.FC = () => {
           className='container bookmarks_tweet_container'
         >
           {allTweets.length == 0 ? (
-            <p className='no_content'>
-              <i>Looks Like you haven't saved any Tweets</i>
-            </p>
+            <p id='display_state' className='no_content'></p>
           ) : (
             allTweets.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;
@@ -80,9 +105,7 @@ const BookMarks: React.FC = () => {
           className='container bookmarks_tweet_container'
         >
           {mediaTweets.length == 0 ? (
-            <p className='no_content'>
-              <i>You don't have saved tweets with media</i>
-            </p>
+            <p id='display_state' className='no_content'></p>
           ) : (
             mediaTweets.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;

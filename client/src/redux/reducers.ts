@@ -41,11 +41,13 @@ export const current_user_reducer = (
 interface IDisplay {
   tweets_data: Array<object>;
   show_profile_user_id: number | string;
+  viewed_tweet_id: string | number;
 }
 
 const init_dispaly: IDisplay = {
   tweets_data: [],
-  show_profile_user_id: localStorage.getItem('profile_user_id') || ''
+  show_profile_user_id: localStorage.getItem('profile_user_id') || '',
+  viewed_tweet_id: ''
 };
 
 export const display_reducer = (state: IDisplay = init_dispaly, action) => {
@@ -59,6 +61,12 @@ export const display_reducer = (state: IDisplay = init_dispaly, action) => {
       return {
         ...state,
         show_profile_user_id: action.payload.data
+      };
+    case actionTypes.SET_VIEWED_TWEET_ID:
+        localStorage.setItem('viewed_tweet_id', action.payload.data);
+      return {
+        ...state,
+        viewed_tweet_id: action.payload.data
       };
     default:
       return state;

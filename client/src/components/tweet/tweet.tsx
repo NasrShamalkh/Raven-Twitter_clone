@@ -5,6 +5,43 @@ import * as actions from '../../redux/actions';
 import { NavLink } from 'react-router-dom';
 import { IProfile } from '../profile/profile';
 import axiosInstance from '../axiosApi/axiosApi';
+import Reply, { IReply } from '../reply/reply';
+
+export const getDate = timestamp => {
+  let date = new Date(timestamp);
+  let day = date.getDate();
+  let year = date.getFullYear();
+  let month = date.getMonth();
+  function getMonth(month) {
+    switch (month) {
+      case 0:
+        return 'Jan';
+      case 1:
+        return 'Feb';
+      case 2:
+        return 'Mar';
+      case 3:
+        return 'Apr';
+      case 4:
+        return 'May';
+      case 5:
+        return 'Jun';
+      case 6:
+        return 'Jul';
+      case 7:
+        return 'Aug';
+      case 8:
+        return 'Sep';
+      case 9:
+        return 'Oct';
+      case 10:
+        return 'Nov';
+      case 11:
+        return 'Dec';
+    }
+  }
+  return `${day}/${getMonth(month)}/${year}`;
+};
 
 //interface based on serializer output
 // all the props that need to pass to tweet component
@@ -27,20 +64,7 @@ export interface ITweetData {
   retweeted: boolean;
   saved: boolean;
 }
-interface IReply {
-  reply_id: string | number;
-  tweet: string | number;
-  user: string | number;
-  username: string;
-  alias: string | null;
-  image_url: string | null;
-  content: string | null;
-  media: boolean;
-  media_url: null | string;
-  number_of_likes: string | number;
-  liked: boolean;
-  timestamp: string | Date;
-}
+
 type IUserData = {
   user_id: number;
   profile_id: number;
@@ -58,54 +82,7 @@ interface Props {
   forceRerender?: Function;
 }
 const Tweet: React.FC<Props> = (props: Props) => {
-  const [replies, setReplies] = React.useState([]);
-  // let fileInput = React.createRef<HTMLInputElement>();
-  // const handleReplay = () => {};
   const dispatch = useDispatch();
-  function openNav() {
-    document.getElementById("view_tweet").style.width = "100%";
-  }
-  
-  /* Close when someone clicks on the "x" symbol inside the overlay */
-  function closeNav() {
-    document.getElementById("view_tweet").style.width = "0%";
-  }
-
-  const getDate = timestamp => {
-    let date = new Date(timestamp);
-    let day = date.getDate();
-    let year = date.getFullYear();
-    let month = date.getMonth();
-    function getMonth(month) {
-      switch (month) {
-        case 0:
-          return 'Jan';
-        case 1:
-          return 'Feb';
-        case 2:
-          return 'Mar';
-        case 3:
-          return 'Apr';
-        case 4:
-          return 'May';
-        case 5:
-          return 'Jun';
-        case 6:
-          return 'Jul';
-        case 7:
-          return 'Aug';
-        case 8:
-          return 'Sep';
-        case 9:
-          return 'Oct';
-        case 10:
-          return 'Nov';
-        case 11:
-          return 'Dec';
-      }
-    }
-    return `${day}/${getMonth(month)}/${year}`;
-  };
   // ---------- HANDLE LIKE ----------------------------
   //api/tweets/liked_tweets_list/:id/ # trigger  PUT
   const handleLike = () => {
@@ -150,25 +127,6 @@ const Tweet: React.FC<Props> = (props: Props) => {
       .catch(err => console.error('Error in saving tweet', err));
   };
 
-  // ---------- HANDLE REPLY ----------------------------
-  // api/tweets/replies/replies_list/:id/ # tweet_id   POST
-  const handleReply = () => {};
-
-  // ------------- GET REPLIES ------------
-  const getReplies = () => {
-    axiosInstance
-      .get(`api/tweets/replies/replies_list/${props.tweet_data.tweet_id}/`)
-      .then(res => {
-        setReplies(res.data);
-        console.log(res.data)
-        console.log(replies)
-      })
-      .catch(err => {
-        console.error('Error in getting replies', err);
-        setReplies([]);
-      });
-  };
-
   return (
     <div className='card'>
       <div id='card_first_div'>
@@ -207,25 +165,18 @@ const Tweet: React.FC<Props> = (props: Props) => {
             {getDate(props.tweet_data.timestamp)}
           </span>
         </div>
-        <div
+        <NavLink
+          to='/viewtweet'
           className='view_tweet_action_div'
           onClick={() => {
-            getReplies()
-            openNav()
+            dispatch(actions.setViewedTweet(props.tweet_data.tweet_id));
           }}
         >
           <img
             src='https://res.cloudinary.com/nasr-cloudinary/image/upload/v1609126255/Raven%20App/645446-200_rcm7iv.png'
-            width='50' 
+            width='50'
           />
-        </div>
-        {/*  ------------------------- OVERLAY ------------------------- */}
-        <div id="view_tweet" className="overlay">
-          <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>&times;</a>
-          <div className="overlay-content">
-          </div>
-        </div>
-          {/* ---------------------------------------------------------- */}
+        </NavLink>
       </div>
       <div id='tweet_content_div'>
         {props.tweet_data.content ? <p>{props.tweet_data.content}</p> : ''}
@@ -261,8 +212,20 @@ const Tweet: React.FC<Props> = (props: Props) => {
           <span className='ml-1'>Like</span>
         </div>
         <div className='action_button like p-2 cursor'>
-          <i className='far fa-comment'></i>
-          <span className='ml-1'>Reply</span>
+          <NavLink
+            style={{
+              display: 'flex',
+              alignItems: 'center'
+            }}
+            to='/viewtweet'
+            className='view_tweet_action_div'
+            onClick={() => {
+              dispatch(actions.setViewedTweet(props.tweet_data.tweet_id));
+            }}
+          >
+            <i className='far fa-comment'></i>
+            <span className='ml-1'>Reply</span>
+          </NavLink>
         </div>
         <div onClick={handleRetweet} className='action_button like p-2 cursor'>
           {props.tweet_data.retweeted ? (
@@ -284,108 +247,12 @@ const Tweet: React.FC<Props> = (props: Props) => {
       {props.reply_data ? (
         <section>
           <div id='comment_section' className='comments'>
-            <article className='comment'>
-              <a className='comment-img'>
-                <img
-                  src={
-                    props.profile_data.image_url
-                      ? props.profile_data.image_url
-                      : props.user_data.defaultProfileImage
-                  }
-                  alt='...'
-                  width='60'
-                />
-              </a>
-              <div className='comment-body'>
-                {props.reply_data.content ? (
-                  <div className='text'>{props.reply_data.content}</div>
-                ) : (
-                  ''
-                )}
-                <div>
-                  {props.reply_data.media ? (
-                    <img
-                      id='comment_media'
-                      src={props.reply_data.media_url}
-                      alt='...'
-                    />
-                  ) : (
-                    ''
-                  )}
-                </div>
-                <p className='attribution'>
-                  <span>
-                    by{' '}
-                    <a>
-                      {props.profile_data.alias
-                        ? props.profile_data.alias
-                        : props.profile_data.username}
-                    </a>{' '}
-                    at{' '}
-                    {`${new Date(
-                      props.reply_data.timestamp
-                    ).getHours()}: ${new Date(
-                      props.reply_data.timestamp
-                    ).getMinutes()}`}
-                    , {getDate(props.reply_data.timestamp)}
-                  </span>
-                  <span id='reply-number_of_likes'>
-                    {props.reply_data.number_of_likes} Likes
-                  </span>
-                </p>
-                <br />
-                <div id='reply_like_dev'>
-                  <div id='reply_like_button'>
-                    {props.reply_data.liked ? (
-                      <i style={{ color: 'red' }} className='fa fa-heart'></i>
-                    ) : (
-                      <i className='far fa-heart'></i>
-                    )}
-                    <span className='ml-1'>Like</span>
-                  </div>
-                </div>
-              </div>
-            </article>
+            <Reply reply_data={props.reply_data} />
           </div>
-          {/* <div  className='d-flex flex-row fs-12'>
-       
-      </div> */}
         </section>
       ) : (
         ''
       )}
-      {/*---------------- comment section  ----------------+*/}
-      {/* <form onSubmit={handleReplay} id='comment_section'>
-        <div id='card_fist_div'>
-          <div>
-          <img
-            id='tweets_profile_image'
-            src={
-              props.user_data.image_url
-                ? props.user_data.image_url
-                : props.user_data.defaultProfileImage
-            }
-          />
-          </div>
-          <textarea
-            style={{ resize: 'none', borderRadius: '0' }}
-            className='form-control'
-          ></textarea>
-        </div>
-        <div className='mt-2 text-right'>
-          <label id='uploadImageLable' className='btn btn-default'>
-            <img
-              id='image_icon'
-              src='http://res.cloudinary.com/nasr-cloudinary/image/upload/v1608923986/Raven%20App/Sed-16-512_nrkb3v.png'
-            />{' '}
-            <input id='uploadImageInput' type='file' ref={fileInput} hidden />
-          </label>
-          <button className='btn btn-primary btn-sm shadow-none' type='button'>
-            Post comment
-          </button>
-        </div>
-      </form> */}
-      {/*---------------- comment section  ----------------+*/}
     </div>
   );
 };

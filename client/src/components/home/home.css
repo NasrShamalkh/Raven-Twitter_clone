@@ -61,3 +61,10 @@
   border: 1px solid white;
   border-radius: 50%;
 }
+#display_state {
+  text-align: center;
+}
+.spinner-grow {
+  font-size: 50px;
+  color: #000033;
+}
