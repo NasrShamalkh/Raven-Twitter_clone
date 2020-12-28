@@ -31,6 +31,9 @@ interface IReply {
   reply_id: string | number;
   tweet: string | number;
   user: string | number;
+  username: string;
+  alias: string | null;
+  image_url: string | null;
   content: string | null;
   media: boolean;
   media_url: null | string;
@@ -55,9 +58,18 @@ interface Props {
   forceRerender?: Function;
 }
 const Tweet: React.FC<Props> = (props: Props) => {
+  const [replies, setReplies] = React.useState([]);
   // let fileInput = React.createRef<HTMLInputElement>();
   // const handleReplay = () => {};
   const dispatch = useDispatch();
+  function openNav() {
+    document.getElementById("view_tweet").style.width = "100%";
+  }
+  
+  /* Close when someone clicks on the "x" symbol inside the overlay */
+  function closeNav() {
+    document.getElementById("view_tweet").style.width = "0%";
+  }
 
   const getDate = timestamp => {
     let date = new Date(timestamp);
@@ -100,12 +112,11 @@ const Tweet: React.FC<Props> = (props: Props) => {
     axiosInstance
       .put(`api/tweets/liked_tweets_list/${props.tweet_data.tweet_id}/`)
       .then(res => {
-        console.log('Like Trigger ', res.data);
         if (props.forceRerender) {
           props.forceRerender();
         }
       })
-      .catch(err => console.log('Error in liking tweet', err));
+      .catch(err => console.error('Error in liking tweet', err));
   };
 
   // ---------- HANDLE RETWEET ----------------------------
@@ -118,13 +129,12 @@ const Tweet: React.FC<Props> = (props: Props) => {
     axiosInstance
       .post(`api/tweets/retweet_list/${props.tweet_data.tweet_id}/`)
       .then(res => {
-        console.log('Retweeted ', res.data);
         alert('Retweeted');
         if (props.forceRerender) {
           props.forceRerender();
         }
       })
-      .catch(err => console.log('Error in Retweeting', err));
+      .catch(err => console.error('Error in Retweeting', err));
   };
 
   // ---------- HANDLE SAVE ----------------------------
@@ -133,21 +143,35 @@ const Tweet: React.FC<Props> = (props: Props) => {
     axiosInstance
       .put(`api/tweets/saved_tweets_list/${props.tweet_data.tweet_id}/`)
       .then(res => {
-        console.log('Save Trigger ', res.data);
         if (props.forceRerender) {
           props.forceRerender();
         }
       })
-      .catch(err => console.log('Error in saving tweet', err));
+      .catch(err => console.error('Error in saving tweet', err));
   };
 
   // ---------- HANDLE REPLY ----------------------------
   // api/tweets/replies/replies_list/:id/ # tweet_id   POST
   const handleReply = () => {};
 
+  // ------------- GET REPLIES ------------
+  const getReplies = () => {
+    axiosInstance
+      .get(`api/tweets/replies/replies_list/${props.tweet_data.tweet_id}/`)
+      .then(res => {
+        setReplies(res.data);
+        console.log(res.data)
+        console.log(replies)
+      })
+      .catch(err => {
+        console.error('Error in getting replies', err);
+        setReplies([]);
+      });
+  };
+
   return (
     <div className='card'>
-      <div id='card_fist_div'>
+      <div id='card_first_div'>
         <div>
           <NavLink
             onClick={() => {
@@ -156,6 +180,7 @@ const Tweet: React.FC<Props> = (props: Props) => {
             to='/profile'
           >
             <img
+              className='card-image'
               id='tweets_profile_image'
               src={
                 props.tweet_data.profile_image
@@ -182,6 +207,25 @@ const Tweet: React.FC<Props> = (props: Props) => {
             {getDate(props.tweet_data.timestamp)}
           </span>
         </div>
+        <div
+          className='view_tweet_action_div'
+          onClick={() => {
+            getReplies()
+            openNav()
+          }}
+        >
+          <img
+            src='https://res.cloudinary.com/nasr-cloudinary/image/upload/v1609126255/Raven%20App/645446-200_rcm7iv.png'
+            width='50' 
+          />
+        </div>
+        {/*  ------------------------- OVERLAY ------------------------- */}
+        <div id="view_tweet" className="overlay">
+          <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>&times;</a>
+          <div className="overlay-content">
+          </div>
+        </div>
+          {/* ---------------------------------------------------------- */}
       </div>
       <div id='tweet_content_div'>
         {props.tweet_data.content ? <p>{props.tweet_data.content}</p> : ''}

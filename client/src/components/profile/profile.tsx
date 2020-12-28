@@ -149,7 +149,7 @@ const Profile: React.FC<Props> = (props: Props) => {
         setEndPoint('get_tweets');
       })
       .catch(err => {
-        console.log('Error in fetching profile data', err);
+        console.error('Error in fetching profile data', err);
         alert('Error in fetching profile data');
       });
   }, [props.user_id, rerender]);
@@ -162,7 +162,7 @@ const Profile: React.FC<Props> = (props: Props) => {
           setTweets(sortTweets(res.data));
         })
         .catch(err => {
-          console.log('Error in getting data');
+          console.error('Error in getting data', err);
           setTweets([]);
         });
     }
@@ -178,7 +178,7 @@ const Profile: React.FC<Props> = (props: Props) => {
         setEndPoint('get_tweets');
       })
       .catch(err => {
-        console.log(
+        console.error(
           'Error in fetching profile data from fallback function',
           err
         );
@@ -193,7 +193,7 @@ const Profile: React.FC<Props> = (props: Props) => {
         setRerender(!rerender);
       })
       .catch(err => {
-        console.log('Error while trying to follow profile', err);
+        console.error('Error while trying to follow profile', err);
       });
   };
 
@@ -208,7 +208,7 @@ const Profile: React.FC<Props> = (props: Props) => {
        })
        .catch(err => {
          setFollowers([]);
-         console.log('Error in getting followers', err);
+         console.error('Error in getting followers', err);
        });
        //get following
         axiosInstance
@@ -218,7 +218,7 @@ const Profile: React.FC<Props> = (props: Props) => {
        })
        .catch(err => {
          setFollowing([]);
-         console.log('Error in getting Following data', err);
+         console.error('Error in getting Following data', err);
        });
     }
    
@@ -561,7 +561,6 @@ const Profile: React.FC<Props> = (props: Props) => {
                     return (
                       <Link data-dismiss='modal' key={index} to='/profile'
                       onClick={() => {
-                        console.log('This should go to user', profile.username);
                           dispatch(actions.setShowProfileId(profile.user_id));
                       }}
                       >
@@ -618,7 +617,6 @@ const Profile: React.FC<Props> = (props: Props) => {
                     return (
                       <Link data-dismiss='modal' key={index} to='/profile'
                       onClick={() => {
-                        console.log('This should go to user', profile.username);
                           dispatch(actions.setShowProfileId(profile.user_id));
                       }}
                       >

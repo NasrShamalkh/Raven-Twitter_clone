@@ -53,7 +53,7 @@ const Home: React.FC<Props> = (props: Props) => {
         dispatch(actions.setDisplayedTweets(sort(data)));
       })
       .catch(err => {
-        console.log('Error in getting tweets');
+        console.error('Error in getting tweets');
         dispatch(actions.setDisplayedTweets([]));
       });
   }, [rerender]);
@@ -128,9 +128,9 @@ const Home: React.FC<Props> = (props: Props) => {
   };
 
   const forceRerender = () => {
-    setRerender(!rerender)
-  }
-  
+    setRerender(!rerender);
+  };
+
   return (
     <div>
       <NavBar />
@@ -161,7 +161,7 @@ const Home: React.FC<Props> = (props: Props) => {
               <label id='uploadImageLable' className='btn btn-default'>
                 <img
                   id='image_icon'
-                  src='http://res.cloudinary.com/nasr-cloudinary/image/upload/v1608923986/Raven%20App/Sed-16-512_nrkb3v.png'
+                  src='https://res.cloudinary.com/nasr-cloudinary/image/upload/v1609122890/Raven%20App/Sed-16-512_tvadtm.png'
                 />{' '}
                 <input
                   id='uploadImageInput'
@@ -189,7 +189,11 @@ const Home: React.FC<Props> = (props: Props) => {
                 <button
                   id='submit_button'
                   type='submit'
-                  className='btn btn-primary'
+                  className='btn btn-success'
+                  style={{
+                    fontSize: '20px',
+                    borderRadius: '20px'
+                  }}
                 >
                   Tweet
                 </button>
@@ -203,7 +207,13 @@ const Home: React.FC<Props> = (props: Props) => {
           ) : (
             props.displayed_tweets.tweets_data.map((tweet, index) => {
               let tweet_data: ITweetData = tweet;
-              return <Tweet key={index} tweet_data={tweet_data} forceRerender={forceRerender} />;
+              return (
+                <Tweet
+                  key={index}
+                  tweet_data={tweet_data}
+                  forceRerender={forceRerender}
+                />
+              );
             })
           )}
         </div>

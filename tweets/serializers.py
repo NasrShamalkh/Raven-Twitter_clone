@@ -93,6 +93,9 @@ class TweetSerializer(serializers.ModelSerializer):
 
 class ReplySerializer(serializers.ModelSerializer):
     reply_id = serializers.IntegerField(source='pk', read_only=True)
+    username = serializers.CharField(source='user.username', read_only=True)
+    alias = serializers.CharField(source='user.profile.alias', read_only=True)
+    image_url = serializers.CharField(source='user.profile.image_url', read_only=True)
     number_of_likes = serializers.SerializerMethodField('get_number_of_likes', read_only=True)
     liked = serializers.SerializerMethodField('check_liked', read_only=True)
 
@@ -103,6 +106,9 @@ class ReplySerializer(serializers.ModelSerializer):
             'tweet', # forign key # need to be added to data
             'user', # forign key # need to be added to data
             'content',
+            'username',
+            'alias',
+            'image_url',
             'media',
             'media_url',
             'number_of_likes',

@@ -28,7 +28,7 @@ const BookMarks: React.FC = () => {
         setMediaTweets(media_tweets);
       })
       .catch(err => {
-        console.log('Error in fetching data');
+        console.error('Error in fetching data');
       });
   }, [rerender]);
   return (

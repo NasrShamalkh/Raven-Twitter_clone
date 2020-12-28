@@ -70,7 +70,7 @@ const DropDown = props => {
         setRedirect('/');
       })
       .catch(err => {
-        console.log('Error in logging out', err);
+        console.error('Error in logging out', err);
         // we still want to remove the tokens even if there is an error
         localStorage.clear();
 
@@ -90,7 +90,7 @@ const DropDown = props => {
         setRedirect('/');
       })
       .catch(err => {
-        console.log('Error in logging out', err);
+        console.error('Error in logging out', err);
         // we still want to remove the tokens even if there is an error
         localStorage.clear();
         setRedirect('/');

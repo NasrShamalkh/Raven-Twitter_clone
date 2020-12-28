@@ -34,7 +34,7 @@ const Login: React.FC<Props> = (props: Props) => {
             props.set_current_user(res.data);
           })
           .catch((err: AxiosError) => {
-            console.log('Error in getting current user', err);
+            console.error('Error in getting current user', err);
           });
       })
       .catch((err: AxiosError) => {
@@ -49,9 +49,12 @@ const Login: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div style={{
-      color: 'white'
-    }} id='container'>
+    <div
+      style={{
+        color: 'white'
+      }}
+      id='container'
+    >
       <form id='login_form' onSubmit={handleSubmit}>
         <h3>Log in</h3>
         <div className='form-group'>

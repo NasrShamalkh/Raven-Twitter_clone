@@ -34,7 +34,6 @@ const Signup: React.FC<Props> = (props: Props) => {
         }
       })
       .then(async (res: AxiosResponse) => {
-        console.log(res);
         axiosInstance.defaults.headers['Authorization'] =
           'JWT ' + res.data.access;
         localStorage.setItem('access_token', res.data.tokens.access);
@@ -46,7 +45,7 @@ const Signup: React.FC<Props> = (props: Props) => {
             props.set_current_user(res.data);
           })
           .catch((err: AxiosResponse) => {
-            console.log('Error in getting current user', err);
+            console.error('Error in getting current user', err);
           });
       })
       .catch((err: AxiosError) => {
