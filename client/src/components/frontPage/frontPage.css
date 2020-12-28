@@ -1,6 +1,7 @@
 #front_page_main_div {
   display: flex;
   flex-direction: row;
+  color: white;
 }
 .front_page_content_div {
   border: 1px solid black;

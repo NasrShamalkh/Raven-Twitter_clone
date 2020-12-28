@@ -217,7 +217,8 @@ const Tweet: React.FC<Props> = (props: Props) => {
                   )}
                 </div>
                 <p className='attribution'>
-                  by{' '}
+                 <span>
+                 by{' '}
                   <a>
                     {props.profile_data.alias
                       ? props.profile_data.alias
@@ -230,11 +231,16 @@ const Tweet: React.FC<Props> = (props: Props) => {
                     props.reply_data.timestamp
                   ).getMinutes()}`}
                   , {getDate(props.reply_data.timestamp)}
+                 </span>
+                 <span id='reply-number_of_likes'>
+                   {props.reply_data.number_of_likes}
+                   {' '} Likes
+                 </span>
                 </p>
                 <br />
                 <div id='reply_like_dev'>
                   <div id='reply_like_button'>
-                    {props.tweet_data.liked ? (
+                    {props.reply_data.liked ? (
                       <i style={{ color: 'red' }} className='fa fa-heart'></i>
                     ) : (
                       <i className='far fa-heart'></i>

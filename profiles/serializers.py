@@ -72,8 +72,11 @@ class ProfileSerializer(serializers.ModelSerializer):
         return len(obj.user.tweets.filter(media=True))
     
     def check_following(self, obj):
-        request = self.context.get('request', None)
-        user = request.user
+        try:
+            request = self.context.get('request', None)
+            user = request.user
+        except:
+            return False
         if user in obj.followers.all():
             return True
         return False
@@ -91,7 +94,7 @@ class ProfileBriefSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'username', 'number_of_followers', 'image_url', 'related', )
+        fields = ('id', 'user_id', 'alias', 'username', 'number_of_followers', 'image_url', 'related', )
 
     def get_number_of_followers(self, obj):
         return len(obj.followers.all())

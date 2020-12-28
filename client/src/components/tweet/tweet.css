@@ -1,5 +1,9 @@
 .card {
   padding: 20px;
+  background-color: #000033;
+  color: white;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 .card > div,
 .card > form {
@@ -91,6 +95,7 @@
   padding: 0 0 1em;
   border-bottom: 1px solid #ddd;
   margin: 0 0 1em;
+  color: black;
 }
 
 .comment-img {
@@ -113,7 +118,7 @@
 
 .comment .text {
   padding: 10px;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #000033;
   border-radius: 5px;
   background: #f5efef;
 }
@@ -165,7 +170,7 @@
 }
 
 .comment:hover:before {
-  background: orange;
+  background: black;
 }
 
 .comment .text:before {
@@ -180,7 +185,7 @@
 }
 #comment_media {
   width: 300px;
- border-radius: 10px;
+  border-radius: 10px;
 }
 
 #comment_section {
@@ -199,4 +204,9 @@
 }
 #reply_like_button:hover {
   background-color: lightsteelblue;
+}
+#reply-number_of_likes {
+  float: right;
+  margin-right: 50px;
+  font-weight: bold;
 }

@@ -7,8 +7,8 @@ import axios from 'axios';
 import Tweet from '../tweet/tweet';
 import { useDispatch } from 'react-redux';
 import { ITweetData } from '../tweet/tweet';
-
 import './home.css';
+
 interface IUserData {
   user_id: number;
   profile_id: number;

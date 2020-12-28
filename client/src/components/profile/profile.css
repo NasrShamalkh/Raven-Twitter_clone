@@ -16,6 +16,7 @@ body {
 }
 .profile {
   height: 200px;
+  background-color: #f5efef;
 }
 #profile_image_div {
   transform: translate(3rem, -3.5rem);
@@ -44,14 +45,17 @@ body {
 }
 #follow_statics {
   margin-right: 10px;
-  font-size: 25px;
+  font-size: 27px;
   /* border: 1px solid black; */
 }
-.show_followers {
+.show_followers,
+.show_following {
   padding: 5px;
   border-radius: 7px;
+  text-align: center;
 }
-.show_followers:hover {
+.show_followers:hover,
+.show_following:hover {
   background: lightblue;
   cursor: pointer;
 }
@@ -60,14 +64,23 @@ body {
   /* border: 1px solid rebeccapurple; */
   /* flex-grow: 1; */
 }
-#follow_status > img {
-  width: 200px;
+#follow_status img {
+  width: 180px;
+}
+#follow_status {
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+}
+#follow_status > div {
+  display: flex;
+  flex-direction: column;
 }
 
 /* The side navigation menu */
 .sidebar {
   width: 200px;
-  background-color: lightgrey;
+  background-color: #f5efef;
   position: relative;
   height: 100%;
   overflow: auto;
@@ -138,4 +151,7 @@ body {
   padding: 3.5px;
   float: right;
   border: none;
+}
+#profile-profile_image {
+  object-fit: scale-down;
 }

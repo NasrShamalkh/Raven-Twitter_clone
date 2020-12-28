@@ -1,0 +1,53 @@
+.container {
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 40px;
+  width: 60%;
+  background-color: lightyellow;
+}
+.fill {
+  min-height: 100%;
+  height: 100%;
+  background-color: green;
+}
+#bookmarks_nav {
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.bookmarks_toggle {
+  transition: 0.5s;
+  flex-grow: 1;
+  text-align: center;
+  cursor: pointer;
+}
+.bookmarks_toggle:hover {
+  background-color: #3399ff;
+  border: none;
+  border-radius: 5px;
+}
+.no_content {
+  text-align: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 25px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  color: #000033;
+}
+.bookmarks_tweet_container {
+  border: none;
+  margin-top: 0px;
+  border-radius: 20px;
+  background-color: #3399ff;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.bookmarks_tweet_container > div {
+  margin-top: 10px;
+}
