@@ -8,6 +8,8 @@ import Tweet from '../tweet/tweet';
 import Reply from '../reply/reply';
 import axios from 'axios';
 import { S_ProfileBrief } from '../profileBrief/profileBrief';
+import { Redirect } from 'react-router-dom';
+import { ITweetData } from '../tweet/tweet';
 
 interface Props {
   viewed_tweet_id: string | number;
@@ -23,10 +25,12 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
   const [retweetList, setRetweetList] = React.useState([]);
   const [replies, setReplies] = React.useState([]);
   const [rerender, setRerender] = React.useState<boolean>(false);
-  const [tweet, setTweet] = React.useState();
+  const [tweet, setTweet] = React.useState<ITweetData>();
   const [replyContent, setReplyContent] = React.useState<string>('');
   const [finished, setFinished] = React.useState<boolean>(false);
   const [imageUrl, setImageUrl] = React.useState<string>('');
+  const [owner, setOwner] = React.useState<boolean>(false);
+  const [redirect, setRedirect] = React.useState<string>('');
   const dispatch = useDispatch();
   let fileInput = React.createRef<HTMLInputElement>();
 
@@ -41,7 +45,30 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
         }
       })
       .catch(err => console.error('Error in getting tweet data', err));
+    if (tweet) {
+      if (props.user_id == tweet.user_id) {
+        setOwner(true);
+      } else {
+        setOwner(false);
+      }
+    }
   }, [props.viewed_tweet_id, rerender]);
+
+  const handleDelete = () => {
+    const conf = confirm('Are you sure you want to delete this tweet ?');
+    if (conf) {
+      axiosInstance
+        .delete(`api/tweets/manage_tweet/${tweet.tweet_id}/`)
+        .then(res => {
+          alert('Tweet deleted !');
+          setRedirect('/home');
+        })
+        .catch(err => {
+          console.error('Error in deleting tweet', err);
+          alert('Error in deleting tweet, please try again later');
+        });
+    }
+  };
 
   React.useEffect(() => {
     // ------------ get tweet retweet list
@@ -87,6 +114,13 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
         console.error('Error in getting replies', err);
         setReplies([]);
       });
+    if (tweet) {
+      if (props.user_id == tweet.user_id) {
+        setOwner(true);
+      } else {
+        setOwner(false);
+      }
+    }
   }, [rerender, props.viewed_tweet_id, tweet]);
 
   const reloadFallback = tweet_id => {
@@ -163,15 +197,26 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
     setImageUrl('');
     setFinished(false);
   }
+  if (redirect) {
+    return <Redirect to={redirect} />;
+  }
   return (
     <div>
       <NavBar />
       {/* ------------------------- LEFT LIST ------------------- */}
+      {owner ? (
+        <div onClick={handleDelete} className='delete_tweet_div'>
+          Delete Tweet
+        </div>
+      ) : (
+        ''
+      )}
       <div
         style={{
           height: '100%',
           width: '250px',
-          position: 'fixed'
+          position: 'fixed',
+          top: '80px'
         }}
         className='sidebar'
       >
@@ -211,7 +256,8 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
           height: '100%',
           width: '250px',
           position: 'fixed',
-          right: '0'
+          right: '0',
+          top: '80px'
         }}
         className='sidebar'
       >
@@ -245,10 +291,13 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
       </div>
 
       <div>
-        <div style={{
+        <div
+          style={{
             border: '2px solid #000033',
             marginBottom: '10px'
-        }} className='container'>
+          }}
+          className='container'
+        >
           {tweet ? (
             <Tweet forceRerender={forceRerender} tweet_data={tweet} />
           ) : (

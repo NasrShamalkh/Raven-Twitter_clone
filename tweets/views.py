@@ -385,4 +385,3 @@ def get_tweet(request, tweet_id):
     except:
         return Response({'message': "Tweet not found"}, status=status.HTTP_404_NOT_FOUND)
     
-

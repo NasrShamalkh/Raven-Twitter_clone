@@ -98,6 +98,10 @@
     POST --> api/tweets/retweet_list/:id/   # name='retweet_list'  ## add new retweet
     GET  --> api/tweets/retweet_list/:id/   # name='retweet_list'    ## get retweets list
 
+     EXPOLORE
+
+     GET --> api/tweets/get_top/   #name='get_top'    # gets top none-followers tweets
+
 ------------------------------------------  
   
     POST --> api/tweets/replies/replies_list/:id/  # name='replies_list' # add new reply  (id of tweet)  
