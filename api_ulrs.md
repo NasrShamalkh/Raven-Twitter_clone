@@ -100,7 +100,10 @@
 
      EXPOLORE
 
-     GET --> api/tweets/get_top/   #name='get_top'    # gets top none-followers tweets
+     GET --> api/tweets/get_top/   #name='get_top'    # gets top none-followers tweets  
+     GET --> api/tweets/get_explore_media/ name='get_explore_media'   
+     GET  --> api/profiles/most_popular/  name='most_popular'  
+     GET  --> api/tweets/get_latest/ name='get_latest'
 
 ------------------------------------------  
   
@@ -114,9 +117,9 @@
 ------------------------------------------  
 
     !!!! TODO !!!!  
-    - #1 getting started with front 
     - add 'retweeted' to all GET tweets requests  (show 'retweeted by')  
-    - Explore tweets and profiles (based on popularity/followers/relations) + (top, latest, media)
     - Hashtags 
-    - Fix 2 repliies 1 Tweet 
+    - Fix 2 repliies 1 Tweet  
+    - do ( people I should follow )  
+    -  Explore page  
 

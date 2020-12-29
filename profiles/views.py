@@ -92,3 +92,21 @@ def get_following(request, profile_id):
 
     profile_brief_serializer = ProfileBriefSerializer(following_list, context={'request': request}, many=True)
     return Response(profile_brief_serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def most_popular(request):
+    user = request.user
+    # execluding following and current user
+    users = RavenUser.objects.exclude(profile__in=user.following.all()).exclude(pk=user.id)
+    profiles = []
+    for user in users:
+        profiles.append(user.profile)
+
+    # getting the most popular profiles based on the number of followers
+    # this is where the real magic happens
+    #we sort a list with a limit of 10
+    # passing in a lambda function as owr sorting function becase then applying our sorting method (the len() propert) on the lambda argument which is our elements
+
+    brief_serializer = ProfileBriefSerializer(sorted(list(profiles)[:10], key = lambda i: -len(i.followers.all())), many=True, context={'request': request})
+    return Response(brief_serializer.data, status=status.HTTP_200_OK)

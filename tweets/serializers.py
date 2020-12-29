@@ -50,7 +50,7 @@ class TweetSerializer(serializers.ModelSerializer):
             'retweeted_by_user': {'required' : False, 'read_only': True, 'default': False},
             'timestamp': {'read_only': True}
         }
-        order_by = ('-timestamp') # not working
+        order_by = ('number_of_likes')
 
 
     def get_number_of_saves(self, obj):

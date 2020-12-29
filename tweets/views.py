@@ -9,6 +9,7 @@ from .serializers import TweetSerializer, ReplySerializer
 from itertools import chain  # compine multiple querysets
 from functools import reduce
 from profiles.serializers import ProfileBriefSerializer # to view liked users
+from profiles.models import Profile
 
 # create a tweet or get Home tweets
 @api_view(['POST', 'GET'])
@@ -384,4 +385,77 @@ def get_tweet(request, tweet_id):
         return Response(tweet_serializer.data, status=status.HTTP_200_OK)
     except:
         return Response({'message': "Tweet not found"}, status=status.HTTP_404_NOT_FOUND)
-    
+
+
+@api_view(['GET'])
+def get_top(request):
+        user = request.user
+        # Getting all users who are not the current user & there profile is not in the following list of the current user
+        users = RavenUser.objects.exclude(profile__in=user.following.all()).exclude(pk=user.id)
+        tweets_querysets = []
+        for n_user in users:
+            # adding the tweets of the users where they're not public
+            tweets_querysets.append(Tweet.objects.filter(
+                user_id=n_user.id).exclude(public=False))
+
+        def reduce_func(current_value, accumulator): 
+            return chain(current_value, accumulator)
+
+        if not tweets_querysets and not user.tweets.all():
+            return Response([], status=status.HTTP_404_NOT_FOUND)
+        else: 
+            chain_result = reduce(reduce_func, tweets_querysets) # chaining everything through reduced chain
+
+        tweet_serializer = TweetSerializer(sorted(list(chain_result)[:20], key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all()) + (len(i.saves.all()))))), context={'request': request}, many=True)
+        """
+        sorted(list(chain_result)[:20], key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all()) + (len(i.saves.all())))))
+        this sorts the list with a limit of 20 tweets and applies the lamda as sorting function
+        in which we combine the likes, retweets and saves all together to detrmain the popularity of the tweet ( sum of all ainteractions (execpt replies))
+        CCCoooooooooLLLL
+        https://media.makeameme.org/created/cool-man-real.jpg
+        """
+        return Response(tweet_serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_explore_media(request):
+        user = request.user
+        # Getting all users who are not the current user & there profile is not in the following list of the current user
+        users = RavenUser.objects.exclude(profile__in=user.following.all()).exclude(pk=user.id)
+        tweets_querysets = []
+        for n_user in users:
+            # adding the tweets of the users where they're not public
+            tweets_querysets.append(Tweet.objects.filter(
+                user_id=n_user.id).exclude(public=False).exclude(media=False))
+
+        def reduce_func(current_value, accumulator): 
+            return chain(current_value, accumulator)
+
+        if not tweets_querysets and not user.tweets.all():
+            return Response([], status=status.HTTP_404_NOT_FOUND)
+        else: 
+            chain_result = reduce(reduce_func, tweets_querysets) # chaining everything through reduced chain
+        tweet_serializer = TweetSerializer(sorted(list(chain_result)[:20], key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all()) + (len(i.saves.all()))))), context={'request': request}, many=True)
+        return Response(tweet_serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def get_latest(request):
+        user = request.user
+        # Getting all users who are not the current user & there profile is not in the following list of the current user
+        users = RavenUser.objects.exclude(profile__in=user.following.all()).exclude(pk=user.id)
+        tweets_querysets = []
+        for n_user in users:
+            # adding the tweets of the users where they're not public
+            tweets_querysets.append(Tweet.objects.filter(
+                user_id=n_user.id).exclude(public=False))
+
+        def reduce_func(current_value, accumulator): 
+            return chain(current_value, accumulator)
+
+        if not tweets_querysets and not user.tweets.all():
+            return Response([], status=status.HTTP_404_NOT_FOUND)
+        else: 
+            chain_result = reduce(reduce_func, tweets_querysets) # chaining everything through reduced chain
+            data = sorted(list(chain_result), key = lambda i: i.timestamp)
+            data.reverse()
+        tweet_serializer = TweetSerializer(data, context={'request': request}, many=True)
+        return Response(tweet_serializer.data, status=status.HTTP_200_OK)

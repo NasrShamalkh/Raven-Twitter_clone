@@ -20,4 +20,7 @@ urlpatterns = [
     url(r'^replies/get_reply_like_list/(?P<reply_id>\d+)/$', views.get_reply_like_list, name='get_reply_like_list'),
     url(r'^get_liked/(?P<user_id>\d+)/$', views.get_liked, name='get_liked'),
     url(r'^get_user_media/(?P<user_id>\d+)/$', views.get_user_media, name='get_user_media'),
+    path('get_top/', views.get_top, name='get_top'),
+    path('get_explore_media/', views.get_explore_media, name='get_explore_media'),
+    path('get_latest/', views.get_latest, name='get_latest'),
 ]

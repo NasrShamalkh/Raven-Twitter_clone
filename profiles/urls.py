@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^get_followers/(?P<profile_id>\d+)/$', views.get_followers, name='get_followers'),
     url(r'^get_following/(?P<profile_id>\d+)/$', views.get_following, name='get_following'),
     path('edit/', views.profile_details, name='edit_profile'),
+    path('most_popular/', views.most_popular, name='most_popular')
 ]
