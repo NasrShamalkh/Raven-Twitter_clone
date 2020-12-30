@@ -55,7 +55,10 @@ const ProfileBrief: React.FC<IProfileBrief> = (props: IProfileBrief) => {
           }}
         >
           <span className='fas fa-at'></span>
-          <h3>{props.alias ? props.alias : props.username}</h3>
+          <h3>
+            {props.username}
+            {props.alias ? <small>({props.alias})</small> : ''}
+          </h3>
         </div>
         <small>
           <span className='badge badge-primary badge-pill'>
@@ -130,7 +133,10 @@ export const S_ProfileBrief: React.FC<IProfileBrief> = (
             className='fas fa-at'
           ></span>{' '}
           <h3>
-            <i>{props.alias ? props.alias : props.username}</i>
+            <i>
+              {props.username}
+              {props.alias ? <small>({props.alias})</small> : ''}
+            </i>
           </h3>
         </div>
         <small>

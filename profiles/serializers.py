@@ -111,7 +111,7 @@ class ProfileBriefSerializer(serializers.ModelSerializer):
         followers_user = obj.followers.all() # RavenUser # target profile followers list
         related_followers = []
         for follow_user in followers_user: # iterating users (that follow the target profile)
-            if follow_user.profile in following_profile: # if one of the profiles that the follow the target profile is in the current user's followers list
+            if follow_user.profile in following_profile: # if one of the profiles that follow the target profile is in the current user's followers list
                 related_followers.append({               # then add it to the recomendations list (related)
                     "id": follow_user.profile.id,
                     "username": follow_user.username,

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer, ProfileBriefSerializer
 from auth_app.models import RavenUser
+from django.shortcuts import redirect
 
 
 @api_view(['GET'])
@@ -108,5 +109,47 @@ def most_popular(request):
     #we sort a list with a limit of 10
     # passing in a lambda function as owr sorting function becase then applying our sorting method (the len() propert) on the lambda argument which is our elements
 
-    brief_serializer = ProfileBriefSerializer(sorted(list(profiles)[:10], key = lambda i: -len(i.followers.all())), many=True, context={'request': request})
+    brief_serializer = ProfileBriefSerializer(sorted(list(profiles), key = lambda i: -len(i.followers.all()))[:10], many=True, context={'request': request})
     return Response(brief_serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def who_to_follow(request):
+    pass
+#     user = request.user
+#     users = RavenUser.objects.exclude(profile__in=user.following.all()).exclude(pk=user.id)
+#     followers_user = user.profile.followers.all()
+#     profiles = []
+#     for user in users:
+#         profiles.append(user.profile)
+    
+#     mommy = RavenUser.objects.get(username='marry').profile
+#     bobby_profile = RavenUser.objects.get(username='bobby').profile
+#     marry_profile = mommy.profile
+#     # print(mommy.followers.exclude(profile__in=user.following.all()))
+#     print(marry_profile.followers.all())
+#     # now we have all profiles that the user does not follow
+#     brief_serializer = ProfileBriefSerializer(sorted(list(profiles), key = lambda i: -(len(i.followers.filter(profile__in=user.following.all()))))[:10], many=True, context={'request': request})
+#     return Response(brief_serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def search(request):
+    try:
+        post_data = JSONParser().parse(request)  
+        search_input = post_data['search_input']
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    
+    results = []
+
+    if search_input[0] == '@':
+        users = RavenUser.objects.filter(username__icontains=search_input[1:])
+        for user in users:
+            results.append(user.profile)
+    else:
+        profiles = Profile.objects.filter(alias__icontains=search_input)
+        print(profiles)
+        results = profiles
+
+    profile_brief = ProfileBriefSerializer(results, many=True, context={'request': request})
+    return Response(profile_brief.data, status=status.HTTP_200_OK)

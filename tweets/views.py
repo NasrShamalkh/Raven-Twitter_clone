@@ -406,7 +406,7 @@ def get_top(request):
         else: 
             chain_result = reduce(reduce_func, tweets_querysets) # chaining everything through reduced chain
 
-        tweet_serializer = TweetSerializer(sorted(list(chain_result)[:20], key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all()) + (len(i.saves.all()))))), context={'request': request}, many=True)
+        tweet_serializer = TweetSerializer(sorted(list(chain_result), key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all())) + (len(i.tweet_replies.all())) + (len(i.saves.all()))))[:20], context={'request': request}, many=True)
         """
         sorted(list(chain_result)[:20], key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all()) + (len(i.saves.all())))))
         this sorts the list with a limit of 20 tweets and applies the lamda as sorting function
@@ -434,7 +434,7 @@ def get_explore_media(request):
             return Response([], status=status.HTTP_404_NOT_FOUND)
         else: 
             chain_result = reduce(reduce_func, tweets_querysets) # chaining everything through reduced chain
-        tweet_serializer = TweetSerializer(sorted(list(chain_result)[:20], key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all()) + (len(i.saves.all()))))), context={'request': request}, many=True)
+        tweet_serializer = TweetSerializer(sorted(list(chain_result), key = lambda i: -((len(i.likes.all())) + (len(i.retweets.all()) + (len(i.saves.all())))))[:20], context={'request': request}, many=True)
         return Response(tweet_serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])

@@ -19,12 +19,10 @@
 }
 .log_out_text {
   color: red;
-  text-decoration: underline;
   cursor: pointer;
 }
 .log_out_from_all_text {
   color: red;
-  text-decoration: underline;
   font-size: 13px;
   cursor: pointer;
 }
