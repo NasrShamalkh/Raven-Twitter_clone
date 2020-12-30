@@ -62,8 +62,7 @@
 - profiles (api/profiles/) ## Authorization required  
     GET --> api/profiles/view_profile/:id/ # name='view_profile'  ## user_id   
     PUT --> api/prfiles/edit/             # name='edit_profile'  
-            body {  
-                "profile_id": id,  
+            body {    
                 "alias": new_alias,  
                 ... bio, image_url, background_image_url  
             }  

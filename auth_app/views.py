@@ -53,7 +53,7 @@ def currentUser(request):
         if edit_user_serializer.is_valid():
             edit_user_serializer.save()
             user.save()
-            return Response({'message': 'Updated Successfully !'}, status=status.HTTP_202_ACCEPTED)
+            return Response(edit_user_serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(edit_user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

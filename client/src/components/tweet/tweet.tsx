@@ -65,7 +65,7 @@ export interface ITweetData {
   saved: boolean;
 }
 
-type IUserData = {
+export type IUserData = {
   user_id: number;
   profile_id: number;
   username: string;

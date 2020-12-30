@@ -23,9 +23,9 @@ def view_profile(request, user_id):
 
 @api_view(['PUT'])
 def profile_details(request):
+    user = request.user
+    profile = user.profile
     put_data = JSONParser().parse(request)
-    profile_id = put_data.pop('profile_id')
-    profile = Profile.objects.get(pk=profile_id)
     # any data passed into the serializer is updated
     # anything else is ignored
     # we are using the same serializer but we are only interacting with the writable data (not read_only) but returning all data after update
