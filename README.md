@@ -1,6 +1,19 @@
 # Raven
 Raven App is a [*Twitter*](https://twitter.com/) clone app. Built by Web Developer [*Nasr Shamalkh*](https://github.com/NasrShamalkh).
 
+## Table of content
+1. [Description](##Description)
+2. [Installation](##Installation)
+    * [Pre-installation](###pre-installation-requirements)
+    * [Installation](####Installation)
+3. [Technologies & Explanation](##Technologies-&-Explanation)
+    * [Backend](####Backend)
+    * [Frontend](####Frontend)
+    * [image Upload](####Image-upload)
+4. [Key files and folders](##Key-files)
+5. [Usage](##Usage)
+6. [Deployment](##Deployment-link)
+7. [Docker](##Docker-image)
 ## Description
 This applications is built as an attempt to rebuild Twitter with a different style and functionality for educational & Training puroposes.  
 This projects is one of the many challenges on [*DevChallenges.io*](https://devchallenges.io/challenges/rleoQc34THclWx1cFFKH), instructions on the challenge are provided in the link. 
