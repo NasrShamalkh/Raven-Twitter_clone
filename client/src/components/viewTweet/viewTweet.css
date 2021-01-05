@@ -15,7 +15,7 @@
   transition: 0.5s;
   border: 1px solid white;
   color: white;
-  width: 768px;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,8 +26,147 @@
   background-color: #000033;
   cursor: pointer;
 }
+#right_sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  right: 0;
+  top: 80p;
+}
+#right_sidebar h1 {
+  font-size: 24px;
+}
+#left_sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 80px;
+}
+#left_sidebar h1 {
+  font-size: 24px;
+}
 .delete_tweet_div:hover {
   color: #000033;
   background-color: white;
   border-color: #000033;
+}
+@media only screen and (max-width: 500px) {
+  #card_fist_div {
+    display: flex;
+    align-items: center;
+  }
+  #right_sidebar {
+    width: 30%;
+    font-size: 8px;
+    position: fixed;
+    left: 0;
+    top: 47%;
+    height: 40%;
+  }
+  #right_sidebar img {
+    width: 20px;
+  }
+  #right_sidebar h1 {
+    font-size: 12px;
+  }
+  #right_sidebar h3 {
+    font-size: 11px;
+  }
+  #left_sidebar {
+    width: 30%;
+    top: 70px;
+    height: 35%;
+  }
+  #left_sidebar h1 {
+    font-size: 12px;
+  }
+  #left_sidebar img {
+    width: 20px;
+  }
+  .view_tweet_container {
+    padding: 0;
+  }
+  #T-D-01 {
+    width: 70%;
+    margin: auto;
+    position: relative;
+    float: right;
+  }
+  #replies_container {
+    width: 70%;
+    padding: 0;
+    float: right;
+  }
+
+  #T-D-02 {
+    padding: 0;
+  }
+  .delete_tweet_div {
+    font-size: 15px;
+    height: 30px;
+    transition: 0.5s;
+    width: 70%;
+    margin-bottom: 0px;
+    float: right;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  #card_fist_div {
+    display: flex;
+    align-items: center;
+  }
+  #right_sidebar {
+    width: 30%;
+    font-size: 8px;
+    position: fixed;
+    left: 0;
+    top: 47%;
+    height: 40%;
+  }
+  #right_sidebar img {
+    width: 20px;
+  }
+  #right_sidebar h1 {
+    font-size: 12px;
+  }
+  #right_sidebar h3 {
+    font-size: 11px;
+  }
+  #left_sidebar {
+    width: 30%;
+    top: 70px;
+    height: 35%;
+  }
+  #left_sidebar h1 {
+    font-size: 12px;
+  }
+  #left_sidebar img {
+    width: 20px;
+  }
+  .view_tweet_container {
+    padding: 0;
+  }
+  #T-D-01 {
+    width: 78%;
+    margin: auto;
+    position: relative;
+    float: right;
+  }
+  #replies_container {
+    width: 70%;
+    padding: 0;
+    float: right;
+  }
+
+  #T-D-02 {
+    padding: 0;
+  }
+  .delete_tweet_div {
+    font-size: 15px;
+    height: 30px;
+    transition: 0.5s;
+    width: 70%;
+    margin-bottom: 0px;
+    float: right;
+  }
 }

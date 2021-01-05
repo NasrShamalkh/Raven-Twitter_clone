@@ -32,3 +32,54 @@
   border-radius: 5px;
   margin-right: 5px;
 }
+
+@media only screen and (max-width: 500px) {
+  .nav-link {
+    font-size: 13px;
+  }
+  #user_nav_alias {
+    display: none;
+  }
+  #raven_brand {
+    width: 30px;
+  }
+  #burger {
+    font-size: 15px;
+  }
+  .nav-link {
+    font-size: 15px;
+  }
+
+  #nav_dropdown_menu {
+    margin-right: 30px;
+  }
+
+  #profile_image {
+    width: 30px;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  .nav-link {
+    font-size: 13px;
+  }
+  #user_nav_alias {
+    display: none;
+  }
+  #raven_brand {
+    width: 30px;
+  }
+  #burger {
+    font-size: 15px;
+  }
+  .nav-link {
+    font-size: 15px;
+  }
+
+  #nav_dropdown_menu {
+    margin-right: 30px;
+  }
+
+  #profile_image {
+    width: 30px;
+  }
+}

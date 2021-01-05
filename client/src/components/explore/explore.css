@@ -11,9 +11,14 @@
   height: 100%;
   overflow: auto;
   padding: 20px;
-
   border-radius: 9px;
   overflow-x: hidden;
+}
+#side_content {
+  height: 80%;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: auto;
 }
 .explore_container {
   background: white;
@@ -84,4 +89,144 @@ form.searchForm button:hover {
 }
 #search_button:hover {
   opacity: 0.7;
+}
+#side_nav_element {
+  height: 400px;
+  margin-top: 49px;
+}
+@media only screen and (max-width: 500px) {
+  .explor_sidebar {
+    padding: 0px;
+  }
+  .explore_container {
+    padding: 0px;
+  }
+  .explore_content {
+    padding: 0px;
+    position: relative;
+    height: 70%;
+  }
+  .explore_fixed_div {
+    padding: 6px;
+  }
+  #explore_sidebar_right {
+    height: 50%;
+    width: 26%;
+    top: 20%;
+    position: absolute;
+    font-size: 10px;
+    float: left;
+  }
+  #explore_sidebar_right h3 {
+    font-size: 12px;
+  }
+  #explore_sidebar_right div {
+    overflow-x: hidden;
+  }
+  #explore_sidebar_left {
+    height: fit-content;
+    padding-bottom: 20px;
+    width: 130px;
+  }
+  .side_nav_elem_exp {
+    padding: 0;
+  }
+  #side_nav_element {
+    height: inherit;
+    /* height: 10px; */
+    border: 1px solid black;
+  }
+  #top,
+  #media,
+  #latest {
+    margin: 1px;
+    margin-top: 0;
+    padding: 0;
+    font-size: 13px;
+    border: none;
+    border-radius: 3px;
+  }
+  .hr_elem {
+    display: none;
+  }
+  .searchForm button {
+    font-size: 10px;
+  }
+  .searchForm input {
+    font-size: 12px;
+  }
+  .explore_fixed_div {
+    width: 70%;
+  }
+  .explore_main_dev {
+    height: 100%;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  .explor_sidebar {
+    padding: 2px;
+  }
+  .explore_container {
+    padding: 2px;
+  }
+  .explore_content {
+    padding: 2px;
+    position: relative;
+    height: 40%;
+  }
+  .explore_fixed_div {
+    padding: 6px;
+  }
+  #explore_sidebar_right {
+    height: 50%;
+    width: 26%;
+    top: 20%;
+    position: absolute;
+    font-size: 12px;
+    float: left;
+  }
+  #explore_sidebar_right h3 {
+    font-size: 13px;
+  }
+  #explore_sidebar_right div {
+    overflow-x: hidden;
+  }
+  #explore_sidebar_left {
+    height: fit-content;
+    padding-bottom: 20px;
+    width: 140px;
+  }
+  .side_nav_elem_exp {
+    padding: 0;
+  }
+  #side_nav_element {
+    height: inherit;
+    /* height: 10px; */
+    border: 1px solid black;
+  }
+  #top,
+  #media,
+  #latest {
+    margin: 1px;
+    margin-top: 0;
+    padding: 0;
+    font-size: 14px;
+    border: none;
+    border-radius: 3px;
+  }
+  .hr_elem {
+    display: none;
+  }
+  .searchForm button {
+    font-size: 12px;
+  }
+  .searchForm input {
+    font-size: 13px;
+  }
+  .explore_fixed_div {
+    width: 70%;
+  }
+  .explore_main_dev {
+    height: 100%;
+  }
 }

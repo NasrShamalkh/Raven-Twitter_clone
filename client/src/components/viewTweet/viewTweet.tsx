@@ -211,19 +211,10 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
       ) : (
         ''
       )}
-      <div
-        style={{
-          height: '100%',
-          width: '250px',
-          position: 'fixed',
-          top: '80px'
-        }}
-        className='sidebar'
-      >
+      <div className='sidebar' id='left_sidebar'>
         <h1
           style={{
             textAlign: 'center',
-            fontSize: '24px',
             fontFamily: 'revert'
           }}
         >
@@ -251,20 +242,10 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
 
       {/* ------------------------- RIGHT LIST ------------------- */}
 
-      <div
-        style={{
-          height: '100%',
-          width: '250px',
-          position: 'fixed',
-          right: '0',
-          top: '80px'
-        }}
-        className='sidebar'
-      >
+      <div className='sidebar' id='right_sidebar'>
         <h1
           style={{
             textAlign: 'center',
-            fontSize: '24px',
             fontFamily: 'revert'
           }}
         >
@@ -290,8 +271,9 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
         </div>
       </div>
 
-      <div>
+      <div id='T-D-01'>
         <div
+          id='T-D-02'
           style={{
             border: '2px solid #000033',
             marginBottom: '10px'
@@ -299,7 +281,9 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
           className='container'
         >
           {tweet ? (
-            <Tweet forceRerender={forceRerender} tweet_data={tweet} />
+            <div className='view_tweet_container'>
+              <Tweet forceRerender={forceRerender} tweet_data={tweet} />
+            </div>
           ) : (
             ''
           )}
@@ -355,7 +339,7 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
           {/*---------------- Replies section  ----------------+*/}
         </div>
       </div>
-      <div className='container'>
+      <div id='replies_container' className='container'>
         {replies.length > 0 ? (
           <section>
             <div id='comment_section' className='comments'>
@@ -377,7 +361,6 @@ const ViewTweet: React.FC<Props> = (props: Props) => {
             <i>No Replies Yet</i>
           </p>
         )}
-        <div className='sidenav'></div>
       </div>
     </div>
   );

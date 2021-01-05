@@ -1,20 +1,42 @@
 #front_page_main_div {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   color: white;
 }
 .front_page_content_div {
-  border: 1px solid black;
   text-align: center;
   flex: 1;
   padding-top: 100px;
-  /* padding-bottom: 60px; */
-  height: 650px;
+
+  /* width: 50%; */
 }
 ul {
   list-style: none;
 }
+.front_page_content_div li {
+  font-size: 20px;
+  text-align: left;
+  margin-top: 20px;
+  padding-left: 23px;
+}
 button {
   width: 100px;
   margin: 10px;
+}
+#front_image {
+  padding-top: 100px;
+  width: 300px;
+  border-radius: 50%;
+  margin: auto;
+}
+@media only screen and (max-width: 500px) {
+  #front_page_main_div {
+    flex-direction: column;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  #front_page_main_div {
+    flex-direction: column;
+  }
 }

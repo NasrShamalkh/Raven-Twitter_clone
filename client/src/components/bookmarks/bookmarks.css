@@ -2,7 +2,6 @@
   border: 1px solid grey;
   border-radius: 10px;
   padding: 40px;
-  width: 60%;
   background-color: lightyellow;
 }
 .fill {
@@ -50,4 +49,8 @@
 }
 .bookmarks_tweet_container > div {
   margin-top: 10px;
+}
+@media only screen and (max-width: 500px) {
+}
+@media only screen and (max-width: 700px) and (min-width: 500px) {
 }

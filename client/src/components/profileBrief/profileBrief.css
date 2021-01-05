@@ -35,3 +35,56 @@
   border: 1px solid grey;
   padding: 13px;
 }
+@media only screen and (max-width: 500px) {
+  #S_profile_brief_image {
+    width: 20px;
+    height: 20px;
+    object-fit: scale-down;
+    margin-right: 3px;
+
+    margin-left: 0px;
+  }
+  #S_profile_brief_content_div h3 {
+    font-size: 11px;
+  }
+  #S_profile_div {
+    padding: 3px;
+  }
+  .followed_by_small {
+    display: none;
+  }
+  #profile_brief_image {
+    width: 50px;
+    height: 50px;
+    margin-right: 7px;
+  }
+  #profile_brief_content_div h3 {
+    font-size: 15px;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  #S_profile_brief_image {
+    width: 23px;
+    height: 23px;
+    object-fit: scale-down;
+    margin-right: 3px;
+    margin-left: 0px;
+  }
+  #S_profile_brief_content_div h3 {
+    font-size: 11px;
+  }
+  #S_profile_div {
+    padding: 3px;
+  }
+  .followed_by_small {
+    display: none;
+  }
+  #profile_brief_image {
+    width: 50px;
+    height: 50px;
+    margin-right: 7px;
+  }
+  #profile_brief_content_div h3 {
+    font-size: 15px;
+  }
+}

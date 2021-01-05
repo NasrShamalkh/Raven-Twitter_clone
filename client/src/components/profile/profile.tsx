@@ -259,7 +259,6 @@ const Profile: React.FC<Props> = (props: Props) => {
               <div id='profile_info_div'>
                 <h5
                   style={{
-                    fontSize: '28px',
                     fontFamily: 'arial',
                     fontWeight: 'bold'
                   }}
@@ -317,7 +316,7 @@ const Profile: React.FC<Props> = (props: Props) => {
                 <div>
                   <div id='follow_status'>
                     {profile_data.following ? (
-                      <div>
+                      <div  className='follow_status_div'>
                         <img
                           src='https://res.cloudinary.com/nasr-cloudinary/image/upload/v1609048452/Raven%20App/follow_following_twitter_icon-1320196031920300840_oi7guk.png'
                           alt='...'
@@ -348,7 +347,7 @@ const Profile: React.FC<Props> = (props: Props) => {
                         </div>
                       </div>
                     ) : (
-                      <div>
+                      <div className='follow_status_div'>
                         <img
                           alt='...'
                           src='https://res.cloudinary.com/nasr-cloudinary/image/upload/v1609048471/Raven%20App/JD-27-512_aavneb.png'
@@ -386,9 +385,6 @@ const Profile: React.FC<Props> = (props: Props) => {
               )}
               <ul id='follow_statics' className='list-inline mb-0'>
                 <li
-                  style={{
-                    marginRight: '20px'
-                  }}
                   className='list-inline-item show_followers'
                   data-toggle='modal'
                   data-target='#show_followers_modal'
@@ -447,11 +443,6 @@ const Profile: React.FC<Props> = (props: Props) => {
         id='profile_large_div'
       >
         <div
-          style={{
-            marginTop: '100px',
-            width: '250px',
-            height: '380px'
-          }}
           id='M_sidebar'
           className='sidebar'
         >
@@ -475,7 +466,7 @@ const Profile: React.FC<Props> = (props: Props) => {
               setEndPoint('replies/get_user_tweets_and_replies');
             }}
           >
-            Tweets & replies{' '}
+            Tweets & Replies{' '}
             <span className='staticNumber'>
               {profile_data.number_of_tweets_and_replies}
             </span>
@@ -503,7 +494,7 @@ const Profile: React.FC<Props> = (props: Props) => {
             <span className='staticNumber'>{profile_data.number_of_likes}</span>
           </a>
         </div>
-        <div id='tweets_container' className='container'>
+        <div id='tweets_container' className='container profile_tweets_container'>
           {tweets.length == 0 ? (
             <div id='display_state'></div>
           ) : (

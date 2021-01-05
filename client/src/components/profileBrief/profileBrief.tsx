@@ -148,6 +148,7 @@ export const S_ProfileBrief: React.FC<IProfileBrief> = (
         <br />
         {props.related.length > 0 ? (
           <small
+            className='followed_by_small'
             style={{
               fontSize: '10px'
             }}
@@ -159,6 +160,7 @@ export const S_ProfileBrief: React.FC<IProfileBrief> = (
             style={{
               fontSize: '10px'
             }}
+            className='followed_by_small'
           >
             Not followed by anyone you're following
           </small>

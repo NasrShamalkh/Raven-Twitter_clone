@@ -18,8 +18,11 @@ const NavBar: React.FC<CurrentUserInterface> = (
   props: CurrentUserInterface
 ) => {
   return (
-    <nav className='navbar sticky-top navbar-expand-md navbar-dark bg-dark'>
-      <NavLink to='/home' className='navbar-brand d-none d-lg-inline-block'>
+    <nav
+      id='nav_bar'
+      className='navbar sticky-top navbar-expand navbar-dark bg-dark'
+    >
+      <NavLink to='/home' className='navbar-brand  d-lg-inline-block'>
         <img
           id='raven_brand'
           src='http://res.cloudinary.com/nasr-cloudinary/image/upload/v1608924243/Raven%20App/5338222e8cb88bc99dd14cb722d8c43f_r4qs7p.jpg'
@@ -119,7 +122,9 @@ const DropDown = props => {
               }
               id='profile_image'
             />
-            <span>{user.alias ? user.alias : user.username}</span>
+            <span id='user_nav_alias'>
+              {user.alias ? user.alias : user.username}
+            </span>
           </a>
           <div
             id='nav_dropdown_menu'

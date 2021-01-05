@@ -44,7 +44,7 @@ body {
   justify-content: space-between;
 }
 #follow_statics {
-  margin-right: 10px;
+  margin-right: 20px;
   font-size: 27px;
   /* border: 1px solid black; */
 }
@@ -110,28 +110,6 @@ body {
   color: white;
 }
 
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
-  .sidebar a {
-    float: left;
-  }
-  div.content {
-    margin-left: 0;
-  }
-}
-
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
-  .sidebar a {
-    text-align: center;
-    float: none;
-  }
-}
 #profile_large_div {
   display: flex;
   /* border: 1px solid black; */
@@ -140,6 +118,9 @@ body {
   position: relative;
   left: 50px;
   border-radius: 10px;
+  margin-top: 100px;
+  width: 250px;
+  height: 380px;
 }
 
 .staticNumber {
@@ -163,4 +144,192 @@ body {
 .hr_elem {
   color: gray;
   background-color: gray;
+}
+#profile_info_div h5 {
+  font-size: 28px;
+}
+@media only screen and (max-width: 500px) {
+  .cover {
+    height: 128px;
+  }
+  #cover_image {
+    object-fit: scale-down;
+  }
+  .profile {
+    height: 150px;
+  }
+  #profile_info_div {
+    margin-left: 0px;
+  }
+  #profile_image_div {
+    width: 100px;
+    transform: translate(0.5rem, -3.5rem);
+  }
+  #edit_button {
+    margin-top: 7px;
+    font-size: 13px;
+  }
+  #profile_info_div h5 {
+    font-size: 15px;
+  }
+  #profile_info_div {
+    font-size: 10px;
+  }
+  #follow_statics {
+    margin-right: 0px;
+    font-size: 9px;
+
+    /* width: 120px; */
+  }
+  #follow_statics h5 {
+    font-size: 9px;
+  }
+  .show_followers,
+  .show_following {
+    padding: 0px;
+    width: 35%;
+  }
+  .staticNumber {
+    padding: 2px;
+    font-size: 8px;
+  }
+  #profile_info_div {
+    margin-left: 0px;
+  }
+  #follow_status img {
+    width: 70px;
+  }
+  .sidebar a {
+    padding: 0px;
+    font-size: 11px;
+  }
+  .sidebar a {
+    text-align: center;
+    float: none;
+    margin-top: 15px;
+  }
+  #M_sidebar {
+    left: 0px;
+    /* top: -30px; */
+    margin-top: 10px;
+    height: fit-content;
+    padding-bottom: 6px;
+    width: fit-content;
+    padding: 5px;
+  }
+
+  .side_nav_elem {
+    font-size: 13px;
+    margin: 5px;
+  }
+
+  #tweets_container {
+    padding: 0;
+  }
+  .profile_tweets_container {
+    width: 300px;
+  }
+  .follow_status_div {
+    padding: auto;
+  }
+  .follow_status_div img {
+    width: 20px;
+    margin: auto;
+  }
+  .follow_status_div button {
+    font-size: 8px;
+    width: 60px;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  .cover {
+    height: 128px;
+  }
+  #cover_image {
+    object-fit: scale-down;
+  }
+  .profile {
+    height: 150px;
+  }
+  #profile_info_div {
+    margin-left: 0px;
+  }
+  #profile_image_div {
+    width: 100px;
+    transform: translate(0.5rem, -3.5rem);
+  }
+  #edit_button {
+    margin-top: 7px;
+    font-size: 13px;
+  }
+  #profile_info_div h5 {
+    font-size: 15px;
+  }
+  #profile_info_div {
+    font-size: 10px;
+  }
+  #follow_statics {
+    margin-right: 0px;
+    font-size: 9px;
+
+    /* width: 120px; */
+  }
+  #follow_statics h5 {
+    font-size: 9px;
+  }
+  .show_followers,
+  .show_following {
+    padding: 0px;
+    width: 35%;
+  }
+  .staticNumber {
+    padding: 2px;
+    font-size: 8px;
+  }
+  #profile_info_div {
+    margin-left: 0px;
+  }
+  #follow_status img {
+    width: 70px;
+  }
+  .sidebar a {
+    padding: 0px;
+    font-size: 11px;
+  }
+  .sidebar a {
+    text-align: center;
+    float: none;
+    margin-top: 15px;
+  }
+  #M_sidebar {
+    left: 0px;
+    width: fit-content;
+    padding: 5px;
+    margin-top: 10px;
+    height: fit-content;
+    padding-bottom: 6px;
+  }
+
+  .side_nav_elem {
+    font-size: 13px;
+    margin: 5px;
+  }
+
+  #tweets_container {
+    padding: 0;
+  }
+  .profile_tweets_container {
+    width: 400px;
+  }
+  .follow_status_div {
+    padding: auto;
+  }
+  .follow_status_div img {
+    width: 20px;
+    margin: auto;
+  }
+  .follow_status_div button {
+    font-size: 8px;
+    width: 60px;
+  }
 }

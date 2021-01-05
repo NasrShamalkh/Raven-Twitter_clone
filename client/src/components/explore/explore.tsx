@@ -87,16 +87,12 @@ const Explore: React.FC = () => {
       <div className='explore_main_dev'>
         <div
           className='left explor_sidebar sidebar'
+          id='explore_sidebar_left'
           style={{
             marginTop: '0'
           }}
         >
-          <div
-            style={{
-              height: '400px',
-              marginTop: '49px'
-            }}
-          >
+          <div id='side_nav_element'>
             <hr className='hr_elem' />
             <a
               onClick={() => {
@@ -146,7 +142,7 @@ const Explore: React.FC = () => {
             <hr className='hr_elem' />
             <hr
               style={{
-                height: '20px',
+                height: '10px',
                 border: '5px'
               }}
               className='hr_elem'
@@ -218,6 +214,7 @@ const Explore: React.FC = () => {
             marginTop: '0'
           }}
           className='right explor_sidebar sidebar'
+          id='explore_sidebar_right'
         >
           <h3
             style={{
@@ -226,15 +223,7 @@ const Explore: React.FC = () => {
           >
             <i>Most popular</i>
           </h3>
-          <div
-            id='side_content'
-            style={{
-              height: '80%',
-              border: '1px solid black',
-              borderRadius: '10px',
-              overflow: 'auto'
-            }}
-          >
+          <div id='side_content'>
             {popular.map((profile, index) => {
               return <S_ProfileBrief key={index} {...profile} />;
             })}

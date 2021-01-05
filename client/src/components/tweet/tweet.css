@@ -85,3 +85,75 @@
 .action_button:hover {
   background-color: lightsteelblue;
 }
+@media only screen and (max-width: 500px) {
+  .card {
+    padding: 10px;
+    width: 100%;
+  }
+  .card > div,
+  .card > form {
+    width: 100%;
+  }
+  .card-img {
+    width: 85%;
+  }
+  #tweets_profile_image {
+    width: 40px;
+    margin-right: 7px;
+  }
+  .view_tweet_action_div {
+    flex-grow: 2;
+  }
+  #tweet_content_div > p {
+    font-size: 12px;
+  }
+  #tweet_content_div {
+    padding-left: 4px;
+  }
+  #class_info_div > p {
+    width: 50%;
+    margin-right: 20px;
+  }
+  .tweet_info_span {
+    font-size: 8px;
+  }
+  #tweet_actions {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  .card {
+    padding: 10px;
+    width: 100%;
+  }
+  .card > div,
+  .card > form {
+    width: 100%;
+  }
+  .card-img {
+    width: 85%;
+  }
+  #tweets_profile_image {
+    width: 40px;
+    margin-right: 7px;
+  }
+  .view_tweet_action_div {
+    flex-grow: 2;
+  }
+  #tweet_content_div > p {
+    font-size: 13px;
+  }
+  #tweet_content_div {
+    padding-left: 4px;
+  }
+  #class_info_div > p {
+    width: 40%;
+    margin-right: 20px;
+  }
+  .tweet_info_span {
+    font-size: 10px;
+  }
+  #tweet_actions {
+    font-size: 14px;
+  }
+}

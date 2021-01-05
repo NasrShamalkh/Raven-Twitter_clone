@@ -124,4 +124,4 @@
     - do ( people I should follow )  
     -  Dont do tweet interactions on Explore page (Rerender frenzy !!)  
     - Responsive  
-
+    - fix build problem ( infinity requests on app start )

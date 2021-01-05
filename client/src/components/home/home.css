@@ -68,3 +68,69 @@
   font-size: 50px;
   color: #000033;
 }
+@media only screen and (max-width: 500px) {
+  .container {
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+  }
+  #first_container {
+    padding: 20px;
+    width: 100%;
+  }
+  #tweet_input {
+    width: 80%;
+  }
+  #button_div {
+    width: 60%;
+  }
+  #button_div button {
+    width: 90px;
+    height: 35px;
+    line-height: 1;
+    margin-right: 20px;
+  }
+  #home_profile_image {
+    width: 40px;
+    margin-right: 4px;
+  }
+  .tweet_select {
+    font-size: 10px;
+  }
+  #image_icon {
+    width: 25px;
+  }
+}
+@media only screen and (max-width: 800px) and (min-width: 500px) {
+  .container {
+    border-radius: 5px;
+    padding: 10px;
+    width: 80%;
+  }
+  #first_container {
+    padding: 20px;
+    width: 80%;
+  }
+  #tweet_input {
+    width: 80%;
+  }
+  #button_div {
+    width: 60%;
+  }
+  #button_div button {
+    width: 90px;
+    height: 35px;
+    line-height: 1;
+    margin-right: 20px;
+  }
+  #home_profile_image {
+    width: 40px;
+    margin-right: 4px;
+  }
+  .tweet_select {
+    font-size: 10px;
+  }
+  #image_icon {
+    width: 25px;
+  }
+}
