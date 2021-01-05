@@ -123,4 +123,5 @@
     - Fix 2 repliies 1 Tweet  
     - do ( people I should follow )  
     -  Dont do tweet interactions on Explore page (Rerender frenzy !!)  
+    - Responsive  
 

@@ -2,8 +2,11 @@ import React from 'react';
 import './settings.css';
 import NavBar from '../navBar/navbar';
 import {connect, useDispatch } from 'react-redux'
+import * as actions from '../../redux/actions'
 import {IUserData} from '../tweet/tweet'
-
+import { Redirect } from 'react-router-dom'
+import axiosInstance from '../axiosApi/axiosApi'
+import axios from 'axios'
 interface _IUserData extends IUserData {
   email: string
   bio: string | null
@@ -21,10 +24,155 @@ const Settings: React.FC<Props> = (props: Props) => {
   const [finished, setFinished] = React.useState<boolean>(false);
   const [imageUrl, setImageUrl] = React.useState<string>('');
   const [backgroundImageUrl, setbackgroundImageUrl] = React.useState<string>('')
+  const [ redirect, setRedirect ] = React.useState<string>('')
+  const [ rerender, setRerender ] = React.useState<boolean>(false)
+  const [ upload1_finish, set_upload1_finish ] = React.useState(false)
+  const [ upload2_finish, set_upload2_finish ] = React.useState(false)
+  const [ profile_image_input_state, set_profile_image_input_state] =  React.useState<boolean | File>(false)
+  const [ background_image_input_state, set_background_image_input_state] = React.useState<boolean | File>(false)
 
   const dispatch = useDispatch();
   let imageInput = React.createRef<HTMLInputElement>();
   let backGroundImageInput = React.createRef<HTMLInputElement>();
+
+
+  
+
+  const updateProfile = () => {
+    const profile_image_input = imageInput.current.files[0] || false;  
+    set_profile_image_input_state(profile_image_input)
+    const background_image_input = backGroundImageInput.current.files[0] || false;
+    set_background_image_input_state(background_image_input)
+    if(!alias && !bio && !profile_image_input && !background_image_input) {
+      alert('Nothing to update !')
+      return;
+    }
+    /// --------------- upload1  --------------- ///
+    if(profile_image_input) {
+      const profile_image_form_data = new FormData();
+      profile_image_form_data.append('file', profile_image_input);
+      profile_image_form_data.append('upload_preset', 'ravenapp');
+      axios
+        .post(
+          'https://api.Cloudinary.com/v1_1/nasr-cloudinary/image/upload',
+          profile_image_form_data
+        )
+        .then(res => {
+          setImageUrl(res.data.url);
+          set_upload1_finish(true)
+          console.log('upload 1 finished ')
+        }).catch(err => {
+          console.log('Error in upload 1', err)
+        })
+      }else {
+        set_upload1_finish(true)
+        console.log('NO upload 1')
+      }
+   
+
+      //--------------upload 2 -------- ---- ///
+      if(background_image_input) {
+        const background_image_form_data = new FormData();
+        background_image_form_data.append('file', background_image_input);
+        background_image_form_data.append('upload_preset', 'ravenapp');
+        axios
+          .post(
+            'https://api.Cloudinary.com/v1_1/nasr-cloudinary/image/upload',
+            background_image_form_data
+          )
+          .then(res => {
+            setbackgroundImageUrl(res.data.url);
+            set_upload2_finish(true)
+            console.log('Upload 2 fininshed ')
+          })
+          .catch(err => {
+            console.error('Error in upload 2')
+          })
+      }else {
+        set_upload2_finish(true)
+        console.log('No upload 2')
+      }
+  }
+  if(upload1_finish && upload2_finish) {
+    set_upload1_finish(false)
+    set_upload2_finish(false)
+    const porfile_data = {
+      alias: alias,
+      bio: bio,
+      image_url: imageUrl,
+      background_image_url: backgroundImageUrl,
+    }
+    var profile_put_data = {}
+
+    for(var key in porfile_data) {
+      if(porfile_data[key]) {
+        profile_put_data[key] = porfile_data[key]
+      }
+    }
+    console.log(profile_put_data)
+    axiosInstance.put('api/profiles/edit/', profile_put_data)
+    .then(res => {
+      dispatch(actions.setCurrentUser(res.data))
+      setRerender(!rerender)
+      alert('Profile Data Updated !')
+    })
+    .catch(err => {
+      console.error('Error in updating profile', err)
+     console.log(err.response)
+    })
+  }
+
+
+  const updateUser = () => {
+    let data = {
+      username: username,
+      email: email,
+      current_password: currentPassword,
+      new_password: newPassword
+    }
+
+    if(!username && !email && !newPassword && !currentPassword) {
+      alert('Cant update Empty')
+      return;
+    }
+    var put_data = {}
+    for (var key in data) {
+      if(data[key]) {
+        put_data[key] = data[key]
+      }
+    }
+    if(newPassword !== '') {
+      put_data['update_password'] = true
+    }
+    if((newPassword && !currentPassword) || (currentPassword && !newPassword)) {
+      alert('Please add the missing fields')
+      return;
+    }
+
+    axiosInstance.put('api/auth/user/edit/', put_data)
+    .then(res => {
+      if (res.status === 202) {
+        dispatch(actions.setCurrentUser(res.data))
+      }else if (res.status === 401) {
+        alert('Wrong password')
+        return;
+      }
+      setRerender(!rerender)
+      alert('User Data Updated !')
+    })
+    .catch(err => {
+      if (err.status === 401) {
+        alert('Wrong password')
+        return;
+      }
+      alert('Please check your data')
+      console.error('Error in updating user data', err)
+    })
+    console.log(put_data)
+  }
+  if(redirect) {
+    return <Redirect to={redirect} />
+  }
 
   return (
     <div>
@@ -99,7 +247,7 @@ const Settings: React.FC<Props> = (props: Props) => {
                     </div>
                   </div>
                 </div>
-                <button type="button" id="submit" name="submit" className="btn btn-primary">Update</button>
+                <button onClick={updateProfile} type="button" id="submit" name="submit" className="btn btn-primary">Update Profile</button>
                 <hr  style={{
                   height: '7px',
                   zIndex: 2,
@@ -147,8 +295,10 @@ const Settings: React.FC<Props> = (props: Props) => {
                 <div className="row gutters">
                   <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div className="text-right">
-                      <button type="button" id="submit" name="submit" className="btn btn-secondary">Cancel</button>
-                      <button type="button" id="submit" name="submit" className="btn btn-primary">Update</button>
+                      <button onClick={() => {
+                        setRedirect('/home')
+                      }} type="button" id="submit" name="submit" className="btn btn-secondary">Cancel</button>
+                      <button onClick={updateUser} type="button" id="submit" name="submit" className="btn btn-primary">Update User</button>
                     </div>
                   </div>
                 </div>

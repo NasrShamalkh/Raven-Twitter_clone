@@ -25,7 +25,10 @@ def view_profile(request, user_id):
 def profile_details(request):
     user = request.user
     profile = user.profile
+    # adding the date_of_birth because it is required and making it read_only will miss up registration
+    date_of_birth = profile.date_of_birth
     put_data = JSONParser().parse(request)
+    put_data['date_of_birth'] = date_of_birth
     # any data passed into the serializer is updated
     # anything else is ignored
     # we are using the same serializer but we are only interacting with the writable data (not read_only) but returning all data after update

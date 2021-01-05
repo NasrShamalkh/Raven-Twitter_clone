@@ -45,7 +45,8 @@ def currentUser(request):
                 # if the user only wants to update the password save and return message
                 if not 'email' in put_data and not 'username' in put_data and not 'mode' in put_data:
                     user.save()
-                    return Response({'message': 'Password updated !'}, status=status.HTTP_202_ACCEPTED)
+                    user_serializezr = RavenUserSerializer(user, context={'request': request})
+                    return Response(user_serializezr.data, status=status.HTTP_202_ACCEPTED)
             else:
                 return Response({"message": "Wrong password !"}, status=status.HTTP_401_UNAUTHORIZED)
         # if user choses to update other fields
