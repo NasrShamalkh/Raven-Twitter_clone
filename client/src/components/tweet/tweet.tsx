@@ -247,7 +247,7 @@ const Tweet: React.FC<Props> = (props: Props) => {
       {props.reply_data ? (
         <section>
           <div id='comment_section' className='comments'>
-            <Reply reply_data={props.reply_data} />
+            <Reply forceRerender={props.forceRerender} reply_data={props.reply_data} />
           </div>
         </section>
       ) : (
