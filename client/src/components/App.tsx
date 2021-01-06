@@ -1,6 +1,7 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as actions from '../redux/actions';
 import axiosInstance from './axiosApi/axiosApi';
@@ -26,7 +27,7 @@ const App: React.FC = () => {
     }
   }, []);
   return (
-    <Router>
+    <Router basename='/static'>
       <Switch>
         <Route component={FrontPage} exact path='/' />
         <Route component={Login} path='/login' />
