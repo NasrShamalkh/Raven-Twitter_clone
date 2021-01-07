@@ -1,6 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as actions from '../redux/actions';
@@ -16,6 +16,7 @@ import Profile from './profile/profile';
 import Settings from './settings/settings';
 import PrivateRoute from './privateroute';
 import ViewTweet from './viewTweet/viewTweet';
+import Page_404 from './page_404/page_404';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,8 @@ const App: React.FC = () => {
         <PrivateRoute exact component={Settings} path='/settings' />
         <PrivateRoute exact component={Explore} path='/explore' />
         <PrivateRoute exact component={ViewTweet} path='/viewtweet' />
+        <Route path='/404' component={Page_404} />
+        <Redirect to='/404' />
       </Switch>
     </Router>
   );
