@@ -32,8 +32,15 @@ Before being able to run this project, you need to have these installed on your 
  3. Run `pipenv install` after the environment is all set to install the packages.
  4. `cd client` to get into the client directory and run `npm install`.
  5. After installing the packages we need to run our database migrations.
+    - First, we need to create a local MySQL database.  
+      - Go to MySQL Command Line client and create a database. *Follow bellow steps:*
+      1. Enter your user password in the command line.
+      2. <code>CREATE DATABASE raven_db;</code>
+      3. Add your <code>USER</code> and <code>PASSWORD</code> in settings.py + ( add your <code>PORT</code> if you have anything other than the default 3306 )  
+    - We also need to create a superuser, make sure you're in the root directory then:
+      1. <code>python manage.py createsuperuser</code> and follow the process to create the first user.
     - Make sure you're in the root directory ( where manage.py is ) and then run `python manage.py makemigrations` and `python manage.py migrate`
- 5. Now that you've installed the packages and ran the migrations, you have two options for running the app.
+ 5. Now that you've installed the packages, created a superuser and ran the migrations, you have two options for running the app.
     1. __Development__.  
     Open two terminal windows, one for the Frontend ( in the client directory) and the other for the Backend ( in the root directory ).
     - In the backend terminal run `pipenv shell` & `python manage.py runserver`.
