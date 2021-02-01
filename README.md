@@ -12,20 +12,20 @@ Raven App is a [*Twitter*](https://twitter.com/) clone app. Built by Web Develop
     * [image Upload](#image-upload)
 4. [Key files and folders](#key-files)
 5. [Usage](#usage)
-6. [Deployment](#deployment-link)
-7. [Docker](#docker-image)
+6. [Docker](#docker-image)
+7. [Deployment](#deployment-link)
 ## Description
 This applications is built as an attempt to rebuild Twitter with a different style and functionality for educational & Training puroposes.  
 This projects is one of the many challenges on [*DevChallenges.io*](https://devchallenges.io/challenges/rleoQc34THclWx1cFFKH), instructions on the challenge are provided in the link. 
 
 ## Installation
+> For a faster installation experience check the [Docker](#docker-image) section bellow.
 ### pre-installation requirements
 Before being able to run this project, you need to have these installed on your machine.  
 * [Python3](https://www.python.org/downloads/) & Pip.
 * [Pipenv](https://pypi.org/project/pipenv/).
 * [Node](https://nodejs.org/en/download/) & npm.
 * [MySql](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/) & MySql server.
-> This project is still under development, so Docker and Redis will be added to this list shortly.
  #### Installation.
  1. Clone this repo.
  2. Run `pipenv shell` in the root directory to create a virtural env.
@@ -36,8 +36,8 @@ Before being able to run this project, you need to have these installed on your 
       - Go to MySQL Command Line client and create a database. *Follow bellow steps:*
       1. Enter your user password in the command line.
       2. <code>CREATE DATABASE raven_db;</code>
-      3. Add your <code>USER</code> and <code>PASSWORD</code> in settings.py + ( add your <code>PORT</code> if you have anything other than the default 3306 )  
-    - Make sure you're in the root directory ( where manage.py is ) and then run `python manage.py makemigrations` and `python manage.py migrate`
+      3. Add your <code>USER</code> and <code>PASSWORD</code> in settings.py + ( add your <code>PORT</code> if you have anything other than the default 3306 ), also in <code>HOST</code> use 'db' for Docker or 'localhost' for regular installation.   
+    - Make sure you're in the root directory ( where manage.py is ) and then run `python manage.py migrate`
     - We also need to create a superuser, make sure you're in the root directory then:
       1. <code>python manage.py createsuperuser</code> and follow the process to create the first user.
  5. Now that you've installed the packages, created a superuser and ran the migrations, you have two options for running the app.
@@ -114,9 +114,23 @@ You can do various operations with tweets. You can like, save or retweet a tweet
 If you wish to reply you can press on the reply icon or the   (`+`) on the top, where you will be taken to a page where you can view the tweet.  
 In this page you can see the people who liked and retweeted this tweet, you can also reply on it and see all of the replies. Plus, if you are the owner of the tweet can delete it ( a button will show on top if you're the owner ). 
 
+## Docker
+The fastest way to test this app is to use [Docker](https://docs.docker.com/).  
+Before starting you need to have:  
+1. Docker (.... Didn't see that coming huh ?).   
+2. [docker-compose](https://docs.docker.com/compose/).    
+Only one thing to do all the complexity mentioned in the installation part:  
+* After cloning the repo, be sure you're in the root directory and then use <code>docker-compose up</code>.  
+    * This will create an image for our application.
+    * you will find the application running on port 8000 =>(http://localhost:8000/)
+    * Also, images will be pulled from DockerHub include [nikolaik/python-nodejs](https://hub.docker.com/r/nikolaik/python-nodejs) and moriadb.
+* Moriadb is used in production instaed of Mysql. They're both similar and made by same developers.
+* I used Moriadb for its high performance, light weight and speed.
+    * Check out this [article](https://www.guru99.com/mariadb-vs-mysql.html) if you're intreasted in knowing more about their differences.  
+* > If you had trouble getting the Docker image running please stop the containers and run them again.
+* Now, enjoy the app. Continue from [Usage](#usage) part.
+
 ## Deployment link
 - [ ] coming soon.
 
-## Docker image
-- [ ] coming soon.
 

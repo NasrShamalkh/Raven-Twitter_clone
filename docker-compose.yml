@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      - MYSQL_HOST=localhost
+      - MYSQL_PORT=3306
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=raven_db
+      - MYSQL_USER=raven_user
+      - MYSQL_PASSWORD=raven_password
+      - MYSQL_ROOT_PASSWORD=raven_root_password
+    volumes:
+      - /home/nasr/mdbdata/mdb55:/var/lib/mysql
+    ports: 
+      - "3306:3306"
+  web:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:6060"
+    volumes: 
+      - .:/app
+    ports: 
+      - "6060:6060"
+    depends_on: 
+      - db

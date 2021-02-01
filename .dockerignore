@@ -1,0 +1,6 @@
+# just in case 
+node_modules 
+package-lock.json
+##
+Dockerfile
+.dockerignore
