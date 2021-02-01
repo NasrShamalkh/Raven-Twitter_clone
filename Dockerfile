@@ -12,6 +12,3 @@ COPY . ./
 # because the clinet code is integrated in the python code 
 # and they both depend on each other (Did not see that coming with this structure ! :))
 # package.json is already in the client alongside the resto of the files
-RUN cd client && npm install && npm run build && cd ..
-RUN python manage.py makemigrations && python manage.py migrate
-EXPOSE 8000

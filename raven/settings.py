@@ -113,10 +113,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'raven_db',
-        'USER': 'raven_user',
-        'HOST': 'db',
+        'USER': 'raven_user', # fill in your USER data
+        'HOST': 'db', # localhost for regular development & db for docker
         'PORT': 3306,
-        'PASSWORD': 'raven_password',
+        'PASSWORD': 'raven_password', # fill in your PASSWORD data
     }
 }
 

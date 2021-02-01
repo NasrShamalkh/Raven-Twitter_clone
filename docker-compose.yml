@@ -2,7 +2,9 @@ version: "3"
 
 services:
   db:
+  # using mariadb instead of mysql for production 
     image: mariadb
+    # the restart variable to restarte whenever something happens
     restart: always
     environment:
       - MYSQL_HOST=localhost
@@ -18,7 +20,11 @@ services:
       - "3306:3306"
   web:
     build: .
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:6060"
+    # main command 
+    # build react to production
+    # run any migrations
+    # run the server on port 6060
+    command: bash -c "cd client && npm install && npm run build && cd .. && python manage.py migrate && python manage.py runserver 0.0.0.0:6060"
     volumes: 
       - .:/app
     ports: 

@@ -118,17 +118,18 @@ In this page you can see the people who liked and retweeted this tweet, you can 
 The fastest way to test this app is to use [Docker](https://docs.docker.com/).  
 Before starting you need to have:  
 1. Docker (.... Didn't see that coming huh ?).   
-2. [docker-compose](https://docs.docker.com/compose/).    
-Only one thing to do all the complexity mentioned in the installation part:  
-* After cloning the repo, be sure you're in the root directory and then use <code>docker-compose up</code>.  
+2. [docker-compose](https://docs.docker.com/compose/).   
+3. Please be sure nothing is running on ports 6060 & 3306.   
+Only one thing to handle all the complexity mentioned in the installation part:  
+* After cloning the repo, be sure you're in the root directory and then use <code>docker-compose up</code> and you're good to go on port 6060.  
     * This will create an image for our application.
     * you will find the application running on port 8000 =>(http://localhost:8000/)
     * Also, images will be pulled from DockerHub include [nikolaik/python-nodejs](https://hub.docker.com/r/nikolaik/python-nodejs) and moriadb.
 * Moriadb is used in production instaed of Mysql. They're both similar and made by same developers.
 * I used Moriadb for its high performance, light weight and speed.
     * Check out this [article](https://www.guru99.com/mariadb-vs-mysql.html) if you're intreasted in knowing more about their differences.  
-* > If you had trouble getting the Docker image running please stop the containers and run them again.
-* Now, enjoy the app. Continue from [Usage](#usage) part.
+* > The process will take sometime depending on your internet connection and computer speed.
+* Now, enjoy the app. Continue from [Usage](#usage) part.  
 
 ## Deployment link
 - [ ] coming soon.
