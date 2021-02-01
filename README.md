@@ -37,9 +37,9 @@ Before being able to run this project, you need to have these installed on your 
       1. Enter your user password in the command line.
       2. <code>CREATE DATABASE raven_db;</code>
       3. Add your <code>USER</code> and <code>PASSWORD</code> in settings.py + ( add your <code>PORT</code> if you have anything other than the default 3306 )  
+    - Make sure you're in the root directory ( where manage.py is ) and then run `python manage.py makemigrations` and `python manage.py migrate`
     - We also need to create a superuser, make sure you're in the root directory then:
       1. <code>python manage.py createsuperuser</code> and follow the process to create the first user.
-    - Make sure you're in the root directory ( where manage.py is ) and then run `python manage.py makemigrations` and `python manage.py migrate`
  5. Now that you've installed the packages, created a superuser and ran the migrations, you have two options for running the app.
     1. __Development__.  
     Open two terminal windows, one for the Frontend ( in the client directory) and the other for the Backend ( in the root directory ).
@@ -48,7 +48,15 @@ Before being able to run this project, you need to have these installed on your 
      Now you have two running servers, you can find the app running on port 3000 and the backend server running on port 8000.
     2. __Production__.  
     Open one terminal window in the root and run `cd client && npm run build` after the build is finished run `cd ..`  
-    Now that you are in the root run `python manage.py runserver`. You can find the app running on the backend server on port 8000.
+    Now that you are in the root run `python manage.py runserver`. You can find the app running on the backend server on port 8000.  
+    *Important note*   
+    For the app to work properly ( because it is still in developement), you have to do the following:  
+    > 1. when the app is up ad running go to django admin page (localhost:8000/admin) and login with the superuser.  
+    > 2. go to proilfes tab.  
+    > 3. click on "add profile" in the top right corner.  
+    > 4. in the user space select your superuser username.  
+    > 5. select whatever other data you want.  
+    > 6. once you're done, select save.  
 
 ## Technologies & Explanation
 #### Backend
