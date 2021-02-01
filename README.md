@@ -12,7 +12,7 @@ Raven App is a [*Twitter*](https://twitter.com/) clone app. Built by Web Develop
     * [image Upload](#image-upload)
 4. [Key files and folders](#key-files)
 5. [Usage](#usage)
-6. [Docker](#docker-image)
+6. [Docker](#docker)
 7. [Deployment](#deployment-link)
 ## Description
 This applications is built as an attempt to rebuild Twitter with a different style and functionality for educational & Training puroposes.  
