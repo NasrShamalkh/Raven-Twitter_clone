@@ -114,6 +114,9 @@ You can do various operations with tweets. You can like, save or retweet a tweet
 If you wish to reply you can press on the reply icon or the   (`+`) on the top, where you will be taken to a page where you can view the tweet.  
 In this page you can see the people who liked and retweeted this tweet, you can also reply on it and see all of the replies. Plus, if you are the owner of the tweet can delete it ( a button will show on top if you're the owner ). 
 
+## Video walkthrough  
+Click [here](https://drive.google.com/file/d/1tpsjG0L2K3oaUJt6JYMieAgTPyV8WhBP/view?usp=sharing) for video.  
+
 ## Docker
 The fastest way to test this app is to use [Docker](https://docs.docker.com/).  
 Before starting you need to have:  
